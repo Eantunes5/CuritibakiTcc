@@ -66,7 +66,7 @@ function UpdateDeleteUsuario() {
   return (
     <div className="App">
       <h1>Update e Delete </h1>
-      <table border="1" style={{ float: 'left' }}>
+      <table border="1" style={{ float: 'left' }}> 
         <tbody>
           <tr>
             <td>Indice</td>
