@@ -1,14 +1,22 @@
-import './App.css';
-import React from "react"
-//import Routes from "./Routes";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function HomeAdmin() {
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    // Limpar o token de autenticação armazenado
+    localStorage.removeItem("token");
+
+    // Redirecionar para a página de login
+    navigate("/");
+  };
+
+  const isUserLoggedIn = !!localStorage.getItem("token"); // Verifica se o token está presente
 
   return (
-
     <div>
-        <h1>Ola administrador</h1>
+      <h1>Ola administrador</h1>
       <div>
         <a href="http://localhost:3000/Pontos">Acesse os pontos turisticos</a>
       </div>
@@ -16,24 +24,45 @@ function HomeAdmin() {
         <a href="http://localhost:3000/Faq">Acesse as perguntas frequentes</a>
       </div>
       <div>
-        <a href="http://localhost:3000/Emergencia">Acesse os numeros de emergencia</a>
+        <a href="http://localhost:3000/Emergencia">
+          Acesse os números de emergência
+        </a>
       </div>
-      <div>
-        <a href="http://localhost:3000/RegisterLocal">Cadastre novos locais</a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/UpdateDeleteLocal">Atualize ou Exclua locais</a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/Register">Cadastre novos usuarios</a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/UpdateDeleteUsuario">Atualize ou Exclua usuarios</a>
-      </div>
+      {isUserLoggedIn && (
+        <div>
+          <a href="http://localhost:3000/RegisterLocal">
+            Cadastre novos locais
+          </a>
+        </div>
+      )}
+      {isUserLoggedIn && (
+        <div>
+          <a href="http://localhost:3000/UpdateDeleteLocal">
+            Atualize ou Exclua locais
+          </a>
+        </div>
+      )}
+      {isUserLoggedIn && (
+        <div>
+          <a href="http://localhost:3000/Register">
+            Cadastre novos usuários
+          </a>
+        </div>
+      )}
+      {isUserLoggedIn && (
+        <div>
+          <a href="http://localhost:3000/UpdateDeleteUsuario">
+            Atualize ou Exclua usuários
+          </a>
+        </div>
+      )}
+      {isUserLoggedIn && (
+        <div>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      )}
     </div>
-
-  )
+  );
 }
 
-export default HomeAdmin
-
+export default HomeAdmin;

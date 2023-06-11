@@ -26,12 +26,12 @@ root.render(
     <BrowserRouter>
     
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<App  />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/RegisterLocal" element={<RegisterLocal />} />
       <Route path="/UpdateDeleteUsuario" element={<UpdateDeleteUsuario />} />
       <Route path="/UpdateDeleteLocal" element={<UpdateDeleteLocal />} />
-      <Route path="/Home" element={<App />} />
+      <Route path="/Login" element={<Login />} />
       <Route path="/HomeAdmin" element={<HomeAdmin />} />
       <Route path="/Pontos" element={<Pontos />} />
       <Route path="/Faq" element={<Faq />} />

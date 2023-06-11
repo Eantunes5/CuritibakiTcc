@@ -18,6 +18,9 @@ function App() {
       <div>
         <a href="http://localhost:3000/Emergencia">Acesse os numeros de emergencia</a>
       </div>
+      <div>
+        <a href="http://localhost:3000/login">Logar</a>
+      </div>
     </div>
 
   )
