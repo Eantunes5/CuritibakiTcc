@@ -1,6 +1,7 @@
 import './App.css';
 import axios from "axios"
 import { useState } from "react"
+import Logo from "./components/logo";
 
 function Register() {
 
@@ -35,51 +36,58 @@ function Register() {
   const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
 
   return (
-    <div>
-      <form action="" id="login" method="post" onSubmit={handleSubmit}>
-        <h1>Registrar</h1>
-        <p className="item">
-          <label for="nome"> Nome </label>
-          <input
-            type="nome"
-            name="nome"
-            id="nome"
-            value={nome}
-            onChange={e => setNome(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <label for="email"> Email </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <label for="password"> Password </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={senha}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <input type="submit" value="Registrar" />
-        </p>
-      </form>
-      {isLoggedIn && (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
+    <div id='page_register'>
+      <Logo/>
+      <div className="div_container_login_info">
+        <div className="form_container">
+          <form action='' id='login' method='' onSubmit={handleSubmit}>
+            <h1>Registrar</h1>
+            <br/><br/>
+            <span className="legenda">NOME:</span>
+            <br/>
+            <input
+              className="inp_login"
+              type="nome"
+              name="nome"
+              id="nome"
+              value={nome}
+              onChange={e => setNome(e.target.value)}
+            />
+            <br/>
+            <span className="legenda">EMAIL:</span>
+            <br/>
+            <input
+              className="inp_login"
+              type="email"
+              name="email"
+              id="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <br/>
+            <span className="legenda">SENHA:</span>
+            <br/>
+            <input
+              className="inp_login"
+              type="password"
+              name="password"
+              id="password"
+              value={senha}
+              onChange={e => setPassword(e.target.value)}
+            />
+            <br/><br/>
+            <input type="submit" value="Registrar" className='btn_submit'/>
+            {isLoggedIn && (
+              <div>
+                <button onClick={handleLogout}>Logout</button>
+              </div>
+            )}
+          </form>
         </div>
-      )}
+      </div>
     </div>
   )
 }
 
-export default Register
+export default Register;
 
