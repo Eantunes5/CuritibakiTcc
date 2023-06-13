@@ -9,5 +9,6 @@ router.post('/',authMiddleware, ratingController.create);
 router.get('/', ratingController.findAll);
 router.get('/:id_local',validRating, ratingController.findById);
 router.delete('/:id',validId, ratingController.deleteById);
+router.delete('/delete/:id',validId, ratingController.deleteById2);
 
 export default  router;

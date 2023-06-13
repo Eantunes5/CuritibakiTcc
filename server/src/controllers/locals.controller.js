@@ -1,4 +1,5 @@
 import localsSerivce  from '../services/locals.serivce.js';
+import ratingSerivce from '../services/rating.serivce.js';
 
 const create = async(req,res)  => {
   try{
@@ -54,11 +55,11 @@ const findById = async(req,res) => {
   } catch (err) {
     res.status(500).send( {message: err.message})
   }
-  };
+};
 
 const update = async(req,res) => {
   try{const {nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;
-  console.log(nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe)
+  
   if (!nome & !slug & !tipo & !sobre & !horarios & !ingressos & !endereco & !foto & !iframe ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
@@ -88,6 +89,10 @@ const deleteById = async(req,res) => {
   try{const id = req.id;
 
   await localsSerivce.deleteService(id);
+  
+  const ratings = await ratingSerivce.findByIdService(id);
+  
+  await ratingSerivce.deleteService(ratings[0].Locals_id);
 
   res.status(200).send({message:"Local deletado com sucesso"})
 } catch (err) {

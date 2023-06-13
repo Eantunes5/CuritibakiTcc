@@ -16,11 +16,29 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required:true,
     select: false,
-  }, 
+  },
+  adm : {
+    type: Boolean,
+    required:true,
+    default: false
+  },
+
 })
 
 UserSchema.pre("save", async function(next){
   this.senha = await bcrypt.hash(this.senha, 10);
+  next();
+});
+
+UserSchema.pre('findOneAndUpdate', async function(next) {
+  const update = this.getUpdate();
+  
+  const senha = update.senha;
+
+  if (senha) {
+    update.senha = await bcrypt.hash(senha, 10);
+  };
+
   next();
 });
 

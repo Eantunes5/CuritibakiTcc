@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import userSerivce from '../services/user.serivce.js';
 import localsSerivce from '../services/locals.serivce.js';
-import ratingSerivce from '../services/rating.serivce.js'
+import ratingSerivce from '../services/rating.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -73,22 +73,22 @@ export const validLocal = async (req,res,next) => {
 };
 
 export const validRating = async (req,res,next) => {
-  try{const id = req.params.id_local;
-  
+  try{
+  const id = req.params.id_local;
+
   const avaliacao = await ratingSerivce.findByIdService(id);
 
   if (!avaliacao) {
-    return res.status(400).send({ message: "Avaliação não encontrado" });
+    return res.status(400).send({ message: "Avaliação não encontrada" });
   }
 
   req.id = id;
   req.rating = avaliacao;
-
+  
   next();
 } catch (err) {
   res.status(500).send( {message: err.message})
 }
 };
-
 
 

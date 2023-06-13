@@ -78,7 +78,7 @@ const update = async(req,res) => {
     email,
     senha
   );
-   
+  
   res.send({message:"Usuário atualizado com sucesso"})
     
 } catch (err) {

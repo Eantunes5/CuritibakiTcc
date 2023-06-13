@@ -37,7 +37,12 @@ const findAll = async(req,res)  => {
 
 const findById = async(req,res) => {
   try{
+    const id = req.id;
     const avaliacao = req.rating;
+
+    if(avaliacao.length === 0){
+      return res.status(400).send({message: "Não há avaliações neste local"});
+    }
 
   res.send(avaliacao);
 } catch (err) {
@@ -56,4 +61,15 @@ const deleteById = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, deleteById };
+const deleteById2 = async(req,res) => {
+  try{const id = req.id;
+
+  await ratingSerivce.deleteService2(id);
+
+  res.status(200).send({message:"Avaliação deletada com sucesso"})
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export default { create, findAll, findById, deleteById, deleteById2 };

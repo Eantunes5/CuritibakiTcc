@@ -17,8 +17,10 @@ function Login() {
       .then((response) => {
         console.log(response);
         const token = response.data.token; // Extrair o token de autenticação da resposta
+        const userId = response.data.id;
         // Armazenar o token no local storage
         localStorage.setItem("token", token);
+        localStorage.setItem("userId", userId);
 
         // Redirecionar para a página "Home"
         navigate("/HomeAdmin");
