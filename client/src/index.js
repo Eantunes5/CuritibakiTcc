@@ -36,7 +36,7 @@ root.render(
       <Route path="/Pontos" element={<Pontos />} />
       <Route path="/Faq" element={<Faq />} />
       <Route path="/Emergencia" element={<Emergencia />} />
-      <Route path="/local/:id" element={<Local />}
+      <Route path="/pontos/local/:id" element={<Local />}
       
 />
 
