@@ -18,11 +18,7 @@ function Login() {
       .then((response) => {
         console.log(response);
         const token = response.data.token; // Extrair o token de autenticação da resposta
-<<<<<<< HEAD
         const userId = response.data.id;
-=======
-        const userId = response.data.userId;
->>>>>>> 05a1fe8c477cd811600453cc73352e01f0e1f16e
         // Armazenar o token no local storage
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
