@@ -27,18 +27,7 @@ function CardsPontos(tipo){
           setId(resp[0]._id);
         });
       });
-    }
-  
-    function handleLogout() {
-      // Limpar o token do local storage
-      localStorage.removeItem("token");
-  
-      // Redirecionar para a página de login
-      window.location.href = "http://localhost:3000/";
-    }
-  
-    const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
-  
+    }  
     return(
         <div className='div_container_card'>
         {users.map((item, i) => {

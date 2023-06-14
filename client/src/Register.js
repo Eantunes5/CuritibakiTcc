@@ -25,16 +25,6 @@ function Register() {
   const [email, setEmail] = useState('')
   const [senha, setPassword] = useState('')
 
-  function handleLogout() {
-    // Limpar o token do local storage
-    localStorage.removeItem("token");
-
-    // Redirecionar para a página de login
-    window.location.href = "http://localhost:3000/";
-  }
-
-  const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
-
   return (
     <div id='page_register'>
       <Logo/>
@@ -77,11 +67,6 @@ function Register() {
             />
             <br/><br/>
             <input type="submit" value="Registrar" className='btn_submit'/>
-            {isLoggedIn && (
-              <div>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
           </form>
         </div>
       </div>

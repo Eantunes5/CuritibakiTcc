@@ -7,9 +7,25 @@ import { Link } from 'react-router-dom';
 import PontosImg from './imgs/curitiba1.png'
 import HospitalImg from './imgs/hospital.jpg'
 import FaqImg from './imgs/faq.jpg'
+import { useNavigate } from "react-router-dom";
 //import Routes from "./Routes";
 
 function App() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Limpar o token de autenticação armazenado
+    localStorage.removeItem("token");
+    
+    // Limpar o userId e o adm armazenados
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+  
+    // Redirecionar para a página de login
+    navigate("/");
+  };
+
+  const isUserLoggedIn = !!localStorage.getItem("token"); // Verifica se o token está presente
 
   return (
     <div>
@@ -34,6 +50,11 @@ function App() {
             <div className='text_center'>PERGUNTAS FREQUENTES</div>
           </div>
         </Link>
+        {isUserLoggedIn && (
+            <div>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+        )}
       </div>
     </div>
   )

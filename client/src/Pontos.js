@@ -3,10 +3,10 @@ import Header from './components/header';
 import Logo from './components/logo';
 import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
-import { Link } from 'react-router-dom';
 import CardsPontos from './components/cards_pontos';
 
 function Pontos() {
+  // eslint-disable-next-line
   const [users, setUser] = useState([]);
   // eslint-disable-next-line
   const [nome, setNome] = useState('');
@@ -29,16 +29,6 @@ function Pontos() {
       });
     });
   }
-
-  function handleLogout() {
-    // Limpar o token do local storage
-    localStorage.removeItem("token");
-
-    // Redirecionar para a página de login
-    window.location.href = "http://localhost:3000/";
-  }
-
-  const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
 
   return (
     <div className="App">
@@ -70,5 +60,4 @@ export default Pontos;
           </div>
         </div>
       ))}
-      {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
 */

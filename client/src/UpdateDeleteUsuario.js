@@ -63,17 +63,6 @@ function UpdateDeleteUsuario() {
     })
   }
 
-  function handleLogout() {
-    // Limpar o token do local storage
-    localStorage.removeItem("token");
-
-    // Redirecionar para a página de login
-    window.location.href = "http://localhost:3000/";
-  }
-
-  const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
-
-
   return (
     <div className="App">
       <h1>Update e Delete </h1>
@@ -106,11 +95,6 @@ function UpdateDeleteUsuario() {
         <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} /> <br /><br />
         <button onClick={updateUser} >Update User</button>  
       </div>
-      {isLoggedIn && (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
     </div>
   );
 }

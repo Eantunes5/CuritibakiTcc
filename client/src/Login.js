@@ -8,24 +8,60 @@ function Login() {
     baseURL: "http://localhost:3001",
   });
 
+  const handleLogout = () => {
+    // Limpar o token de autenticação armazenado
+    localStorage.removeItem("token");
+    
+    // Limpar o userId e o adm armazenados
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+  
+    // Redirecionar para a página de login
+    navigate("/");
+  };
+
+  const isUserLoggedIn = !!localStorage.getItem("token"); // Verifica se o token está presente
+
   const navigate = useNavigate(); // Hook useNavigate para redirecionamento
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axiosInstance
-      .post("/auth", { email, senha })
-      .then((response) => {
-        console.log(response);
-        const token = response.data.token; // Extrair o token de autenticação da resposta
-        const userId = response.data.id;
-        // Armazenar o token no local storage
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", userId);
-
-        // Redirecionar para a página "Home"
-        navigate("/HomeAdmin");
-      })
+    .post("/auth", { email, senha })
+    .then(async (response) => {
+      console.log(response);
+      const token = response.data.token;
+      const userId = response.data.id;
+  
+      // Armazenar o token no localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+  
+      try {
+        // Buscar os dados do usuário com base no userId
+        const userResponse = await axiosInstance.get(`/user/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const userData = userResponse.data;
+  
+        // Verificar o atributo "adm" do usuário e armazenar no localStorage
+        const isAdmin = userData.adm;
+        localStorage.setItem("isAdmin", isAdmin);
+  
+        // Redirecionar para a página correta com base no atributo "adm"
+        if (isAdmin) {
+          navigate("/homeAdmin");
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário:", error);
+      }
+    })
       .catch((error) => {
         if (error.response) {
           // O servidor respondeu com um status de erro (por exemplo, 400, 401, 500, etc.)
@@ -80,6 +116,11 @@ function Login() {
               <span className="to_register">Não tem uma conta? Clique aqui!</span>
             </Link>
           </form>
+          {isUserLoggedIn && (
+            <div>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          )}
         </div>
       </div>
     </div>

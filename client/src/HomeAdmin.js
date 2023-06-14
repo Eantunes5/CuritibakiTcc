@@ -7,7 +7,11 @@ function HomeAdmin() {
   const handleLogout = () => {
     // Limpar o token de autenticação armazenado
     localStorage.removeItem("token");
-
+    
+    // Limpar o userId e o adm armazenados
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+  
     // Redirecionar para a página de login
     navigate("/");
   };

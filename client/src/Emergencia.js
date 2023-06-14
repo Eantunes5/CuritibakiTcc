@@ -8,16 +8,6 @@ import CardEmergencia from './components/cards_emergencia';
 
 function Emergencia() {
 
-  function handleLogout() {
-    // Limpar o token do local storage
-    localStorage.removeItem("token");
-
-    // Redirecionar para a página de login
-    window.location.href = "http://localhost:3000/";
-  }
-
-  const isLoggedIn = !!localStorage.getItem("token"); // Verificar se o usuário está logado
-
   return (
     <div>
       <SmallHeader/>
@@ -63,9 +53,3 @@ function Emergencia() {
 }
 
 export default Emergencia
-
-// {isLoggedIn && (
-//   <div>
-//     <button onClick={handleLogout}>Logout</button>
-//   </div>
-// )}
