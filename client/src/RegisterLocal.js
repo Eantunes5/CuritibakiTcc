@@ -2,8 +2,11 @@ import './App.css';
 import axios from "axios"
 import { useState } from "react"
 import SmallHeader from './components/small_header';
+import { useNavigate } from "react-router-dom";
 
 function RegisterLocal() {
+
+  const navigate = useNavigate();
 
   const axiosInstance = axios.create({
     baseURL:"http://localhost:3001"
@@ -30,6 +33,14 @@ function RegisterLocal() {
   const [endereco, setEndereco] = useState('')
   const [foto, setFoto] = useState('')
   const [iframe, setIframe] = useState('')
+
+  const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
+
+  if (!isAdmin) {
+    // Se o usuário não for um administrador, redirecionar para outra página
+    navigate("/"); // Redireciona para a página inicial
+    return null; // Evita a renderização da página atual
+  }
 
   return (
     <div>

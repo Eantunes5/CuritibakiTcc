@@ -18,6 +18,14 @@ function HomeAdmin() {
 
   const isUserLoggedIn = !!localStorage.getItem("token"); // Verifica se o token está presente
 
+  const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
+
+  if (!isAdmin) {
+    // Se o usuário não for um administrador, redirecionar para outra página
+    navigate("/"); // Redireciona para a página inicial
+    return null; // Evita a renderização da página atual
+  }
+
   return (
     <div>
       <h1>Ola administrador</h1>

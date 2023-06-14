@@ -1,8 +1,11 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 
 function UpdateDeleteUsuario() {
+  const navigate = useNavigate();
+
   const [users, setUser] = useState([])
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
@@ -61,6 +64,14 @@ function UpdateDeleteUsuario() {
         getUsers()
       })
     })
+  }
+
+  const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
+
+  if (!isAdmin) {
+    // Se o usuário não for um administrador, redirecionar para outra página
+    navigate("/"); // Redireciona para a página inicial
+    return null; // Evita a renderização da página atual
   }
 
   return (
