@@ -22,29 +22,29 @@ function Emergencia() {
             url_img='https://www.true.com.br/wp-content/uploads/2022/05/Ativo-5-300x300.png'
             />
           <CardEmergencia 
-            nome='corpo de bombeiros' 
+            nome='Corpo de bombeiros' 
             numero='193' 
-            url_img='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_PMPR_2.svg/1200px-Logo_PMPR_2.svg.png'
+            url_img='https://upload.wikimedia.org/wikipedia/commons/5/5e/Brasao_bombeiros_parana_decada_90.png'
             />
           <CardEmergencia 
-            nome='polícia militar' 
+            nome='Polícia militar' 
             numero='190' 
             url_img='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_PMPR_2.svg/1200px-Logo_PMPR_2.svg.png'
             />
           <CardEmergencia 
-            nome='polícia militar' 
-            numero='190' 
-            url_img='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_PMPR_2.svg/1200px-Logo_PMPR_2.svg.png'
+            nome='polícia civil' 
+            numero='197' 
+            url_img='https://upload.wikimedia.org/wikipedia/commons/2/2d/Logo_policia_civil.gif'
             />
           <CardEmergencia 
-            nome='polícia militar' 
-            numero='190' 
-            url_img='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_PMPR_2.svg/1200px-Logo_PMPR_2.svg.png'
+            nome='polícia rodovíaria' 
+            numero='191' 
+            url_img='https://logodownload.org/wp-content/uploads/2016/10/policia-rodoviaria-logo-1-1.png'
             />
-          <CardEmergencia 
-            nome='polícia militar' 
-            numero='190' 
-            url_img='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_PMPR_2.svg/1200px-Logo_PMPR_2.svg.png'
+            <CardEmergencia 
+            nome='Defesa cívil' 
+            numero='199' 
+            url_img='https://cdn-icons-png.flaticon.com/512/126/126341.png'
             />
         </div>
       </div>
