@@ -1,49 +1,64 @@
 import './App.css';
-import axios from "axios"
-import { useState } from "react"
+import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 
 function Register() {
-
   const axiosInstance = axios.create({
-    baseURL:"http://localhost:3001"
-  }) 
+    baseURL: "http://localhost:3001"
+  });
+
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
-    // Prevent the default submit and page reload
-    e.preventDefault()
+    e.preventDefault();
 
-    // Handle validations 
+    // Verifica se o email já está em uso
     axiosInstance
-      .post("http://localhost:3001/user", { nome, email, senha })
+      .get(`http://localhost:3001/user?email=${email}`)
       .then(response => {
-        console.log(response.statusText)
-        if(response.statusText == 'Created'){
-          alert('Registro realizado com sucesso!')
-          navigate("/login");
+        if (response.data.length > 0) {
+          alert('Este email já está em uso. Por favor, escolha outro email.');
+        } else {
+          // Realiza o registro se o email estiver disponível
+          axiosInstance
+            .post("http://localhost:3001/user", { nome, email, senha })
+            .then(response => {
+              console.log(response.statusText);
+              if (response.statusText === 'Created') {
+                alert('Registro realizado com sucesso!');
+                navigate("/login");
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              // Trate o erro de registro aqui, se necessário
+            });
         }
-        // Handle response
       })
-  }
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [senha, setPassword] = useState('')
-  const navigate = useNavigate();
+      .catch(error => {
+        console.error(error);
+        // Trate o erro de verificação de email aqui, se necessário
+      });
+  };
 
   return (
     <div id='page_register'>
       <Logo/>
       <div className="div_container_login_info">
         <div className="form_container">
-          <form action='' id='login' method='' onSubmit={handleSubmit}>
+          <form id='login' onSubmit={handleSubmit}>
             <h1>Registrar</h1>
             <br/><br/>
             <span className="legenda">NOME:</span>
             <br/>
             <input
               className="inp_login"
-              type="nome"
+              type="text"
               name="nome"
               id="nome"
               value={nome}
@@ -77,8 +92,7 @@ function Register() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Register;
-
