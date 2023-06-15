@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import SmallHeader from './components/small_header';
+import infoIcon from './imgs/circle-info-solid.svg'
+import timeIcon from './imgs/clock-solid.svg';
+import ticketIcon from './imgs/ticket-solid.svg';
+import mapIcon from './imgs/map-solid.svg';
 
 function Local() {
   const [nome, setNome] = useState('');
@@ -162,13 +167,64 @@ function Local() {
 
   return (
     <div>
-      <h1>{nome}</h1>
+      <SmallHeader/>
+      <div className='local_img'>
+        <img src={foto} alt=''/>
+      </div>
+      <div className='div_name_container'>
+        <div className='div_name_local'>
+          <p className='ponto_name'>{nome}</p>
+        </div>
+      </div>
+      <div className='infos_pontos_container'>
+        <div className='card_ponto'>
+          <p className='ponto_name'>
+            <img className='icons_infos' src={infoIcon} alt=''/>
+            SOBRE O LOCAL
+          </p>
+          <p className='ponto_infos_text'>
+            {sobre}
+          </p>
+        </div>
+        <div className='card_ponto'>
+          <p className='ponto_name'>
+            <img className='icons_infos' src={timeIcon} alt=''/>
+            HORÁRIOS
+          </p>
+          <p className='ponto_infos_text'>
+            {horarios}
+          </p>
+        </div>
+        <div className='card_ponto'>
+          <p className='ponto_name'>
+            <img className='icons_infos' src={ticketIcon} alt=''/>
+            INGRESSOS
+          </p>
+          <p className='ponto_infos_text'>
+            {ingressos}
+          </p>
+        </div>
+        <div className='card_ponto'>
+          <p className='ponto_name'>
+            <img className='icons_infos' src={mapIcon} alt=''/>
+            COMO CHEGAR
+          </p>
+          <p className='ponto_infos_text'>
+            {endereco}
+            <br></br>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14415.36754526454!2d-49.2671932!3d-25.4101027!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce41fa86f6915%3A0xf5f24c5f00323bee!2sMuseu%20Oscar%20Niemeyer!5e0!3m2!1spt-BR!2sbr!4v1686803979068!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </p>
+        </div>
+      </div>
+      
+
+      {/* <h1>{nome}</h1>
       <p>Tipo: {tipo}</p>
       <p>Sobre: {sobre}</p>
       <p>Horários: {horarios}</p>
       <p>Ingressos: {ingressos}</p>
       <p>Endereço: {endereco}</p>
-      <img src={foto} alt="Foto do local" />
+      <img src={foto} alt="Foto do local" /> */}
 
       {isLoggedIn && (
         <div>

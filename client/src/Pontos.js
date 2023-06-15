@@ -4,6 +4,7 @@ import Logo from './components/logo';
 import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
 import CardsPontos from './components/cards_pontos';
+import SmallHeader from './components/small_header';
 
 function Pontos() {
   // eslint-disable-next-line
@@ -32,8 +33,7 @@ function Pontos() {
 
   return (
     <div className="App">
-      <Header/>
-      <Logo/>
+      <SmallHeader/>
       <SelectButtons page='pontos'/>
       <div className='div_container_cards_pontos'>
         <PontosTitle text='PONTOS TURISTICOS'/>
