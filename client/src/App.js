@@ -50,11 +50,6 @@ function App() {
             <div className='text_center'>PERGUNTAS FREQUENTES</div>
           </div>
         </Link>
-        {isUserLoggedIn && (
-            <div>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-        )}
       </div>
     </div>
   )

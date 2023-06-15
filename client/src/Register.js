@@ -1,6 +1,7 @@
 import './App.css';
 import axios from "axios"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 
 function Register() {
@@ -17,13 +18,18 @@ function Register() {
     axiosInstance
       .post("http://localhost:3001/user", { nome, email, senha })
       .then(response => {
-        console.log(response)
+        console.log(response.statusText)
+        if(response.statusText == 'Created'){
+          alert('Registro realizado com sucesso!')
+          navigate("/login");
+        }
         // Handle response
       })
   }
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setPassword] = useState('')
+  const navigate = useNavigate();
 
   return (
     <div id='page_register'>

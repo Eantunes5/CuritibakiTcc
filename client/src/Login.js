@@ -116,11 +116,6 @@ function Login() {
               <span className="to_register">Não tem uma conta? Clique aqui!</span>
             </Link>
           </form>
-          {isUserLoggedIn && (
-            <div>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          )}
         </div>
       </div>
     </div>

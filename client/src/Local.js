@@ -6,6 +6,9 @@ import infoIcon from './imgs/circle-info-solid.svg'
 import timeIcon from './imgs/clock-solid.svg';
 import ticketIcon from './imgs/ticket-solid.svg';
 import mapIcon from './imgs/map-solid.svg';
+import starIcon from './imgs/star-solid.svg';
+import emptyStarIcon from './imgs/star-regular.svg';
+import userIcon from './imgs/user-solid.svg'
 
 function Local() {
   const [nome, setNome] = useState('');
@@ -18,6 +21,8 @@ function Local() {
   const [avaliacoes, setAvaliacoes] = useState([]);
   const [nota, setNota] = useState('');
   const [comentario, setComentario] = useState('');
+  const [iframe, setIframe] = useState('');
+
   // eslint-disable-next-line
   const [nomeUsuario, setNomeUsuario] = useState('');
 
@@ -63,6 +68,7 @@ function Local() {
         setIngressos(data.ingressos);
         setEndereco(data.endereco);
         setFoto(data.foto);
+        setIframe(data.iframe)
       } catch (error) {
         console.error('Error:', error);
       }
@@ -116,8 +122,7 @@ function Local() {
 
     // Verifica se há um usuário logado
     if (!userId) {
-        console.log('ID do usuário:', userId);
-      console.error('Usuário não logado');
+      alert('Você precisa estar logado para fazer uma avaliação!');
       return;
     }
 
@@ -155,11 +160,11 @@ function Local() {
     axios
       .post('http://localhost:3001/rating', novaAvaliacao, { headers })
       .then((response) => {
-        console.log('Avaliação enviada:', response.data);
+        alert('Obrigado pela avaliação!')
         // Atualize o estado de avaliações se necessário
       })
       .catch((error) => {
-        console.error('Erro ao enviar avaliação:', error);
+        alert('Ocorreu um erro ao enviar sua avaliação. Por favor tenta novamente!')
       });
   }
 
@@ -212,60 +217,119 @@ function Local() {
           <p className='ponto_infos_text'>
             {endereco}
             <br></br>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14415.36754526454!2d-49.2671932!3d-25.4101027!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce41fa86f6915%3A0xf5f24c5f00323bee!2sMuseu%20Oscar%20Niemeyer!5e0!3m2!1spt-BR!2sbr!4v1686803979068!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src={iframe} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </p>
         </div>
       </div>
-      
+      <div className='container_comments'>
+        <p className='card_text'>
+          <img className='icons_infos' src={starIcon} alt=''/>
+          AVALIAÇÕES
+          <img className='icons_infos' src={starIcon} alt=''/>
+        </p>
+        <div className='container_card_comment'>
+        {avaliacoes.map((avaliacao) => (
+          <div className='card_comment'>
+            <p className='card_text'>
+            <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
+            {avaliacao.usuario.nome}
+            </p>
+            <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
+              {avaliacao.comentario}
+            </p>
+            { avaliacao.nota == '1' && (
+                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                </p>
+              ) ||
+              avaliacao.nota == '2' && (
+                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                </p>
+              ) ||
+              avaliacao.nota == '3' && (
+                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                </p>
+              ) ||
+              avaliacao.nota == '4' && (
+                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
+                </p>
+              ) ||
+              avaliacao.nota == '5' && (
+                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                  <img className='icons_avaliacao' src={starIcon} alt=''/>
+                </p>
+              )
+            }
+          </div>
 
-      {/* <h1>{nome}</h1>
-      <p>Tipo: {tipo}</p>
-      <p>Sobre: {sobre}</p>
-      <p>Horários: {horarios}</p>
-      <p>Ingressos: {ingressos}</p>
-      <p>Endereço: {endereco}</p>
-      <img src={foto} alt="Foto do local" /> */}
-
-      {isLoggedIn && (
-        <div>
-          <h2>Fazer uma avaliação</h2>
+          // <li key={avaliacao._id}>
+          //   <p>Usuário: {avaliacao.usuario.nome}</p>
+          //   <p>Nota: {avaliacao.nota}</p>
+          //   <p>Comentário: {avaliacao.comentario}</p>
+          //   <p>Tipo: {avaliacao.tipo}</p>
+          //   <p>ID do Local: {avaliacao.Locals_id}</p>
+          //   <p>ID do Usuário: {avaliacao.Users_id}</p>
+          // </li>
+          ))}
+          
+          <div className='contato_faq colored_background_opacity'>
+          <p className='card_text'>
+          JÁ VISITOU ESTE LOCAL? FAÇA UMA AVALIAÇÃO!
+          </p>
           <form onSubmit={handleSubmit}>
             <label>
-              Nota:
-              <input
-                type="number"
-                value={nota}
-                onChange={(event) => setNota(event.target.value)}
-              />
-            </label>
-            <br />
-            <label>
-              Comentário:
+              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
+                Comentário:
+              </p>
               <textarea
                 value={comentario}
                 onChange={(event) => setComentario(event.target.value)}
               />
             </label>
-            <br />
-            <button type="submit">Enviar Avaliação</button>
+            <br/>
+            <label>
+              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
+                Nota:
+                <input
+                id='input_nota'
+                type="number"
+                value={nota}
+                onChange={(event) => setNota(event.target.value)}
+                min={1}
+                max={5}
+              />
+              <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
+              </p>
+            </label>
+            
           </form>
         </div>
-      )}
+        </div>   
+      </div>
 
-      {/* Renderizar as avaliações */}
-      <h2>Avaliações</h2>
-      <ul>
-        {avaliacoes.map((avaliacao) => (
-          <li key={avaliacao._id}>
-            <p>Usuário: {avaliacao.usuario.nome}</p>
-            <p>Nota: {avaliacao.nota}</p>
-            <p>Comentário: {avaliacao.comentario}</p>
-            <p>Tipo: {avaliacao.tipo}</p>
-            <p>ID do Local: {avaliacao.Locals_id}</p>
-            <p>ID do Usuário: {avaliacao.Users_id}</p>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

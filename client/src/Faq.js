@@ -27,14 +27,14 @@ function Faq() {
           resposta='R: Sim! Todas estão sendo tiradas de fontes oficiais, sendo atualizadas sempre que necessário.'
           />
 
-        <div className='contato_faq'>
-          <p className='card_text'>
-          COMO FAÇO PARA ENTRAR EM CONTATO COM OS RESPONSÁVEIS DO SITE?
-          </p>
-          <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none'}}>
-          R: Nos contate através do nosso email: curitibaki_faq@dominio.com
-          </p>
-        </div>
+          <div className='contato_faq colored_background_opacity'>
+            <p className='card_text'>
+            COMO FAÇO PARA ENTRAR EM CONTATO COM OS RESPONSÁVEIS DO SITE?
+            </p>
+            <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none'}}>
+            R: Nos contate através do nosso email: curitibaki_faq@dominio.com
+            </p>
+          </div>
         </div>
         
       </div>

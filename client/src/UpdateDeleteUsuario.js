@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import SmallHeader from './components/small_header';
 
 
 function UpdateDeleteUsuario() {
@@ -75,36 +76,49 @@ function UpdateDeleteUsuario() {
   }
 
   return (
-    <div className="App">
-      <h1>Update e Delete </h1>
-      <table border="1" style={{ float: 'left' }}> 
-        <tbody>
-          <tr>
-            <td>Indice</td>
-            <td>ID</td>
-            <td>Nome</td>
-            <td>Email</td>
-            <td>Operations</td>
-          </tr>
-          {
-            users.map((item, i) =>
-              <tr key={i}>
-                <td>{i}</td>
-                <td>{item._id}</td>
-                <td>{item.nome}</td>
-                <td>{item.email}</td>
-                <td><button onClick={() => deleteUser(item._id)}>Delete</button></td>
-                <td><button onClick={() => selectUser(i)}>Select</button></td>
+    <div>
+      <SmallHeader/>
+      <h1 className='card_text'>Update e Delete - Usuario</h1>
+      <div className='colored_background_opacity container_selector_admin'>
+        <label>
+          <span>Nome</span>
+          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> 
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
+        </label>
+        <div style={{width: '100%', textAlign: 'center'}}>
+          <button className='att_local btn_submit' onClick={updateUser} >Update User</button>  
+        </div>
+      </div>
+      <div style={{marginLeft: '5%', width: '90%', height: 'fit-content', display: 'flex', justifyContent: 'center'}}>
+        <table className='table_admin'>
+          <thead>
+            <tr>
+              <td colSpan={2}>Operations</td>
+              <td>Indice</td>
+              <td>ID</td>
+              <td>Nome</td>
+              <td>Email</td>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              users.map((item, i) =>
+                <tr key={i}>
+                  <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
+                  <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
+                  <td>{i}</td>
+                  <td>{item._id}</td>
+                  <td>{item.nome}</td>
+                  <td>{item.email}</td>
 
-              </tr>
-            )
-          }
-        </tbody>
-      </table>
-      <div>
-        <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> <br /><br />
-        <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} /> <br /><br />
-        <button onClick={updateUser} >Update User</button>  
+                </tr>
+              )
+            }
+          </tbody>
+        </table>
       </div>
     </div>
   );

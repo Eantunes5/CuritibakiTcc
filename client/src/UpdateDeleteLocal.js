@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import SmallHeader from './components/small_header';
 
 
 function UpdateDeleteLocal() {
@@ -96,14 +97,59 @@ function UpdateDeleteLocal() {
   }
 
   return (
-    <div className="App">
-      <h1>Update e Delete </h1>
-      <table border="1" style={{ float: 'left' }}>
-        <tbody>
+    <div>
+      <SmallHeader/>
+      <h1 className='card_text'>Update e Delete - Local </h1>
+      <div className='colored_background_opacity container_selector_admin'>
+        <label>
+          <span>Nome</span>
+          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> 
+        </label>
+        <label>
+          <span>Slug</span>
+          <input type="text" value={slug} onChange={(e)=>{setSlug(e.target.value)}} /> 
+        </label>
+        <label>
+          <span>Tipo</span>
+          <input type="text" value={tipo} onChange={(e)=>{setTipo(e.target.value)}} /> 
+        </label>
+        <label>
+          <span>Foto</span>
+          <input type="text" value={foto} onChange={(e)=>{setFoto(e.target.value)}} /> 
+        </label>
+        <label className='input_bigger'>
+          <span>Sobre</span><br></br>
+          <textarea type="text" value={sobre} onChange={(e)=>{setSobre(e.target.value)}} /> 
+        </label>
+        <label className='input_bigger'>
+          <span >Horários</span> <br></br>
+          <textarea type="text" value={horarios} onChange={(e)=>{setHorarios(e.target.value)}} /> 
+        </label>
+        <label className='input_bigger'>
+          <span>Ingressos</span><br></br>
+          <textarea type="text" value={ingressos} onChange={(e)=>{setIngressos(e.target.value)}} />  
+        </label>
+        <label className='input_bigger'>
+          <span>Endereços</span><br></br>
+          <textarea type="text" value={endereco} onChange={(e)=>{setEndereco(e.target.value)}} />
+        </label>
+        
+        <label>
+          <span>Iframe</span>
+          <input type="text" value={iframe} onChange={(e)=>{setIframe(e.target.value)}} /> 
+        </label>
+        <div style={{width: '100%', textAlign: 'center'}}>
+          <button className='att_local btn_submit' onClick={updateUser} >Update Local</button>  
+        </div>
+      </div>
+      <div style={{width: '100%', height: '500px', overflowX: 'scroll', overflowY: 'scroll'}}>
+      <table className='table_admin'>
+        <thead>
           <tr>
+            <td colSpan={2}>Operations</td>
+            <td>Nome</td>
             <td>Indice</td>
             <td>ID</td>
-            <td>Nome</td>
             <td>Slug</td>
             <td>Tipo</td>
             <td>Sobre</td>
@@ -112,14 +158,18 @@ function UpdateDeleteLocal() {
             <td>Endereco</td>
             <td>Foto</td>
             <td>Iframe</td>
-            <td>Operations</td>
           </tr>
+        </thead>
+        <tbody style={{marginTop: '10px'}}>
           {
             users.map((item, i) =>
+            
               <tr key={i}>
+                <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
+                <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
+                <td>{item.nome}</td>
                 <td>{i}</td>
                 <td>{item._id}</td>
-                <td>{item.nome}</td>
                 <td>{item.slug}</td>
                 <td>{item.tipo}</td>
                 <td>{item.sobre}</td>
@@ -128,35 +178,16 @@ function UpdateDeleteLocal() {
                 <td>{item.endereco}</td>
                 <td>{item.foto}</td>
                 <td>{item.iframe}</td>
-                <td><button onClick={() => deleteUser(item._id)}>Delete</button></td>
-                <td><button onClick={() => selectUser(i)}>Select</button></td>
+                
 
               </tr>
             )
           }
         </tbody>
       </table>
-      <div>
-        <p>Nome</p>
-        <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> <br /><br />
-        <p>Slug</p>
-        <input type="text" value={slug} onChange={(e)=>{setSlug(e.target.value)}} /> <br /><br />
-        <p>Tipo</p>
-        <input type="text" value={tipo} onChange={(e)=>{setTipo(e.target.value)}} /> <br /><br />
-        <p>Sobre</p>
-        <input type="text" value={sobre} onChange={(e)=>{setSobre(e.target.value)}} /> <br /><br />
-        <p>Horarios</p>
-        <input type="text" value={horarios} onChange={(e)=>{setHorarios(e.target.value)}} /> <br /><br />
-        <p>Ingressos</p>
-        <input type="text" value={ingressos} onChange={(e)=>{setIngressos(e.target.value)}} /> <br /><br />
-        <p>Endereco</p>
-        <input type="text" value={endereco} onChange={(e)=>{setEndereco(e.target.value)}} /> <br /><br />
-        <p>Foto</p>
-        <input type="text" value={foto} onChange={(e)=>{setFoto(e.target.value)}} /> <br /><br />
-        <p>Iframe</p>
-        <input type="text" value={iframe} onChange={(e)=>{setIframe(e.target.value)}} /> <br /><br />
-        <button onClick={updateUser} >Update Local</button>  
       </div>
+      
+      
     </div>
   );
 }

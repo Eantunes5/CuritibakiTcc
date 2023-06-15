@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SmallHeader from "./components/small_header";
 
 function HomeAdmin() {
   const navigate = useNavigate();
@@ -27,52 +28,38 @@ function HomeAdmin() {
   }
 
   return (
-    <div>
-      <h1>Ola administrador</h1>
       <div>
-        <a href="http://localhost:3000/Pontos">Acesse os pontos turisticos</a>
+      <SmallHeader/>
+      <div className='div_register_local'>
+        <div className='form_container'>
+        <form action="" id="login" method="post" className="admin_container">
+          <h1>ADMINISTRADOR</h1>
+          <Link to='/pontos'>
+            <button className="buttons_admin">Pontos</button>
+          </Link>
+          <Link to='/faq'>
+            <button className="buttons_admin">Faq</button>
+          </Link>
+          <Link to='/emergencia'>
+            <button className="buttons_admin">Emergencia</button>
+          </Link>
+          <Link to='/registerlocal'>
+            <button className="buttons_admin">Registrar Locais</button>
+          </Link>
+          <Link to='/UpdateDeleteLocal'>
+            <button className="buttons_admin">Atualizar Locais</button>
+          </Link>
+          <Link to='/register'>
+            <button className="buttons_admin">Registrar Usuarios</button>
+          </Link>
+          <Link to='/UpdateDeleteUsuario'>
+            <button className="buttons_admin">Atualizar Usuarios</button>
+          </Link>
+          
+        </form>
+
       </div>
-      <div>
-        <a href="http://localhost:3000/Faq">Acesse as perguntas frequentes</a>
-      </div>
-      <div>
-        <a href="http://localhost:3000/Emergencia">
-          Acesse os números de emergência
-        </a>
-      </div>
-      {isUserLoggedIn && (
-        <div>
-          <a href="http://localhost:3000/RegisterLocal">
-            Cadastre novos locais
-          </a>
-        </div>
-      )}
-      {isUserLoggedIn && (
-        <div>
-          <a href="http://localhost:3000/UpdateDeleteLocal">
-            Atualize ou Exclua locais
-          </a>
-        </div>
-      )}
-      {isUserLoggedIn && (
-        <div>
-          <a href="http://localhost:3000/Register">
-            Cadastre novos usuários
-          </a>
-        </div>
-      )}
-      {isUserLoggedIn && (
-        <div>
-          <a href="http://localhost:3000/UpdateDeleteUsuario">
-            Atualize ou Exclua usuários
-          </a>
-        </div>
-      )}
-      {isUserLoggedIn && (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
+    </div>
     </div>
   );
 }
