@@ -300,6 +300,10 @@ function Local() {
           // </li>
           ))}
           
+
+            {/* COLOCA UMA VALIDAÇÃO PRA SUMIR COM ESSE SETOR, DPS EU ARRUMO OQ VAI APARECER E OQ N VAI */}
+
+
           <div className='contato_faq colored_background_opacity'>
           <p className='card_text'>
           JÁ VISITOU ESTE LOCAL? FAÇA UMA AVALIAÇÃO!
