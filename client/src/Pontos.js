@@ -21,7 +21,8 @@ function Pontos() {
   }, []);
 
   function getUsers() {
-    fetch("http://localhost:3001/locals").then((result) => {
+    const url = process.env.REACT_APP_API_URL;
+    fetch(`${url}/locals`).then((result) => {
       result.json().then((resp) => {
         setUser(resp);
         setNome(resp[0].nome);
@@ -48,16 +49,3 @@ function Pontos() {
 }
 
 export default Pontos;
-
-/*
-{users.map((item, i) => (
-        <div class="row">
-          <div class="card">
-            <h2>{item.nome}</h2>
-            <p>{item.foto}</p>
-            <img src={`${item.foto}`} alt="" />
-            <a href={`http://localhost:3000/Local/${item._id}`}>Acessar</a>
-          </div>
-        </div>
-      ))}
-*/

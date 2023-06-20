@@ -19,7 +19,8 @@ function CardsPontos(tipo){
     }, []);
   
     function getUsers() {
-      fetch("http://localhost:3001/locals").then((result) => {
+      const url = process.env.REACT_APP_API_URL;
+      fetch(`${url}/locals`).then((result) => {
         result.json().then((resp) => {
           setUser(resp);
           setNome(resp[0].nome);

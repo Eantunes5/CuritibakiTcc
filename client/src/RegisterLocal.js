@@ -9,7 +9,7 @@ function RegisterLocal() {
   const navigate = useNavigate();
 
   const axiosInstance = axios.create({
-    baseURL:"http://localhost:3001"
+    baseURL: process.env.REACT_APP_API_URL
   }) 
 
   const handleSubmit = e => {
@@ -17,8 +17,9 @@ function RegisterLocal() {
     e.preventDefault()
 
     // Handle validations 
+    const url = process.env.REACT_APP_API_URL;
     axiosInstance
-      .post("http://localhost:3001/locals", { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe })
+      .post(`${url}/locals`, { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe })
       .then(response => {
         console.log(response)
         // Handle response

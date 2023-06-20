@@ -6,7 +6,7 @@ import Logo from "./components/logo";
 
 function Register() {
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3001"
+    baseURL: process.env.REACT_APP_API_URL
   });
 
   const [nome, setNome] = useState('');
@@ -18,15 +18,16 @@ function Register() {
     e.preventDefault();
 
     // Verifica se o email já está em uso
+    const url = process.env.REACT_APP_API_URL;
     axiosInstance
-      .get(`http://localhost:3001/user?email=${email}`)
+      .get(`${url}/user?email=${email}`)
       .then(response => {
         if (response.data.length > 0) {
           alert('Este email já está em uso. Por favor, escolha outro email.');
         } else {
           // Realiza o registro se o email estiver disponível
           axiosInstance
-            .post("http://localhost:3001/user", { nome, email, senha })
+            .post(`${url}/user`, { nome, email, senha })
             .then(response => {
               console.log(response.statusText);
               if (response.statusText === 'Created') {

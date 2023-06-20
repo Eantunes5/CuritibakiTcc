@@ -24,7 +24,8 @@ function UpdateDeleteLocal() {
   const navigate = useNavigate();
 
   function getUsers() {
-    fetch("http://localhost:3001/locals").then((result) => {
+    const url = process.env.REACT_APP_API_URL;
+    fetch(`${url}/locals`).then((result) => {
       result.json().then((resp) => {
         // console.warn(resp)
         setUser(resp)
@@ -43,7 +44,8 @@ function UpdateDeleteLocal() {
   }
 
   function deleteUser(_id) {
-    fetch(`http://localhost:3001/locals/${_id}`, {
+    const url = process.env.REACT_APP_API_URL;
+    fetch(`${url}/locals/${_id}`, {
       method: 'DELETE'
     }).then((result) => {
       result.json().then((resp) => {
@@ -72,8 +74,9 @@ function UpdateDeleteLocal() {
   function updateUser()
   {
     let item={nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe}
+    const url = process.env.REACT_APP_API_URL;
     console.warn("item",item)
-    fetch(`http://localhost:3001/locals/${_id}`, {
+    fetch(`${url}/locals/${_id}`, {
       method: 'PATCH',
       headers:{
         'Accept':'application/json',

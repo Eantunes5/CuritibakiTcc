@@ -41,7 +41,8 @@ function Local() {
         }
   
         // Faça uma solicitação GET para buscar o nome do usuário com base no userId
-        const response = await axios.get(`http://localhost:3001/user/${userId}`);
+        const url = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${url}/user/${userId}`);
         const data = response.data;
   
         setNomeUsuario(data.nome); // Armazene o nome do usuário no estado
@@ -58,7 +59,8 @@ function Local() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/locals/${id}`);
+        const url = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${url}/locals/${id}`);
         const data = response.data;
 
         setNome(data.nome);
@@ -80,12 +82,14 @@ function Local() {
   useEffect(() => {
     const fetchAvaliacoes = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/${id}`);
+        const url = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${url}/rating/${id}`);
         const avaliacoesData = response.data;
   
         // Função para buscar as informações do usuário
         const fetchUsuario = async (userId) => {
-          const response = await axios.get(`http://localhost:3001/user/${userId}`);
+          const url = process.env.REACT_APP_API_URL;
+          const response = await axios.get(`${url}/user/${userId}`);
           return response.data;
         };
   
@@ -157,8 +161,9 @@ function Local() {
     };
   
     // Envia a requisição com o cabeçalho de autenticação
+    const url = process.env.REACT_APP_API_URL;
     axios
-      .post('http://localhost:3001/rating', novaAvaliacao, { headers })
+      .post(`${url}/rating`, novaAvaliacao, { headers })
       .then((response) => {
         alert('Obrigado pela avaliação!')
         // Atualize o estado de avaliações se necessário

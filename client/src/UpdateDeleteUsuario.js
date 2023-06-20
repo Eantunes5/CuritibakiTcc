@@ -17,7 +17,8 @@ function UpdateDeleteUsuario() {
   }, [])
 
   function getUsers() {
-    fetch("http://localhost:3001/user").then((result) => {
+    const url = process.env.REACT_APP_API_URL;
+    fetch(`${url}/user`).then((result) => {
       result.json().then((resp) => {
         // console.warn(resp)
         setUser(resp)
@@ -29,7 +30,8 @@ function UpdateDeleteUsuario() {
   }
 
   function deleteUser(_id) {
-    fetch(`http://localhost:3001/user/${_id}`, {
+    const url = process.env.REACT_APP_API_URL;
+    fetch(`${url}/user/${_id}`, {
       method: 'DELETE'
     }).then((result) => {
       result.json().then((resp) => {
@@ -51,8 +53,9 @@ function UpdateDeleteUsuario() {
   function updateUser()
   {
     let item={nome,email}
+    const url = process.env.REACT_APP_API_URL;
     console.warn("item",item)
-    fetch(`http://localhost:3001/user/${_id}`, {
+    fetch(`${url}/user/${_id}`, {
       method: 'PATCH',
       headers:{
         'Accept':'application/json',
