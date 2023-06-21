@@ -25,6 +25,7 @@ function Local() {
 
   // eslint-disable-next-line
   const [nomeUsuario, setNomeUsuario] = useState('');
+  const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
 
   const { id } = useParams();
 
@@ -33,27 +34,45 @@ function Local() {
       try {
         // Obtém o ID do usuário do localStorage
         const userId = localStorage.getItem('userId');
-  
+    
         // Verifica se há um usuário logado
         if (!userId) {
           console.error('Usuário não logado');
           return;
         }
-  
-        // Faça uma solicitação GET para buscar o nome do usuário com base no userId
+    
+        // Faça uma solicitação GET para buscar o nome do usuário e o status de administrador
         const url = process.env.REACT_APP_API_URL;
         const response = await axios.get(`${url}/user/${userId}`);
         const data = response.data;
-  
+    
         setNomeUsuario(data.nome); // Armazene o nome do usuário no estado
       } catch (error) {
         console.error('Error:', error);
       }
     };
+    
   
     fetchUsuario();
   }, []);
   
+  const handleDeleteComment = async (commentId) => {
+    try {
+      // Realize uma solicitação para excluir o comentário com base no commentId
+      const url = `${process.env.REACT_APP_API_URL}/rating/${commentId}`;
+      console.log(url)
+      await axios.delete(url);
+  
+      // Atualize a lista de avaliações, removendo o comentário excluído
+      setAvaliacoes(avaliacoes.filter((avaliacao) => avaliacao.id !== commentId));
+  
+      // Exiba uma mensagem de sucesso ou faça qualquer outra ação necessária
+      console.log('Comentário excluído com sucesso!');
+      console.log(commentId)
+    } catch (error) {
+      console.error('Erro ao excluir comentário:', error);
+    }
+  };
   
 
   useEffect(() => {
@@ -242,6 +261,12 @@ function Local() {
             <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
               {avaliacao.comentario}
             </p>
+
+            {isAdmin && (
+            <button onClick={() => handleDeleteComment(avaliacao._id)}>Excluir</button>
+            )}
+
+
             { avaliacao.nota == '1' && (
                 <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
                   <img className='icons_avaliacao' src={starIcon} alt=''/>

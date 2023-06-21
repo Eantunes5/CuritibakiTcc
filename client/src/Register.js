@@ -20,31 +20,35 @@ function Register() {
     // Verifica se o email já está em uso
     const url = process.env.REACT_APP_API_URL;
     axiosInstance
-      .get(`${url}/user?email=${email}`)
-      .then(response => {
-        if (response.data.length > 0) {
-          alert('Este email já está em uso. Por favor, escolha outro email.');
-        } else {
-          // Realiza o registro se o email estiver disponível
-          axiosInstance
-            .post(`${url}/user`, { nome, email, senha })
-            .then(response => {
-              console.log(response.statusText);
-              if (response.statusText === 'Created') {
-                alert('Registro realizado com sucesso!');
-                navigate("/login");
-              }
-            })
-            .catch(error => {
-              console.error(error);
-              // Trate o erro de registro aqui, se necessário
-            });
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        // Trate o erro de verificação de email aqui, se necessário
-      });
+    .get(`${url}/user?email=${email}`)
+    .then(response => {
+      if (response.data.error) {
+        alert(response.data.error);
+      } else if (response.data.emailExists) {
+        alert('Este email já está em uso. Por favor, escolha outro email.');
+      } else {
+        // Realiza o registro se o email estiver disponível
+        axiosInstance
+          .post(`${url}/user`, { nome, email, senha })
+          .then(response => {
+            console.log(response.statusText);
+            if (response.statusText === 'Created') {
+              alert('Registro realizado com sucesso!');
+              navigate("/login");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Esse email ja está em uso');
+            // Trate o erro de registro aqui, se necessário
+          });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      // Trate o erro de verificação de email aqui, se necessário
+    });
+  
   };
 
   return (
