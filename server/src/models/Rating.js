@@ -21,6 +21,11 @@ const RatingSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
+  Comentario_Pai_id: {
+    type: String,
+    required:false,
+    default: ""
+  }
 }) 
 
 const Rating = mongoose.model("Avaliacao", RatingSchema);

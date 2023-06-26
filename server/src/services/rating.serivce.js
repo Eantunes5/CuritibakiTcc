@@ -6,7 +6,11 @@ const findAllService = () => Rating.find();
 
 const findByIdService = (id) => Rating.find({Locals_id: id});
 
+const findByIdUserService = (id) => Rating.find({Users_id: id});
+
 const deleteService = (id) => Rating.deleteMany({Locals_id: id});
+
+const deleteUserService = (id) => Rating.deleteMany({Users_id: id});
 
 const deleteService2 = (id) => Rating.deleteOne({_id: id});
 
@@ -16,4 +20,6 @@ export default {
   findByIdService,
   deleteService,
   deleteService2,
+  findByIdUserService,
+  deleteUserService
 };

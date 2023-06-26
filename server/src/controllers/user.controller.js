@@ -1,4 +1,5 @@
 import userSerivce  from '../services/user.serivce.js';
+import ratingSerivce from '../services/rating.serivce.js';
 
 const create = async(req,res)  => {
   try{
@@ -93,6 +94,10 @@ const deleteById = async(req,res) => {
   try{const id = req.id;
 
   await userSerivce.deleteService(id);
+
+  const ratings = await ratingSerivce.findByIdUserService(id);
+
+  await ratingSerivce.deleteUserService(ratings[0].Users_id);
 
   res.status(200).send({message:"Usuario deletado com sucesso"})
 } catch (err) {

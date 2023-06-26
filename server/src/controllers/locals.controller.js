@@ -1,19 +1,39 @@
 import localsSerivce  from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
+import Locals from '../models/Locals.js';
 
 const create = async(req,res)  => {
   try{
-    const {id,nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;
+    const {id,nome,slug,tipo,sobre,horarios,ingressos,endereco,iframe} = req.body;
 
-  if (!nome || !slug || !tipo || !sobre || !horarios || !ingressos || !endereco || !foto || !iframe ) {
-    res.status(400).send({mensagem:"Envie todos os campos para registrar"});
-  }
+    const foto = req.file;
 
-  const user = await localsSerivce.createService(req.body);
+    if (!nome || !slug || !tipo || !sobre || !horarios || !ingressos || !endereco || !foto || !iframe ) {
+      res.status(400).send({mensagem:"Envie todos os campos para registrar"});
+    }
 
-  if (!user) {
-    return res.status(400).send({ message: "Erro na criação de local" });
-  }
+    const locals = new Locals({
+      id,
+      nome,
+      slug,
+      tipo,
+      sobre,
+      horarios,
+      ingressos,
+      endereco,
+      foto: foto.path,
+      iframe,
+    });
+
+    const user=await locals.save()
+
+    if (!user) {
+      return res.status(400).send({ message: "Erro na criação de local" });
+    }
+  /*-------------------------------*/
+  
+
+  /*const user = await localsSerivce.createService(req.body);*/
 
   res.status(201).send({
     mensagem:"Local criado com sucesso",
