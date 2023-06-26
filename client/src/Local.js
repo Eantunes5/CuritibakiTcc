@@ -22,10 +22,14 @@ function Local() {
   const [nota, setNota] = useState('');
   const [comentario, setComentario] = useState('');
   const [iframe, setIframe] = useState('');
+  const [comentarioPaiId, setComentarioPaiId] = useState(''); 
 
   // eslint-disable-next-line
   const [nomeUsuario, setNomeUsuario] = useState('');
   const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+  const [reply, setReply] = useState({});
+  const [replyTo, setReplyTo] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const { id } = useParams();
 
@@ -60,7 +64,7 @@ function Local() {
     try {
       // Realize uma solicitação para excluir o comentário com base no commentId
       const url = `${process.env.REACT_APP_API_URL}/rating/${commentId}`;
-      console.log(url)
+      console.log(url);
       await axios.delete(url);
   
       // Atualize a lista de avaliações, removendo o comentário excluído
@@ -68,12 +72,11 @@ function Local() {
   
       // Exiba uma mensagem de sucesso ou faça qualquer outra ação necessária
       console.log('Comentário excluído com sucesso!');
-      console.log(commentId)
+      console.log(commentId);
     } catch (error) {
       console.error('Erro ao excluir comentário:', error);
     }
-  };
-  
+  }; 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,29 +142,27 @@ function Local() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    // Obtém o ID do usuário do localStorage
+  
     const userId = localStorage.getItem('userId');
-
-    // Verifica se há um usuário logado
     if (!userId) {
       alert('Você precisa estar logado para fazer uma avaliação!');
       return;
     }
-
-    // Cria o objeto de avaliação com os dados necessários
+  
     const novaAvaliacao = {
       nota: nota,
       comentario: comentario,
-      tipo: 'tipo da avaliação', // Defina o tipo da avaliação conforme necessário
+      tipo: 'tipo da avaliação',
       Locals_id: id,
       Users_id: userId,
+      Comentario_Pai_Id: comentarioPaiId, // Adicione o ID da avaliação pai
     };
-
+  
     enviarAvaliacao(novaAvaliacao);
-
+  
     setNota('');
     setComentario('');
+    setComentarioPaiId(''); // Limpe o ID da avaliação pai após o envio
   }
 
   function enviarAvaliacao(novaAvaliacao) {
@@ -192,6 +193,47 @@ function Local() {
       });
   }
 
+  const openForm = (avaliacaoId) => {
+    setReplyTo(avaliacaoId);
+  };
+  
+
+  const closeForm = () => {
+    setReplyTo(null);
+  };
+  
+
+  const handleReplyChange = (avaliacaoId, event) => {
+    setReply((prevState) => ({
+      ...prevState,
+      [avaliacaoId]: event.target.value
+    }));
+  };
+
+  const handleSubmitReply = (avaliacaoId, event) => {
+    event.preventDefault();
+
+      const userId = localStorage.getItem('userId');
+        if (!userId) {
+          alert('Você precisa estar logado para fazer uma avaliação!');
+         return;
+        }
+    
+      const novaAvaliacao = {
+        nota: '1',
+        comentario: comentario,
+        tipo: 'resposta',
+        Locals_id: id,
+        Users_id: userId,
+        Comentario_Pai_Id: avaliacaoId, // Adicione o ID da avaliação pai
+      };
+        console.log(novaAvaliacao);
+        enviarAvaliacao(novaAvaliacao);
+      
+        setNota('');
+        closeForm(); // Fechar o formulário após enviar a resposta
+  };
+  
   const isLoggedIn = !!localStorage.getItem('token'); // Verificar se o usuário está logado
 
   return (
@@ -262,10 +304,25 @@ function Local() {
               {avaliacao.comentario}
             </p>
 
-            {isAdmin && (
-            <button onClick={() => handleDeleteComment(avaliacao._id)}>Excluir</button>
-            )}
-
+            {isAdmin || avaliacao.usuario._id === localStorage.getItem('userId') ? (
+              <button onClick={() => handleDeleteComment(avaliacao._id)}>Excluir</button>
+            ) : null}
+            
+          <div>
+          {replyTo === avaliacao._id ? (
+                <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
+                  <textarea
+                    value={reply[avaliacao._id]}
+                    onChange={(event) => setComentario(event.target.value)}
+                    placeholder="Escreva sua resposta"
+                  />
+                  <button type="submit">Responder</button>
+                  <button onClick={closeForm}>Cancelar</button>
+                </form>
+              ) : (
+                <button onClick={() => openForm(avaliacao._id)}>Responder</button>
+              )}
+          </div>
 
             { avaliacao.nota == '1' && (
                 <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>

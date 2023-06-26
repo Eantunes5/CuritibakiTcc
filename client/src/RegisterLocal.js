@@ -22,6 +22,7 @@ function RegisterLocal() {
       .post(`${url}/locals`, { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe })
       .then(response => {
         console.log(response)
+        alert("Local registrado com sucesso!");
         // Handle response
       })
   }

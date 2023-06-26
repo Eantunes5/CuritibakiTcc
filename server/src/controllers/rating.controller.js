@@ -53,7 +53,7 @@ const findById = async(req,res) => {
 const deleteById = async(req,res) => {
   try{const id = req.id;
 
-  await ratingSerivce.deleteService(id);
+  await ratingSerivce.deleteService2(id);
 
   res.status(200).send({message:"Avaliação deletada com sucesso"})
 } catch (err) {
@@ -64,7 +64,7 @@ const deleteById = async(req,res) => {
 const deleteById2 = async(req,res) => {
   try{const id = req.id;
 
-  await ratingSerivce.deleteService2(id);
+  await ratingSerivce.deleteService(id);
 
   res.status(200).send({message:"Avaliação deletada com sucesso"})
 } catch (err) {
