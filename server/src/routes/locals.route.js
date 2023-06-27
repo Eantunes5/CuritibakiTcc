@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import localsController from '../controllers/locals.controller.js';
 import {validId,validLocal}  from '../middlewares/global.middlewares.js';
+import upload from '../config/multer.js'
 
 const router = Router();
 
-router.post('/', localsController.create);
+router.post('/',upload.single("foto"), localsController.create);
 router.get('/', localsController.findAll);
 router.get('/:id',validId,validLocal, localsController.findById);
 router.patch('/:id',validId,validLocal, localsController.update);
