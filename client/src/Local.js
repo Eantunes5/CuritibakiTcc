@@ -221,11 +221,11 @@ function Local() {
     
       const novaAvaliacao = {
         nota: '1',
-        comentario: comentario,
+        comentario: reply[avaliacaoId],
         tipo: 'resposta',
         Locals_id: id,
         Users_id: userId,
-        Comentario_Pai_Id: avaliacaoId, // Adicione o ID da avaliação pai
+        Comentario_Pai_id: avaliacaoId, // Adicione o ID da avaliação pai
       };
         console.log(novaAvaliacao);
         enviarAvaliacao(novaAvaliacao);
@@ -313,7 +313,7 @@ function Local() {
                 <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
                   <textarea
                     value={reply[avaliacao._id]}
-                    onChange={(event) => setComentario(event.target.value)}
+                    onChange={(event) => handleReplyChange(avaliacao._id, event)}
                     placeholder="Escreva sua resposta"
                   />
                   <button type="submit">Responder</button>

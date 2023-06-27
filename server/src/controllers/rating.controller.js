@@ -2,7 +2,7 @@ import ratingSerivce  from '../services/rating.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {id,nota,comentario,tipo,Locals_id,Users_id,userId} = req.body;
+    const {id,nota,comentario,tipo,Locals_id,Users_id,Comentario_Pai_id} = req.body;
 
   if (!nota || !comentario || !tipo || !Locals_id || !Users_id ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar uma avaliação"});
