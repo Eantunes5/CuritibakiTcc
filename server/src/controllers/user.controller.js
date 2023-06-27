@@ -97,9 +97,14 @@ const deleteById = async(req,res) => {
 
   const ratings = await ratingSerivce.findByIdUserService(id);
 
-  await ratingSerivce.deleteUserService(ratings[0].Users_id);
-
-  res.status(200).send({message:"Usuario deletado com sucesso"})
+  if (ratings.length===0){   
+    res.status(200).send({message:"Usuario deletado com sucesso"})
+  }
+  else{
+    await ratingSerivce.deleteUserService(ratings[0].Users_id);
+    res.status(200).send({message:"Usuario deletado com sucesso"})
+  }
+  
 } catch (err) {
   res.status(500).send( {message: err.message})
 }

@@ -91,15 +91,16 @@ const deleteById = async(req,res) => {
   await localsSerivce.deleteService(id);
   
   const ratings = await ratingSerivce.findByIdService(id);
-  
+
   if (ratings.length===0){
+    
     res.status(200).send({message:"Local deletado com sucesso"})
   }
   else{
     await ratingSerivce.deleteService(ratings[0].Locals_id);
+    res.status(200).send({message:"Local deletado com sucesso"})
   }
   
-  res.status(200).send({message:"Local deletado com sucesso"})
 } catch (err) {
   res.status(500).send( {message: err.message})
 }
