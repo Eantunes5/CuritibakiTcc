@@ -1,39 +1,19 @@
 import localsSerivce  from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
-import Locals from '../models/Locals.js';
 
 const create = async(req,res)  => {
   try{
-    const {id,nome,slug,tipo,sobre,horarios,ingressos,endereco,iframe} = req.body;
+    const {id,nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;
 
-    const foto = req.file;
+  if (!nome || !slug || !tipo || !sobre || !horarios || !ingressos || !endereco || !foto || !iframe ) {
+    res.status(400).send({mensagem:"Envie todos os campos para registrar"});
+  }
 
-    if (!nome || !slug || !tipo || !sobre || !horarios || !ingressos || !endereco || !foto || !iframe ) {
-      res.status(400).send({mensagem:"Envie todos os campos para registrar"});
-    }
+  const user = await localsSerivce.createService(req.body);
 
-    const locals = new Locals({
-      id,
-      nome,
-      slug,
-      tipo,
-      sobre,
-      horarios,
-      ingressos,
-      endereco,
-      foto: foto.path,
-      iframe,
-    });
-
-    const user=await locals.save()
-
-    if (!user) {
-      return res.status(400).send({ message: "Erro na criação de local" });
-    }
-  /*-------------------------------*/
-  
-
-  /*const user = await localsSerivce.createService(req.body);*/
+  if (!user) {
+    return res.status(400).send({ message: "Erro na criação de local" });
+  }
 
   res.status(201).send({
     mensagem:"Local criado com sucesso",
@@ -112,8 +92,13 @@ const deleteById = async(req,res) => {
   
   const ratings = await ratingSerivce.findByIdService(id);
   
-  await ratingSerivce.deleteService(ratings[0].Locals_id);
-
+  if (ratings.length===0){
+    res.status(200).send({message:"Local deletado com sucesso"})
+  }
+  else{
+    await ratingSerivce.deleteService(ratings[0].Locals_id);
+  }
+  
   res.status(200).send({message:"Local deletado com sucesso"})
 } catch (err) {
   res.status(500).send( {message: err.message})
