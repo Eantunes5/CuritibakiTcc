@@ -1,4 +1,4 @@
-import emergencySerivce from '../services/emergency.serivce';
+import emergencySerivce from '../services/emergency.serivce.js';
 
 const create = async(req,res)  => {
   try{
@@ -15,79 +15,69 @@ const create = async(req,res)  => {
   }
 
   res.status(201).send({
-    mensagem:"Usuario criado com sucesso",
+    mensagem:"Número de emergência criado com sucesso",
     emergencia:{
       id:emergency._id,
-      nome,
-      email
+      logo,
+      numero,
+      nome
     }
   });
 } catch (err) {
-  if(err.message.includes('duplicate key error collection')) {
-    res.status(400).send( {message: 'Este email já está em uso'})
-  } else {
   res.status(500).send( {message: err.message})}
-}
 };
   
 const findAll = async(req,res)  => {
-  try{const users = await userSerivce.findAllService();
+  try{const emergency = await emergencySerivce.findAllService();
   
-  if(users.length === 0){
-    return res.status(400).send({message: "Não há usuarios cadastrados"});
+  if(emergency.length === 0){
+    return res.status(400).send({message: "Não há números de emergência cadastrados"});
   }
 
-  res.send(users)
+  res.send(emergency)
 } catch (err) {
   res.status(500).send( {message: err.message})
 }
 };
 
 const findById = async(req,res) => {
-  try{const user = req.user;
+  try{const emergency = req.emergency;
 
-  res.send(user);
+  res.send(emergency);
 } catch (err) {
   res.status(500).send( {message: err.message})
 }
 };
 
 const update = async(req,res) => {
-  try{const {nome,email,senha} = req.body;
+  try{const {logo,numero,nome} = req.body;
 
-  if (!nome && !email && !senha ) {
+  if (!logo && !numero && !nome ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
-  const {id,user} = req;
-
-  await userSerivce.updateService(
+  const {id,emergency} = req;
+  
+  await emergencySerivce.updateService(
     id,
-    nome,
-    email,
-    senha
+    logo,
+    numero,
+    nome
   );
   
-  res.send({message:"Usuário atualizado com sucesso"})
+  res.send({message:"Número de emergência atualizado com sucesso"})
     
 } catch (err) {
-  if(err.message.includes('duplicate key error collection')) {
-    res.status(400).send( {message: 'Este email já está em uso'})
-  } else {
-  res.status(500).send( {message: err.message})}
+  res.status(500).send( {message: err.message} )
 }
 };
 
 const deleteById = async(req,res) => {
   try{const id = req.id;
 
-  await userSerivce.deleteService(id);
+  await emergencySerivce.deleteService(id);
 
-  const ratings = await ratingSerivce.findByIdUserService(id);
-
-  await ratingSerivce.deleteUserService(ratings[0].Users_id);
-
-  res.status(200).send({message:"Usuario deletado com sucesso"})
+  res.status(200).send({message:"Número de emegência deletado com sucesso"})
 } catch (err) {
   res.status(500).send( {message: err.message})
 }

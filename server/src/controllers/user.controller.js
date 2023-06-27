@@ -72,7 +72,7 @@ const update = async(req,res) => {
   }
 
   const {id,user} = req;
-
+  
   await userSerivce.updateService(
     id,
     nome,

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import userSerivce from '../services/user.serivce.js';
 import localsSerivce from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
+import emergencySerivce from '../services/emergency.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -9,7 +10,6 @@ export const validId = (req,res,next) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({ message: "Id inválido" });
   }
-
   req.id = id;
 
   next();
@@ -84,6 +84,25 @@ export const validRating = async (req,res,next) => {
 
   req.id = id;
   req.rating = avaliacao;
+  
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validEmergency = async (req,res,next) => {
+  try{
+  const id = req.params.id;
+
+  const emergency = await emergencySerivce.findByIdService(id);
+
+  if (!emergency) {
+    return res.status(400).send({ message: "Número de emergencia não encontrado" });
+  }
+
+  req.id = id;
+  req.emergency = emergency;
   
   next();
 } catch (err) {

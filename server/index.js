@@ -7,6 +7,7 @@ import userRoute from './src/routes/user.route.js';
 import authRoute from  './src/routes/auth.route.js';
 import localsRoute from './src/routes/locals.route.js';
 import ratingRoute from './src/routes/rating.route.js';
+import emergencyRoute from './src/routes/emergency.route.js';
 
 dotenv.config();
 
@@ -21,5 +22,6 @@ app.use("/user", userRoute);
 app.use("/auth", authRoute); 
 app.use("/locals", localsRoute);
 app.use("/rating", ratingRoute);
+app.use("/emergency", emergencyRoute);
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
