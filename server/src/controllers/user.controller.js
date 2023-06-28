@@ -65,9 +65,9 @@ const findByEmail = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {nome,email,senha} = req.body;
+  try{const {nome,email,senha,adm} = req.body;
 
-  if (!nome && !email && !senha ) {
+  if (!nome && !email && !senha && !adm ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
@@ -77,7 +77,8 @@ const update = async(req,res) => {
     id,
     nome,
     email,
-    senha
+    senha,
+    adm
   );
   
   res.send({message:"Usuário atualizado com sucesso"})
