@@ -13,10 +13,22 @@ function Register() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setPassword] = useState('');
+  const [confirmarEmail, setConfirmarEmail] = useState('');
+  const [confirmarSenha, setConfirmarPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (email !== confirmarEmail) {
+      alert('Os campos de email e confirmar email devem ser iguais.');
+      return;
+    }
+
+    if (senha !== confirmarSenha) {
+      alert('Os campos de senha e confirmar senha devem ser iguais.');
+      return;
+    }
 
     // Verifica se o email já está em uso
     var alert_div = document.getElementsByClassName('div_alert_error')[0];
@@ -44,12 +56,14 @@ function Register() {
           .catch(error => {
             console.error(error.response);
             console.error(error.response.data);
+            alert("Cadastro Incorreto")
             // Trate o erro de registro aqui, se necessário
           });
       }
     })
     .catch(error => {
       console.error(error);
+      alert("Cadastro Incorreto")
       // Trate o erro de verificação de email aqui, se necessário
     });
   
@@ -79,6 +93,7 @@ function Register() {
               id="nome"
               value={nome}
               onChange={e => setNome(e.target.value)}
+              required
             />
             <br/>
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
@@ -90,6 +105,7 @@ function Register() {
               id="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
+              required
             />
             <br/>
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR EMAIL:</span>
@@ -99,6 +115,9 @@ function Register() {
               type="email"
               name="email"
               id="email_conf"
+              value={confirmarEmail}
+              onChange={e => setConfirmarEmail(e.target.value)}
+              required
             />
             <br/>
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> SENHA:</span>
@@ -110,6 +129,7 @@ function Register() {
               id="password"
               value={senha}
               onChange={e => setPassword(e.target.value)}
+              required
             />
             <br/>
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR SENHA:</span>
@@ -119,6 +139,9 @@ function Register() {
               type="password"
               name="password"
               id="password_conf"
+              value={confirmarSenha}
+              onChange={e => setConfirmarPassword(e.target.value)}
+              required
             />
             <br/><br/>
             <input type="submit" value="Registrar" className='btn_submit'/>

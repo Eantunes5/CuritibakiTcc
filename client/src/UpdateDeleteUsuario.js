@@ -10,6 +10,7 @@ function UpdateDeleteUsuario() {
   const [users, setUser] = useState([])
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
+  const [adm, setAdm] = useState(Boolean)
   const [_id, setId]=useState(null) 
 
   useEffect(() => {
@@ -24,6 +25,7 @@ function UpdateDeleteUsuario() {
         setUser(resp)
         setNome(resp[0].nome)
         setEmail(resp[0].email)
+        setAdm(resp[0].adm)
         setId(resp[0]._id)
       })
     })
@@ -47,12 +49,19 @@ function UpdateDeleteUsuario() {
     let item=users[i];
         setNome(item.nome)
         setEmail(item.email)
+        setAdm(item.adm)
         setId(item._id)
   }
 
   function updateUser()
   {
-    let item={nome,email}
+    if (!nome || !email || adm === "") {
+      // Verifica se algum campo obrigatório está vazio
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    let item={nome,email,adm}
     const url = process.env.REACT_APP_API_URL;
     console.warn("item",item)
     fetch(`${url}/user/${_id}`, {
@@ -85,11 +94,26 @@ function UpdateDeleteUsuario() {
       <div className='colored_background_opacity container_selector_admin'>
         <label>
           <span>Nome</span>
-          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> 
+          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} required /> 
         </label>
         <label>
           <span>Email</span>
-          <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
+          <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} required />
+        </label>
+        <label>
+          <span>Adm</span>
+          <select
+              name="adm"
+              id="adm"
+              value={adm}
+              onChange={e => setAdm(e.target.value)}
+              required
+            >
+              <option value="">-Selecione-</option>
+              <option value="1">Administrador</option>
+              <option value="0">Usuario</option>
+            </select>
+          
         </label>
         <div style={{width: '100%', textAlign: 'center'}}>
           <button className='att_local btn_submit' onClick={updateUser} >Update User</button>  
@@ -104,6 +128,7 @@ function UpdateDeleteUsuario() {
               <td>ID</td>
               <td>Nome</td>
               <td>Email</td>
+              <td>Adm</td>
             </tr>
           </thead>
           <tbody>
@@ -116,6 +141,7 @@ function UpdateDeleteUsuario() {
                   <td>{item._id}</td>
                   <td>{item.nome}</td>
                   <td>{item.email}</td>
+                  <td>{item.adm}</td>
 
                 </tr>
               )

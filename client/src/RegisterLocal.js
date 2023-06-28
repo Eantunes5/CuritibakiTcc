@@ -1,6 +1,6 @@
 import './App.css';
 import axios from "axios"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
 import alertIcon from './imgs/circle-exclamation-solid.svg'
@@ -26,6 +26,14 @@ function RegisterLocal() {
         alert("Local registrado com sucesso!");
         // Handle response
       })
+      .catch(error => {
+        if (error.response && error.response.status === 400) {
+          alert("Insira todos os campos");
+        } else {
+          console.error(error);
+          // Handle other errors
+        }
+      });
   }
 
   const handleChangeNome = (event) => {
@@ -35,19 +43,28 @@ function RegisterLocal() {
     setSlug(slugValue);
   }
 
-  function convertToBase64(e){
-    console.log(e)
+  const fileInputRef = useRef(null);
+
+  function convertToBase64(e) {
+    const file = e.target.files[0];
 
     var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => {
-      console.log(reader.result) //base64 string
-      setFoto(reader.result)
+      if (file.size > 10240) {
+        alert("A imagem não pode ter mais de 10KB.");
+        e.target.value = ""; // Limpa o valor do campo de arquivo
+        return;
+      }
+      console.log(reader.result); //base64 string
+      setFoto(reader.result);
     };
     reader.onerror = error => {
-      console.log("Error: ", error)
-    }
+      console.log("Error: ", error);
+    };
+
+    reader.readAsDataURL(file);
   }
+  
 
   function cleanIframeString(string) {
     const regex = /<iframe.*src=["'](.*?)["']/;
@@ -95,6 +112,7 @@ function RegisterLocal() {
               id="nome"
               value={nome}
               onChange={handleChangeNome}
+              required
             />
           </p>
 
@@ -116,7 +134,9 @@ function RegisterLocal() {
               id="tipo"
               value={tipo}
               onChange={e => setTipo(e.target.value)}
+              required
             >
+              <option value="">-Selecione Tipo-</option>
               <option value="pontos">Pontos</option>
               <option value="parque">Parque</option>
               <option value="shopping">Shopping</option>
@@ -131,6 +151,7 @@ function RegisterLocal() {
               id="sobre"
               value={sobre}
               onChange={e => setSobre(e.target.value)}
+              required
             />
           </p>
 
@@ -142,6 +163,7 @@ function RegisterLocal() {
               id="horarios"
               value={horarios}
               onChange={e => setHorarios(e.target.value)}
+              required
             />
           </p>
 
@@ -153,6 +175,7 @@ function RegisterLocal() {
               id="ingressos"
               value={ingressos}
               onChange={e => setIngressos(e.target.value)}
+              required
             />
           </p>
 
@@ -164,6 +187,7 @@ function RegisterLocal() {
               id="endereco"
               value={endereco}
               onChange={e => setEndereco(e.target.value)}
+              required
             />
           </p>
 
@@ -174,8 +198,10 @@ function RegisterLocal() {
               accept='image/*'
               name="foto"
               id="foto"
+              ref={fileInputRef}
               style={{border: 'none'}}
               onChange={convertToBase64}
+              required
             />
           </p>
 
@@ -187,6 +213,7 @@ function RegisterLocal() {
               id="iframe"
               value={iframe}
               onChange={e => setIframe(cleanIframeString(e.target.value))}
+              required
             />
           </p>
           
@@ -205,4 +232,3 @@ function RegisterLocal() {
 }
 
 export default RegisterLocal
-

@@ -55,6 +55,12 @@ function HomeAdmin() {
           <Link to='/UpdateDeleteUsuario'>
             <button className="buttons_admin">Atualizar Usuarios</button>
           </Link>
+          <Link to='/RegisterEmergencia'>
+            <button className="buttons_admin">Registrar Emergencias</button>
+          </Link>
+          <Link to='/UpdateDeleteEmergencia'>
+            <button className="buttons_admin">Atualizar Emergencias</button>
+          </Link>
           
         </form>
 

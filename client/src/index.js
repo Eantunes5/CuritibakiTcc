@@ -17,6 +17,8 @@ import Faq from './Faq';
 import Emergencia from './Emergencia';
 import Local from './Local';
 import HomeAdmin from './HomeAdmin';
+import UpdateDeleteEmergencia from './UpdateDeleteEmergencia';
+import RegisterEmergencia from './RegisterEmergencia';
 
 
 
@@ -36,7 +38,10 @@ root.render(
       <Route path="/Pontos" element={<Pontos />} />
       <Route path="/Faq" element={<Faq />} />
       <Route path="/Emergencia" element={<Emergencia />} />
+      <Route path="/UpdateDeleteEmergencia" element={<UpdateDeleteEmergencia />} />
+      <Route path="/RegisterEmergencia" element={<RegisterEmergencia />} />
       <Route path="/pontos/local/:id" element={<Local />}
+      
       
 />
 
