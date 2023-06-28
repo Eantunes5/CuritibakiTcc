@@ -181,6 +181,16 @@ justify-content: center;
 .div_child_card_menu:hover .text_center{
   font-size: 4.2em;
 }
+.button_home_admin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
+  border: 1px solid #313131;
+}
 
 /*
 //////////////////////////////////////////////////////////////////////
@@ -595,6 +605,34 @@ input[type='submit' i], .buttons_admin{
 }
 .card_comment > .card_text{
   text-align: left;
+}
+.card_resposta{
+    width: 80%;
+    height: fit-content;
+    padding: 10px;
+    padding-bottom: 15px;
+    background-color:#363636;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
+    border-radius: 12px;
+    margin-left: 5%;
+    margin-top: 15px;
+}
+.icons_resposta{
+  filter: invert(100%);
+  height: 20px;
+
+}
+.text_resposta_nome{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+}
+.text_resposta{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+  padding-left: 10px;
 }
 .icons_avaliacao{
   width: 20px;

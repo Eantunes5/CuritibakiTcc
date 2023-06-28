@@ -194,6 +194,11 @@ function Local() {
       });
   }
 
+  function filterReplies(avaliacoes) {
+    return avaliacoes.filter(avaliacao => avaliacao.comentario_pai_id !== '');
+  }
+  const respostas = filterReplies(avaliacoes);
+
   const openForm = (avaliacaoId) => {
     setReplyTo(avaliacaoId);
   };
@@ -295,7 +300,9 @@ function Local() {
           <img className='icons_infos' src={starIcon} alt=''/>
         </p>
         <div className='container_card_comment'>
-        {avaliacoes.map((avaliacao) => (
+        {avaliacoes
+        .filter((avaliacao) => avaliacao.Comentario_Pai_id === "")
+        .map((avaliacao) => (
           <div className='card_comment'>
             <p className='card_text' id='card_text_av'>
             <div>
@@ -360,6 +367,19 @@ function Local() {
                 </p>
               )
             }
+
+            <div>
+            {respostas.map(resposta => (
+              <div key={resposta._id} className="card_resposta">
+                <div style={{display: 'flex'}}>
+                  <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
+                  <div className='text_resposta_nome'> {avaliacao.usuario.nome} </div>
+                </div>
+                <p className='text_resposta'>{resposta.comentario}</p>
+              </div>
+            ))}
+            </div>
+
             <br></br>
             <div style={{width: '100%', border: '1px solid #a3a3a3'}}></div>
             <br></br>

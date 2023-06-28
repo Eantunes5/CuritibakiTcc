@@ -50,8 +50,8 @@ function RegisterLocal() {
 
     var reader = new FileReader();
     reader.onload = () => {
-      if (file.size > 10240) {
-        alert("A imagem não pode ter mais de 10KB.");
+      if (file.size > 80240) {
+        alert("A imagem não pode ter mais de 80KB.");
         e.target.value = ""; // Limpa o valor do campo de arquivo
         return;
       }
@@ -119,6 +119,8 @@ function RegisterLocal() {
           <p className="item">
             <label for="slug"> Slug </label><br/>
             <input
+              style={{cursor: 'text'}}
+              disabled
               type="slug"
               name="slug"
               id="slug"
@@ -130,6 +132,7 @@ function RegisterLocal() {
           <p className="item">
             <label for="tipo"> Tipo </label><br/>
             <select
+              style={{cursor: 'pointer'}}
               name="tipo"
               id="tipo"
               value={tipo}

@@ -90,6 +90,12 @@ function UpdateDeleteLocal() {
       })
     })
   }
+  const handleChangeNome = (event) => {
+    const nomeValue = event.target.value;
+    const slugValue = nomeValue.toLowerCase().replace(/\s/g, '-')
+    setNome(nomeValue);
+    setSlug(slugValue);
+  }
 
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
@@ -106,11 +112,25 @@ function UpdateDeleteLocal() {
       <div className='colored_background_opacity container_selector_admin'>
         <label>
           <span>Nome</span>
-          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> 
-        </label>
+          <input
+              type="nome"
+              name="nome"
+              id="nome"
+              value={nome}
+              onChange={handleChangeNome}
+              required
+            /></label>
         <label>
           <span>Slug</span>
-          <input type="text" value={slug} onChange={(e)=>{setSlug(e.target.value)}} /> 
+          <input
+              style={{cursor: 'text'}}
+              disabled
+              type="slug"
+              name="slug"
+              id="slug"
+              value={slug}
+              readOnly
+            /> 
         </label>
         <label>
           <span>Tipo</span>

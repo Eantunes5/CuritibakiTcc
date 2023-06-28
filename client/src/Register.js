@@ -20,13 +20,17 @@ function Register() {
   const handleSubmit = e => {
     e.preventDefault();
 
+    var alert_div = document.getElementsByClassName('div_alert_error')[0];
+    var alert_text = document.getElementsByClassName('text_alert')[0];
     if (email !== confirmarEmail) {
-      alert('Os campos de email e confirmar email devem ser iguais.');
+      alert_div.style = 'display: flex'
+      alert_text.innerHTML = 'OS EMAILS DEVEM SER IGUAIS'
       return;
     }
 
     if (senha !== confirmarSenha) {
-      alert('Os campos de senha e confirmar senha devem ser iguais.');
+      alert_div.style = 'display: flex'
+      alert_text.innerHTML = 'AS SENHAS DEVEM SER IGUAIS'
       return;
     }
 

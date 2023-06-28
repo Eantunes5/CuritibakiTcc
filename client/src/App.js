@@ -8,10 +8,12 @@ import PontosImg from './imgs/curitiba1.png'
 import HospitalImg from './imgs/hospital.jpg'
 import FaqImg from './imgs/faq.jpg'
 import { useNavigate } from "react-router-dom";
+import admIcon from './imgs/user-gear-solid.svg'
 //import Routes from "./Routes";
 
 function App() {
   const navigate = useNavigate();
+  const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
 
   const handleLogout = () => {
     // Limpar o token de autenticação armazenado
@@ -51,6 +53,12 @@ function App() {
           </div>
         </Link>
       </div>
+      {isAdmin? (
+        <Link to='/homeadmin' className='button_home_admin'>
+          <img className='icons_infos' src={admIcon} alt=''  style={{marginLeft: '0px', width: '30px'}}/>
+          <div className='header_username'>Home Admin</div>
+        </Link>
+            ) : null}
     </div>
   )
 }
