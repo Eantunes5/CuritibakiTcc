@@ -141,7 +141,7 @@ function UpdateDeleteUsuario() {
                   <td>{item._id}</td>
                   <td>{item.nome}</td>
                   <td>{item.email}</td>
-                  <td>{item.adm}</td>
+                  <td>{item.adm == true ? 'Adm' : 'User'}</td>
 
                 </tr>
               )
