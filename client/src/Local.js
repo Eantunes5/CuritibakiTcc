@@ -9,6 +9,7 @@ import mapIcon from './imgs/map-solid.svg';
 import starIcon from './imgs/star-solid.svg';
 import emptyStarIcon from './imgs/star-regular.svg';
 import userIcon from './imgs/user-solid.svg'
+import deleteIcon from './imgs/xmark-solid.svg'
 
 function Local() {
   const [nome, setNome] = useState('');
@@ -296,34 +297,23 @@ function Local() {
         <div className='container_card_comment'>
         {avaliacoes.map((avaliacao) => (
           <div className='card_comment'>
-            <p className='card_text'>
-            <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-            {avaliacao.usuario.nome}
-            </p>
-            <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
-              {avaliacao.comentario}
-            </p>
+            <p className='card_text' id='card_text_av'>
+            <div>
+              <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
+              {avaliacao.usuario.nome}
+            </div>
 
             {isAdmin || avaliacao.usuario._id === localStorage.getItem('userId') ? (
-              <button onClick={() => handleDeleteComment(avaliacao._id)}>Excluir</button>
+              <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteComment(avaliacao._id)}>
+                <img className='delete_icon' src={deleteIcon} alt=''/>
+              </button>
             ) : null}
-            
+            </p>
+            <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
+              {avaliacao.comentario}
+            </p>
           <div>
-          {replyTo === avaliacao._id ? (
-                <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
-                  <textarea
-                    value={reply[avaliacao._id]}
-                    onChange={(event) => handleReplyChange(avaliacao._id, event)}
-                    placeholder="Escreva sua resposta"
-                  />
-                  <button type="submit">Responder</button>
-                  <button onClick={closeForm}>Cancelar</button>
-                </form>
-              ) : (
-                <button onClick={() => openForm(avaliacao._id)}>Responder</button>
-              )}
           </div>
-
             { avaliacao.nota == '1' && (
                 <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
                   <img className='icons_avaliacao' src={starIcon} alt=''/>
@@ -370,16 +360,26 @@ function Local() {
                 </p>
               )
             }
+            <br></br>
+            <div style={{width: '100%', border: '1px solid #a3a3a3'}}></div>
+            <br></br>
+            <div style={{width: '100%'}}>
+              {replyTo === avaliacao._id ? (
+                <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
+                  <textarea
+                    value={reply[avaliacao._id]}
+                    onChange={(event) => handleReplyChange(avaliacao._id, event)}
+                    placeholder="Escreva sua resposta"
+                  />
+                  <button className='button_responder_av' type="submit">Enviar</button>
+                  <button className='button_responder_av' onClick={closeForm}>Cancelar</button>
+                </form>
+              ) : (
+                <button className='button_responder_av' onClick={() => openForm(avaliacao._id)}>Responder</button>
+              )}
+            </div>
+            
           </div>
-
-          // <li key={avaliacao._id}>
-          //   <p>Usuário: {avaliacao.usuario.nome}</p>
-          //   <p>Nota: {avaliacao.nota}</p>
-          //   <p>Comentário: {avaliacao.comentario}</p>
-          //   <p>Tipo: {avaliacao.tipo}</p>
-          //   <p>ID do Local: {avaliacao.Locals_id}</p>
-          //   <p>ID do Usuário: {avaliacao.Users_id}</p>
-          // </li>
           ))}
           
 
@@ -395,10 +395,13 @@ function Local() {
               <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
                 Comentário:
               </p>
-              <textarea
-                value={comentario}
-                onChange={(event) => setComentario(event.target.value)}
-              />
+              <div style={{width: '100%', boxSizing: 'border-box',}}>
+                <textarea
+                  value={comentario}
+                  onChange={(event) => setComentario(event.target.value)}
+                  placeholder='Escreva seu comentário...'
+                />
+              </div>
             </label>
             <br/>
             <label>

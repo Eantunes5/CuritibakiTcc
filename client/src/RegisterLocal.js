@@ -26,6 +26,29 @@ function RegisterLocal() {
         // Handle response
       })
   }
+
+  const handleChangeNome = (event) => {
+    const nomeValue = event.target.value;
+    const slugValue = nomeValue.toLowerCase().replace(/\s/g, '-')
+    setNome(nomeValue);
+    setSlug(slugValue);
+  }
+
+  function convertToBase64(e){
+    console.log(e)
+
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result) //base64 string
+      setFoto(reader.result)
+    };
+    reader.onerror = error => {
+      console.log("Error: ", error)
+    }
+  }
+
+
   const [nome, setNome] = useState('')
   const [slug, setSlug] = useState('')
   const [tipo, setTipo] = useState('')
@@ -58,7 +81,7 @@ function RegisterLocal() {
               name="nome"
               id="nome"
               value={nome}
-              onChange={e => setNome(e.target.value)}
+              onChange={handleChangeNome}
             />
           </p>
 
@@ -69,24 +92,27 @@ function RegisterLocal() {
               name="slug"
               id="slug"
               value={slug}
-              onChange={e => setSlug(e.target.value)}
+              readOnly
             />
           </p>
 
           <p className="item">
             <label for="tipo"> Tipo </label><br/>
-            <input
-              type="tipo"
+            <select
               name="tipo"
               id="tipo"
               value={tipo}
               onChange={e => setTipo(e.target.value)}
-            />
+            >
+              <option value="pontos">Pontos</option>
+              <option value="parque">Parque</option>
+              <option value="shopping">Shopping</option>
+            </select>
           </p>
 
           <p className="item">
             <label for="sobre"> Sobre </label><br/>
-            <input
+            <textarea
               type="sobre"
               name="sobre"
               id="sobre"
@@ -96,8 +122,8 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="horarios"> Horarios </label><br/>
-            <input
+            <label for="horarios"> Horários </label><br/>
+            <textarea
               type="horarios"
               name="horarios"
               id="horarios"
@@ -131,11 +157,12 @@ function RegisterLocal() {
           <p className="item">
             <label for="foto"> Foto </label><br/>
             <input
-              type="foto"
+              type="file"
+              accept='image/*'
               name="foto"
               id="foto"
-              value={foto}
-              onChange={e => setFoto(e.target.value)}
+              style={{border: 'none'}}
+              onChange={convertToBase64}
             />
           </p>
 

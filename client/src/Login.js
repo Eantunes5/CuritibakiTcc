@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
+import alertIcon from './imgs/circle-exclamation-solid.svg'
 
 function Login() {
   const axiosInstance = axios.create({
@@ -66,6 +67,17 @@ function Login() {
         if (error.response) {
           // O servidor respondeu com um status de erro (por exemplo, 400, 401, 500, etc.)
           console.error(error.response.data); // Exibe a mensagem de erro do servidor
+
+          var alert_div = document.getElementsByClassName('div_alert_error')[0];
+          var alert_text = document.getElementsByClassName('text_alert')[0];
+          if(email != '' || senha != ''){
+            alert_div.style = 'display: flex'
+            alert_text.innerHTML = 'EMAIL E/OU SENHA INCORRETOS'
+          } else if (email == '' || senha == ''){
+            alert_div.style = 'display: flex'
+            alert_text.innerHTML = 'CAMPOS OBRIGATÓRIOS VAZIOS'
+          }
+          
           console.error(error.response.status); // Exibe o status de erro do servidor
         } else if (error.request) {
           // A solicitação foi feita, mas não houve resposta do servidor
@@ -87,8 +99,15 @@ function Login() {
         <div className="form_container">
           <form action='' id='login' method='' onSubmit={handleSubmit}>
             <h1>Login</h1>
-            <br/><br/>
-            <span className="legenda">EMAIL:</span>
+
+            <div className="div_alert_error">
+              <img className="icons_alert" src={alertIcon}/>
+              <div className="text_alert"></div>
+              <img className="icons_alert" src={alertIcon}/>
+            </div>
+            
+            <br></br>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
             <br/>
             <input
               className="inp_login"
@@ -99,7 +118,7 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <br/>
-            <span className="legenda">SENHA:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> SENHA:</span>
             <br/>
             <input
               className="inp_login"
@@ -110,6 +129,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <br/><br/>
+            
             <input type="submit" value="Login" className='btn_submit'/>
             <br/><br/>
             <Link to='/Register'>
@@ -123,47 +143,3 @@ function Login() {
 }
 
 export default Login;
-
-/*
-<form action="" id="login" method="post" onSubmit={handleSubmit}>
-        <h1>Registrar</h1>
-        <p className="item">
-          <label for="nome"> Nome </label>
-          <input
-            type="nome"
-            name="nome"
-            id="nome"
-            value={nome}
-            onChange={e => setNome(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <label for="email"> Email </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <label for="password"> Password </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={senha}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </p>
-        <p className="item">
-          <input type="submit" value="Registrar" />
-        </p>
-      </form>
-      {isLoggedIn && (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
-*/

@@ -1,8 +1,9 @@
 import './App.css';
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
+import alertIcon from './imgs/circle-exclamation-solid.svg'
 
 function Register() {
   const axiosInstance = axios.create({
@@ -18,6 +19,9 @@ function Register() {
     e.preventDefault();
 
     // Verifica se o email já está em uso
+    var alert_div = document.getElementsByClassName('div_alert_error')[0];
+    var alert_text = document.getElementsByClassName('text_alert')[0];
+
     const url = process.env.REACT_APP_API_URL;
     axiosInstance
     .get(`${url}/user?email=${email}`)
@@ -38,8 +42,8 @@ function Register() {
             }
           })
           .catch(error => {
-            console.error(error);
-            alert('Esse email ja está em uso');
+            console.error(error.response);
+            console.error(error.response.data);
             // Trate o erro de registro aqui, se necessário
           });
       }
@@ -58,8 +62,15 @@ function Register() {
         <div className="form_container">
           <form id='login' onSubmit={handleSubmit}>
             <h1>Registrar</h1>
+
+            <div className="div_alert_error">
+              <img className="icons_alert" src={alertIcon}/>
+              <div className="text_alert"></div>
+              <img className="icons_alert" src={alertIcon}/>
+            </div>
+
             <br/><br/>
-            <span className="legenda">NOME:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> NOME:</span>
             <br/>
             <input
               className="inp_login"
@@ -70,7 +81,7 @@ function Register() {
               onChange={e => setNome(e.target.value)}
             />
             <br/>
-            <span className="legenda">EMAIL:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
             <br/>
             <input
               className="inp_login"
@@ -81,7 +92,16 @@ function Register() {
               onChange={e => setEmail(e.target.value)}
             />
             <br/>
-            <span className="legenda">SENHA:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR EMAIL:</span>
+            <br/>
+            <input
+              className="inp_login"
+              type="email"
+              name="email"
+              id="email_conf"
+            />
+            <br/>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> SENHA:</span>
             <br/>
             <input
               className="inp_login"
@@ -91,8 +111,21 @@ function Register() {
               value={senha}
               onChange={e => setPassword(e.target.value)}
             />
+            <br/>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR SENHA:</span>
+            <br/>
+            <input
+              className="inp_login"
+              type="password"
+              name="password"
+              id="password_conf"
+            />
             <br/><br/>
             <input type="submit" value="Registrar" className='btn_submit'/>
+            <br/><br/>
+            <Link to='/Login'>
+              <span className="to_register">Já tem uma conta? Clique aqui!</span>
+            </Link>
           </form>
         </div>
       </div>

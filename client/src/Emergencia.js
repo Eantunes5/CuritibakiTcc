@@ -13,6 +13,7 @@ function Emergencia() {
       <SmallHeader/>
       <SelectButtons page='emergencia'/>
       <div className='div_container_cards_pontos'>
+        <br></br>
         <PontosTitle text='TELEFONES ÚTEIS'/>
         <div className='div_container_cards_emergencia'>
           
