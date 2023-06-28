@@ -487,7 +487,12 @@ input[type='submit' i], .buttons_admin{
   cursor: pointer;
   font-weight: 600;
 }
-
+.icon_alert_admin{
+  height: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  filter: invert(100%);
+}
 /*
 //////////////////////////////////////////////////////////////////////
 //                                                                  //

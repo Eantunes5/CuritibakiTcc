@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
+import alertIcon from './imgs/circle-exclamation-solid.svg'
 
 function RegisterLocal() {
 
@@ -46,6 +47,18 @@ function RegisterLocal() {
     reader.onerror = error => {
       console.log("Error: ", error)
     }
+  }
+
+  function cleanIframeString(string) {
+    const regex = /<iframe.*src=["'](.*?)["']/;
+    const match = regex.exec(string);
+    const cleanedUrl = match ? match[1] : "";
+    return cleanedUrl;
+  }
+
+  const handleIframeChange = (event) => {
+    const cleanedUrl = cleanIframeString(event.target.value);
+    setIframe(cleanedUrl);
   }
 
 
@@ -122,7 +135,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="horarios"> Horários </label><br/>
+            <label for="horarios"> Horários <img  title='Horários de funcionamento:&#10;"xx:xx às xx:xx"&#10;ou&#10;"Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <textarea
               type="horarios"
               name="horarios"
@@ -133,8 +146,8 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="ingressos"> Ingressos </label><br/>
-            <input
+            <label for="ingressos"> Ingressos <img  title='Caso seja gratuito apenas "Entrada franca"'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <textarea
               type="ingressos"
               name="ingressos"
               id="ingressos"
@@ -173,7 +186,7 @@ function RegisterLocal() {
               name="iframe"
               id="iframe"
               value={iframe}
-              onChange={e => setIframe(e.target.value)}
+              onChange={e => setIframe(cleanIframeString(e.target.value))}
             />
           </p>
           

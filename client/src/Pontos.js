@@ -40,9 +40,9 @@ function Pontos() {
         <PontosTitle text='PONTOS TURISTICOS'/>
           <CardsPontos tipo='ponto'/>
         <PontosTitle text='PARQUES'/>
-          <CardsPontos tipo='Parque'/>
+          <CardsPontos tipo='parque'/>
         <PontosTitle text='SHOPPINGS'/>
-          <CardsPontos tipo='Shopping'/>
+          <CardsPontos tipo='shopping'/>
       </div>
     </div>
   );
