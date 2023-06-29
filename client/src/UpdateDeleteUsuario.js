@@ -12,6 +12,7 @@ function UpdateDeleteUsuario() {
   const [email, setEmail] = useState('')
   const [adm, setAdm] = useState(Boolean)
   const [_id, setId]=useState(null) 
+  //
 
   useEffect(() => {
     getUsers();
@@ -27,6 +28,7 @@ function UpdateDeleteUsuario() {
         setEmail(resp[0].email)
         setAdm(resp[0].adm)
         setId(resp[0]._id)
+        //
       })
     })
   }
@@ -51,6 +53,7 @@ function UpdateDeleteUsuario() {
         setEmail(item.email)
         setAdm(item.adm)
         setId(item._id)
+        //
   }
 
   function updateUser()
@@ -130,6 +133,7 @@ function UpdateDeleteUsuario() {
               <td>Adm</td>
               <td>Indice</td>
               <td>ID</td>
+              {/*  */}
             </tr>
           </thead>
           <tbody>
@@ -143,6 +147,7 @@ function UpdateDeleteUsuario() {
                   <td style={{padding: '0 15px'}}>{item.adm == true ? 'Adm' : 'User'}</td>
                   <td style={{padding: '0 15px'}}>{i}</td>
                   <td style={{padding: '0 15px'}}>{item._id}</td>
+                 {/*  */}
 
                 </tr>
               )

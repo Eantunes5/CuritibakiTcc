@@ -15,6 +15,7 @@ function Register() {
   const [senha, setPassword] = useState('');
   const [confirmarEmail, setConfirmarEmail] = useState('');
   const [confirmarSenha, setConfirmarPassword] = useState('');
+  //
   const navigate = useNavigate();
 
   const handleSubmit = e => {
@@ -90,6 +91,7 @@ function Register() {
             </div>
 
             <br/><br/>
+            {/*  */}
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> NOME:</span>
             <br/>
             <input
@@ -102,6 +104,7 @@ function Register() {
               required
             />
             <br/>
+            {/*  */}
             <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
             <br/>
             <input

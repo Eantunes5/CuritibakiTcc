@@ -20,7 +20,7 @@ function RegisterLocal() {
     // Handle validations 
     const url = process.env.REACT_APP_API_URL;
     axiosInstance
-      .post(`${url}/locals`, { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe })
+      .post(`${url}/locals`, { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe }) //
       .then(response => {
         console.log(response)
         alert("Local registrado com sucesso!");
@@ -83,6 +83,7 @@ function RegisterLocal() {
   const [endereco, setEndereco] = useState('')
   const [foto, setFoto] = useState('')
   const [iframe, setIframe] = useState('')
+  //
 
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
