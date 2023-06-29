@@ -50,12 +50,7 @@ function RegisterLocal() {
 
     var reader = new FileReader();
     reader.onload = () => {
-      if (file.size > 80240) {
-        alert("A imagem não pode ter mais de 80KB.");
-        e.target.value = ""; // Limpa o valor do campo de arquivo
-        return;
-      }
-      console.log(reader.result); //base64 string
+      //console.log(reader.result); //base64 string
       setFoto(reader.result);
     };
     reader.onerror = error => {
@@ -159,7 +154,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="horarios"><a style={{color: '#ff4747'}}>*</a> Horários <img  title='Horários de funcionamento:&#10;"xx:xx às xx:xx"&#10;ou&#10;"Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <label for="horarios"><a style={{color: '#ff4747'}}>*</a> Horários <img  title='Modelo:&#10;"(dia) à (dia), das xx:xx às xx:xx"&#10;ou&#10;"(dia) à (dia), Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <textarea
               type="horarios"
               name="horarios"

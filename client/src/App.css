@@ -448,8 +448,8 @@ justify-content: center;
   height: 100%;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button:not(#input_nota),
+input::-webkit-inner-spin-button:not(#input_nota) {
   -webkit-appearance: none;
   margin: 0;
 }

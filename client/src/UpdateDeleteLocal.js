@@ -104,7 +104,7 @@ function UpdateDeleteLocal() {
 
     var reader = new FileReader();
     reader.onload = () => {
-      console.log(reader.result); //base64 string
+      //console.log(reader.result); //base64 string
       setFoto(reader.result);
     };
     reader.onerror = error => {

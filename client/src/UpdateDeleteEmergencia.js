@@ -80,11 +80,6 @@ function UpdateDeleteEmergencia() {
 
     var reader = new FileReader();
     reader.onload = () => {
-      if (file.size > 80240) {
-        alert("A imagem não pode ter mais de 80KB.");
-        e.target.value = ""; // Limpa o valor do campo de arquivo
-        return;
-      }
       console.log(reader.result); //base64 string
       setlogo(reader.result);
     };
@@ -121,7 +116,14 @@ function UpdateDeleteEmergencia() {
           <label>
             <span>Foto</span>
             <input 
-            
+              type="file"
+              accept='image/*'
+              name="foto"
+              id="foto"
+              ref={fileInputRef}
+              style={{border: 'none', color: 'white'}}
+              onChange={convertToBase64}
+              required
             /> 
           </label>
           <label>
