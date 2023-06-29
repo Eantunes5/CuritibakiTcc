@@ -44,7 +44,7 @@ function HomeAdmin() {
             <button className="buttons_admin">Emergencia</button>
           </Link>
           <Link to='/registerlocal'>
-            <button className="buttons_admin">Cadastrar Local</button>
+            <button className="buttons_admin">Registrar Local</button>
           </Link>
           <Link to='/UpdateDeleteLocal'>
             <button className="buttons_admin">Atualizar Locais</button>
