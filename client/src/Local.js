@@ -79,6 +79,24 @@ function Local() {
     }
   }; 
 
+  const handleDeleteReply = async (replyId) => {
+    try {
+      // Realize uma solicitação para excluir a resposta com base no replyId
+      const url = `${process.env.REACT_APP_API_URL}/rating/${replyId}`;
+      console.log(url);
+      await axios.delete(url);
+  
+      // Atualize a lista de respostas, removendo a resposta excluída
+      setReply(respostas.filter((resposta) => resposta._id !== replyId));
+  
+      // Exiba uma mensagem de sucesso ou faça qualquer outra ação necessária
+      alert('Resposta excluída com sucesso!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao excluir resposta:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -371,12 +389,19 @@ function Local() {
 
             <div>
             {respostas
-            .filter((resposta) => resposta.Comentario_Pai_Id === avaliacao.id)
+            .filter((resposta) => resposta.Comentario_Pai_id === avaliacao._id)
             .map(resposta => (
               <div key={resposta._id} className="card_resposta">
-                <div style={{display: 'flex'}}>
-                  <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-                  <div className='text_resposta_nome'> {avaliacao.usuario.nome} </div>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                  <div style={{display: 'flex'}}>
+                    <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
+                    <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
+                  </div>
+                  {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
+                    <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
+                      <img className='delete_icon' src={deleteIcon} alt='' />
+                    </button>
+                  ) : null}
                 </div>
                 <p className='text_resposta'>{resposta.comentario}</p>
               </div>
