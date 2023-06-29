@@ -50,7 +50,7 @@ function Register() {
       } else {
         // Realiza o registro se o email estiver disponível
         axiosInstance
-          .post(`${url}/user`, { nome, email, senha })
+          .post(`${url}/user`, { nome, email, senha })//
           .then(response => {
             console.log(response.statusText);
             if (response.statusText === 'Created') {

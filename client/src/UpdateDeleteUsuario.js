@@ -64,7 +64,7 @@ function UpdateDeleteUsuario() {
       return;
     }
 
-    let item={nome,email,adm}
+    let item={nome,email,adm}//
     const url = process.env.REACT_APP_API_URL;
     console.warn("item",item)
     fetch(`${url}/user/${_id}`, {
@@ -96,10 +96,12 @@ function UpdateDeleteUsuario() {
       <h1 className='card_text'>Update e Delete - Usuario</h1>
       <div style={{display: 'flex', alignItems: 'center',justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap'}}>
       <div className='colored_background_opacity container_selector_admin'>
+        {/*  */}
         <label>
           <span>Nome</span>
           <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} required /> 
         </label>
+        {/*  */}
         <label>
           <span>Email</span>
           <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} required />
