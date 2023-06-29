@@ -104,11 +104,6 @@ function UpdateDeleteLocal() {
 
     var reader = new FileReader();
     reader.onload = () => {
-      if (file.size > 80240) {
-        alert("A imagem não pode ter mais de 80KB.");
-        e.target.value = ""; // Limpa o valor do campo de arquivo
-        return;
-      }
       console.log(reader.result); //base64 string
       setFoto(reader.result);
     };
@@ -172,7 +167,7 @@ function UpdateDeleteLocal() {
                 required
               >
                 <option value="">-Selecione Tipo-</option>
-                <option value="ponto">Pontos</option>
+                <option value="ponto">Ponto</option>
                 <option value="parque">Parque</option>
                 <option value="shopping">Shopping</option>
             </select>

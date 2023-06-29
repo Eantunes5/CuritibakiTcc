@@ -140,7 +140,7 @@ function RegisterLocal() {
               required
             >
               <option value="">-Selecione Tipo-</option>
-              <option value="ponto">Pontos</option>
+              <option value="ponto">Ponto</option>
               <option value="parque">Parque</option>
               <option value="shopping">Shopping</option>
             </select>

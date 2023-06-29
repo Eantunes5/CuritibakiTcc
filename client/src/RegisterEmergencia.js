@@ -1,6 +1,6 @@
 import './App.css';
 import axios from "axios"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +27,28 @@ function RegisterEmergencia() {
       })
   }
 
+  const fileInputRef = useRef(null);
+
+  function convertToBase64(e) {
+    const file = e.target.files[0];
+
+    var reader = new FileReader();
+    reader.onload = () => {
+      if (file.size > 80240) {
+        alert("A imagem não pode ter mais de 80KB.");
+        e.target.value = ""; // Limpa o valor do campo de arquivo
+        return;
+      }
+      console.log(reader.result); //base64 string
+      setlogo(reader.result);
+    };
+    reader.onerror = error => {
+      console.log("Error: ", error);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
 
   const [nome, setNome] = useState('')
   const [logo, setlogo] = useState('')
@@ -47,9 +69,9 @@ function RegisterEmergencia() {
       <div className='div_register_Emergencia'>
         <div className='form_container'>
         <form action="" id="login" method="post" onSubmit={handleSubmit}>
-          <h1>REGISTRAR Emergencia</h1>
+          <h1>REGISTRAR EMERGÊNCIA</h1>
           <p className="item">
-            <label for="nome"> Nome </label><br/>
+            <label for="nome"><a style={{color: '#ff4747'}}>*</a> Nome </label><br/>
             <input
               name="nome"
               id="nome"
@@ -60,18 +82,21 @@ function RegisterEmergencia() {
           </p>
 
           <p className="item">
-            <label for="logo"> logo </label><br/>
+            <label for="logo"><a style={{color: '#ff4747'}}>*</a> Imagem </label><br/>
             <input
-              name="logo"
-              id="logo"
-              value={logo}
-              onChange={e => setlogo(e.target.value)}
+              type="file"
+              accept='image/*'
+              name="foto"
+              id="foto"
+              ref={fileInputRef}
+              style={{border: 'none', color: 'white'}}
+              onChange={convertToBase64}
               required
             />
           </p>
 
           <p className="item">
-            <label for="numero"> numero </label><br/>
+            <label for="numero"><a style={{color: '#ff4747'}}>*</a> Número </label><br/>
             <input
               name="numero"
               id="numero"
