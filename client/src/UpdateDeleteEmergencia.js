@@ -107,71 +107,74 @@ function UpdateDeleteEmergencia() {
     <div>
       <SmallHeader/>
       <h1 className='card_text'>Update e Delete - Emergencia </h1>
-      <div className='colored_background_opacity container_selector_admin'>
-        <label>
-          <span>Nome</span>
-          <input 
-          type="text" 
-          value={nome} 
-          onChange={(e)=>{setNome(e.target.value)}} 
-          required
-          /> 
-        </label>
-        <label>
-          <span>Foto</span>
-          <input 
-          type="file"
-          accept='image/*'
-          name="foto"
-          id="foto"
-          ref={fileInputRef}
-          style={{border: 'none', color: 'white'}}
-          onChange={convertToBase64}
-          required
-          /> 
-        </label>
-        <label>
-          <span>Número</span>
-          <input 
-          type="number" 
-          value={numero} 
-          max={999}
-          onChange={(e)=>{setnumero(e.target.value)}} /> 
-        </label>
-        <div style={{width: '100%', textAlign: 'center'}}>
-          <button className='att_local btn_submit' onClick={updateUser} >Atualizar</button>  
+      <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center',justifyContent: 'center', flexDirection: 'row'}}>
+        <div className='colored_background_opacity container_selector_admin'>
+          <label>
+            <span>Nome</span>
+            <input 
+            type="text" 
+            value={nome} 
+            onChange={(e)=>{setNome(e.target.value)}} 
+            required
+            /> 
+          </label>
+          <label>
+            <span>Foto</span>
+            <input 
+            type="file"
+            accept='image/*'
+            name="foto"
+            id="foto"
+            ref={fileInputRef}
+            style={{border: 'none', color: 'white'}}
+            onChange={convertToBase64}
+            required
+            /> 
+          </label>
+          <label>
+            <span>Número</span>
+            <input 
+            type="number" 
+            value={numero} 
+            max={999}
+            onChange={(e)=>{setnumero(e.target.value)}} /> 
+          </label>
+          <div style={{width: '100%', textAlign: 'center'}}>
+            <button className='att_local btn_submit' onClick={updateUser} >Atualizar</button>  
+          </div>
+        </div>
+        <div style={{width: '100%', height: '500px', overflowX: 'scroll', overflowY: 'scroll'}}>
+        <table className='table_admin'>
+          <thead>
+            <tr>
+              <td colSpan={2}>Operations</td>
+              <td>Nome</td>
+              <td>Indice</td>
+              <td>ID</td>
+              <td>logo</td>
+              <td>numero</td>
+            </tr>
+          </thead>
+          <tbody style={{marginTop: '10px'}}> 
+            {
+              users.map((item, i) =>
+              
+                <tr key={i}>
+                  <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
+                  <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
+                  <td style={{padding: '0 15px'}}>{item.nome}</td>
+                  <td style={{padding: '0 15px'}}>{i}</td>
+                  <td style={{padding: '0 15px'}}>{item._id}</td>
+                  <td style={{padding: '0 15px'}}><div className='td_sobre td_break'>{item.logo}</div></td>
+                  <td style={{padding: '0 15px'}}>{item.numero}</td>
+                </tr>
+              )
+            }
+          </tbody>
+        </table>
         </div>
       </div>
-      <div style={{width: '100%', height: '500px', overflowX: 'scroll', overflowY: 'scroll'}}>
-      <table className='table_admin'>
-        <thead>
-          <tr>
-            <td colSpan={2}>Operations</td>
-            <td>Nome</td>
-            <td>Indice</td>
-            <td>ID</td>
-            <td>logo</td>
-            <td>numero</td>
-          </tr>
-        </thead>
-        <tbody style={{marginTop: '10px'}}> 
-          {
-            users.map((item, i) =>
-            
-              <tr key={i}>
-                <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
-                <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
-                <td>{item.nome}</td>
-                <td>{i}</td>
-                <td>{item._id}</td>
-                <td>{item.logo}</td>
-                <td>{item.numero}</td>
-              </tr>
-            )
-          }
-        </tbody>
-      </table>
-      </div>
+      
       
       
     </div>

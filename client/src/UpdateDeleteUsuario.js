@@ -91,6 +91,7 @@ function UpdateDeleteUsuario() {
     <div>
       <SmallHeader/>
       <h1 className='card_text'>Update e Delete - Usuario</h1>
+      <div style={{display: 'flex', alignItems: 'center',justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap'}}>
       <div className='colored_background_opacity container_selector_admin'>
         <label>
           <span>Nome</span>
@@ -119,16 +120,16 @@ function UpdateDeleteUsuario() {
           <button className='att_local btn_submit' onClick={updateUser} >Update User</button>  
         </div>
       </div>
-      <div style={{marginLeft: '5%', width: '90%', height: 'fit-content', display: 'flex', justifyContent: 'center'}}>
+      <div style={{ width: '100%', maxWidth: '850px', height: 'fit-content', display: 'flex', overflowX: 'scroll'}}>
         <table className='table_admin'>
           <thead>
             <tr>
               <td colSpan={2}>Operations</td>
-              <td>Indice</td>
-              <td>ID</td>
               <td>Nome</td>
               <td>Email</td>
               <td>Adm</td>
+              <td>Indice</td>
+              <td>ID</td>
             </tr>
           </thead>
           <tbody>
@@ -137,11 +138,11 @@ function UpdateDeleteUsuario() {
                 <tr key={i}>
                   <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
                   <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
-                  <td>{i}</td>
-                  <td>{item._id}</td>
-                  <td>{item.nome}</td>
-                  <td>{item.email}</td>
-                  <td>{item.adm == true ? 'Adm' : 'User'}</td>
+                  <td style={{padding: '0 15px'}}>{item.nome}</td>
+                  <td style={{padding: '0 15px'}}>{item.email}</td>
+                  <td style={{padding: '0 15px'}}>{item.adm == true ? 'Adm' : 'User'}</td>
+                  <td style={{padding: '0 15px'}}>{i}</td>
+                  <td style={{padding: '0 15px'}}>{item._id}</td>
 
                 </tr>
               )
@@ -149,6 +150,8 @@ function UpdateDeleteUsuario() {
           </tbody>
         </table>
       </div>
+      </div>
+      
     </div>
   );
 }
