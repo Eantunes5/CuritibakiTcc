@@ -121,14 +121,7 @@ function UpdateDeleteEmergencia() {
           <label>
             <span>Foto</span>
             <input 
-            type="file"
-            accept='image/*'
-            name="foto"
-            id="foto"
-            ref={fileInputRef}
-            style={{border: 'none', color: 'white'}}
-            onChange={convertToBase64}
-            required
+            
             /> 
           </label>
           <label>
