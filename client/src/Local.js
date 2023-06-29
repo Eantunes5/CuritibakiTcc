@@ -72,8 +72,8 @@ function Local() {
       setAvaliacoes(avaliacoes.filter((avaliacao) => avaliacao.id !== commentId));
   
       // Exiba uma mensagem de sucesso ou faça qualquer outra ação necessária
-      console.log('Comentário excluído com sucesso!');
-      console.log(commentId);
+      alert('Comentário excluído com sucesso!')
+      window.location.reload();
     } catch (error) {
       console.error('Erro ao excluir comentário:', error);
     }
@@ -187,6 +187,7 @@ function Local() {
       .post(`${url}/rating`, novaAvaliacao, { headers })
       .then((response) => {
         alert('Obrigado pela avaliação!')
+        window.location.reload();
         // Atualize o estado de avaliações se necessário
       })
       .catch((error) => {
