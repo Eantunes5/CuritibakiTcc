@@ -103,9 +103,9 @@ function RegisterLocal() {
       <div className='div_register_local'>
         <div className='form_container'>
         <form action="" id="login" method="post" onSubmit={handleSubmit}>
-          <h1>REGISTRAR LOCAL</h1>
+          <h1>CADASTRAR LOCAL</h1>
           <p className="item">
-            <label for="nome"> Nome </label><br/>
+            <label for="nome"><a style={{color: '#ff4747'}}>*</a> Nome </label><br/>
             <input
               type="nome"
               name="nome"
@@ -117,7 +117,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="slug"> Slug </label><br/>
+            <label for="slug"><a style={{color: '#ff4747'}}>*</a> Slug </label><br/>
             <input
               style={{cursor: 'text'}}
               disabled
@@ -130,7 +130,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="tipo"> Tipo </label><br/>
+            <label for="tipo"><a style={{color: '#ff4747'}}>*</a> Tipo </label><br/>
             <select
               style={{cursor: 'pointer'}}
               name="tipo"
@@ -147,7 +147,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="sobre"> Sobre </label><br/>
+            <label for="sobre"><a style={{color: '#ff4747'}}>*</a> Sobre </label><br/>
             <textarea
               type="sobre"
               name="sobre"
@@ -159,7 +159,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="horarios"> Horários <img  title='Horários de funcionamento:&#10;"xx:xx às xx:xx"&#10;ou&#10;"Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <label for="horarios"><a style={{color: '#ff4747'}}>*</a> Horários <img  title='Horários de funcionamento:&#10;"xx:xx às xx:xx"&#10;ou&#10;"Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <textarea
               type="horarios"
               name="horarios"
@@ -171,7 +171,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="ingressos"> Ingressos <img  title='Caso seja gratuito apenas "Entrada franca"'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <label for="ingressos"><a style={{color: '#ff4747'}}>*</a> Ingressos <img  title='Caso seja gratuito apenas "Entrada franca"'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <textarea
               type="ingressos"
               name="ingressos"
@@ -183,7 +183,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="endereco"> Endereco </label><br/>
+            <label for="endereco"><a style={{color: '#ff4747'}}>*</a> Endereco </label><br/>
             <input
               type="endereco"
               name="endereco"
@@ -195,7 +195,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="foto"> Foto </label><br/>
+            <label for="foto"><a style={{color: '#ff4747'}}>*</a> Foto <img  title='Tamanho max: 80kb'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <input
               type="file"
               accept='image/*'
@@ -209,7 +209,7 @@ function RegisterLocal() {
           </p>
 
           <p className="item">
-            <label for="iframe"> Iframe </label><br/>
+            <label for="iframe"><a style={{color: '#ff4747'}}>*</a> Iframe <img  title='Insira o iframe completo, ele será corrigido automáticamente'className="icon_alert_admin" src={alertIcon}/></label><br/>
             <input
               type="iframe"
               name="iframe"
@@ -222,7 +222,7 @@ function RegisterLocal() {
           
 
           <p className="item">
-            <input type="submit" value="Registrar" />
+            <input type="submit" value="Enviar" />
           </p>
         </form>
         </div>

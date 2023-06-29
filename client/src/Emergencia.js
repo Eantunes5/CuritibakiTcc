@@ -1,4 +1,9 @@
+import './App.css';
 import React, { useEffect, useState } from 'react';
+import SmallHeader from './components/small_header';
+import SelectButtons from './components/select_page';
+import PontosTitle from './components/pontos_title';
+import CardEmergencia from './components/cards_emergencia';
 
 function Emergencia() {
   const [users, setUsers] = useState([]);
@@ -18,15 +23,25 @@ function Emergencia() {
 
   return (
     <div>
-      {users.map((user) => (
-        <div key={user._id}>
-          <h2>{user.nome}</h2>
-          <img src={user.logo} alt={user.nome} />
-          <p>{user.numero}</p>
+      <SmallHeader/>
+      <SelectButtons page='emergencia'/>
+      <div className='div_container_cards_pontos'>
+        <br></br>
+        <PontosTitle text='TELEFONES ÚTEIS'/>
+        <div className='div_container_cards_emergencia'>
+        {users.map((user) => (
+
+            <CardEmergencia
+              nome={user.nome}
+              numero={user.numero}
+              url_img={user.logo}
+              />
+              
+          ))}
         </div>
-      ))}
+      </div>
     </div>
-  );
+  )
 }
 
 export default Emergencia;

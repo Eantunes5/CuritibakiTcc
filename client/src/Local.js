@@ -369,7 +369,9 @@ function Local() {
             }
 
             <div>
-            {respostas.map(resposta => (
+            {respostas
+            .filter((resposta) => resposta.Comentario_Pai_Id === avaliacao.id)
+            .map(resposta => (
               <div key={resposta._id} className="card_resposta">
                 <div style={{display: 'flex'}}>
                   <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
@@ -419,6 +421,7 @@ function Local() {
                 <textarea
                   value={comentario}
                   onChange={(event) => setComentario(event.target.value)}
+                  required
                   placeholder='Escreva seu comentário...'
                 />
               </div>
@@ -434,6 +437,7 @@ function Local() {
                 onChange={(event) => setNota(event.target.value)}
                 min={1}
                 max={5}
+                required
               />
               <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
               </p>

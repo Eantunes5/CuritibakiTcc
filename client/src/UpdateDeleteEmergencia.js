@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import SmallHeader from './components/small_header';
 
@@ -73,6 +73,28 @@ function UpdateDeleteEmergencia() {
     })
   }
 
+  const fileInputRef = useRef(null);
+
+  function convertToBase64(e) {
+    const file = e.target.files[0];
+
+    var reader = new FileReader();
+    reader.onload = () => {
+      if (file.size > 80240) {
+        alert("A imagem não pode ter mais de 80KB.");
+        e.target.value = ""; // Limpa o valor do campo de arquivo
+        return;
+      }
+      console.log(reader.result); //base64 string
+      setlogo(reader.result);
+    };
+    reader.onerror = error => {
+      console.log("Error: ", error);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
   if (!isAdmin) {
@@ -88,15 +110,33 @@ function UpdateDeleteEmergencia() {
       <div className='colored_background_opacity container_selector_admin'>
         <label>
           <span>Nome</span>
-          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} /> 
+          <input 
+          type="text" 
+          value={nome} 
+          onChange={(e)=>{setNome(e.target.value)}} 
+          required
+          /> 
         </label>
         <label>
-          <span>logo</span>
-          <input type="text" value={logo} onChange={(e)=>{setlogo(e.target.value)}} /> 
+          <span>Foto</span>
+          <input 
+          type="file"
+          accept='image/*'
+          name="foto"
+          id="foto"
+          ref={fileInputRef}
+          style={{border: 'none', color: 'white'}}
+          onChange={convertToBase64}
+          required
+          /> 
         </label>
         <label>
-          <span>numero</span>
-          <input type="text" value={numero} onChange={(e)=>{setnumero(e.target.value)}} /> 
+          <span>Número</span>
+          <input 
+          type="number" 
+          value={numero} 
+          max={999}
+          onChange={(e)=>{setnumero(e.target.value)}} /> 
         </label>
         <div style={{width: '100%', textAlign: 'center'}}>
           <button className='att_local btn_submit' onClick={updateUser} >Atualizar</button>  

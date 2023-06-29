@@ -60,7 +60,9 @@ function Register() {
           .catch(error => {
             console.error(error.response);
             console.error(error.response.data);
-            alert("Cadastro Incorreto")
+            alert_div.style = 'display: flex'
+            alert_text.innerHTML = 'EMAIL JÁ REGISTRADO'
+            //alert("Cadastro Incorreto")
             // Trate o erro de registro aqui, se necessário
           });
       }
