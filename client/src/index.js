@@ -19,6 +19,8 @@ import Local from './Local';
 import HomeAdmin from './HomeAdmin';
 import UpdateDeleteEmergencia from './UpdateDeleteEmergencia';
 import RegisterEmergencia from './RegisterEmergencia';
+import Perfil from './Perfil';
+import AdicionarLocal from './AdicionarLocal';
 
 
 
@@ -40,6 +42,8 @@ root.render(
       <Route path="/Emergencia" element={<Emergencia />} />
       <Route path="/UpdateDeleteEmergencia" element={<UpdateDeleteEmergencia />} />
       <Route path="/RegisterEmergencia" element={<RegisterEmergencia />} />
+      <Route path="/Perfil" element={<Perfil />} />
+      <Route path="/AdicionarLocal" element={<AdicionarLocal />} />
       <Route path="/pontos/local/:id" element={<Local />}
       
       

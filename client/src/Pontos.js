@@ -7,14 +7,12 @@ import CardsPontos from './components/cards_pontos';
 import SmallHeader from './components/small_header';
 
 function Pontos() {
-  // eslint-disable-next-line
   const [users, setUser] = useState([]);
-  // eslint-disable-next-line
   const [nome, setNome] = useState('');
-  // eslint-disable-next-line
   const [foto, setFoto] = useState('');
-  // eslint-disable-next-line
   const [_id, setId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredLocais, setFilteredLocais] = useState([]);
 
   useEffect(() => {
     getUsers();
@@ -32,17 +30,38 @@ function Pontos() {
     });
   }
 
+  useEffect(() => {
+    const filteredLocais = users.filter((local) =>
+      local.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredLocais(filteredLocais);
+  }, [searchTerm, users]);
+
+  // Remova a chamada getUsers() desta função
+  const handleSearch = () => {
+    console.log('Botão de pesquisa clicado');
+  };
+
   return (
     <div className="App">
-      <SmallHeader/>
-      <SelectButtons page='pontos'/>
-      <div className='div_container_cards_pontos'>
-        <PontosTitle text='PONTOS TURISTICOS'/>
-          <CardsPontos tipo='ponto'/>
-        <PontosTitle text='PARQUES'/>
-          <CardsPontos tipo='parque'/>
-        <PontosTitle text='SHOPPINGS'/>
-          <CardsPontos tipo='shopping'/>
+      <SmallHeader />
+      <SelectButtons page="pontos" />
+      <div className="div_container_cards_pontos">
+        {/* Barra de pesquisa */}
+        <input
+          type="text"
+          placeholder="Pesquisar por nome..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        {/* Botão de pesquisa */}
+        <button onClick={handleSearch}>Procurar</button>
+        <PontosTitle text="PONTOS TURISTICOS" />
+        <CardsPontos tipo="ponto" locais={filteredLocais} />
+        <PontosTitle text="PARQUES" />
+        <CardsPontos tipo="parque" locais={filteredLocais} />
+        <PontosTitle text="SHOPPINGS" />
+        <CardsPontos tipo="shopping" locais={filteredLocais} />
       </div>
     </div>
   );

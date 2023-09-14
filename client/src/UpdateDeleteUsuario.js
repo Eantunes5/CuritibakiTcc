@@ -12,6 +12,9 @@ function UpdateDeleteUsuario() {
   const [email, setEmail] = useState('')
   const [adm, setAdm] = useState(Boolean)
   const [_id, setId]=useState(null) 
+  const [idade, setIdade] = useState(''); // Adicione o estado para idade
+  const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
+
   //
 
   useEffect(() => {
@@ -53,34 +56,36 @@ function UpdateDeleteUsuario() {
         setEmail(item.email)
         setAdm(item.adm)
         setId(item._id)
+        setIdade(item.idade); // Adicione esta linha para definir a idade
+        setSexo(item.sexo);   // Adicione esta linha para definir o sexo
         //
   }
 
-  function updateUser()
-  {
-    if (!nome || !email || adm === "") {
+  function updateUser() {
+    if (!nome || !email || adm === "" || !idade || !sexo) {
       // Verifica se algum campo obrigatório está vazio
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
-
-    let item={nome,email,adm}//
+  
+    let item = { nome, email, adm, idade, sexo }; // Inclua idade e sexo no objeto
     const url = process.env.REACT_APP_API_URL;
-    console.warn("item",item)
+    console.warn("item", item);
     fetch(`${url}/user/${_id}`, {
       method: 'PATCH',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json'
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body:JSON.stringify(item)
+      body: JSON.stringify(item)
     }).then((result) => {
       result.json().then((resp) => {
-        console.warn(resp)
-        getUsers()
+        console.warn(resp);
+        getUsers();
       })
     })
   }
+  
 
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
@@ -121,6 +126,27 @@ function UpdateDeleteUsuario() {
             </select>
           
         </label>
+        <label>
+            <span>Idade</span>
+            <input
+              type="text"
+              value={idade}
+              onChange={(e) => setIdade(e.target.value)}
+              required
+            />
+            <br />
+          </label>
+          <label>
+            <span>Sexo</span>
+            <input
+              type="text"
+              value={sexo}
+              onChange={(e) => setSexo(e.target.value)}
+              required
+            />
+            <br />
+
+        </label>
         <div style={{width: '100%', textAlign: 'center'}}>
           <button className='att_local btn_submit' onClick={updateUser} >Update User</button>  
         </div>
@@ -135,6 +161,8 @@ function UpdateDeleteUsuario() {
               <td>Adm</td>
               <td>Indice</td>
               <td>ID</td>
+              <td>Idade</td>
+              <td>Sexo</td>
               {/*  */}
             </tr>
           </thead>

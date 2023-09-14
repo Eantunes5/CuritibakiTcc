@@ -465,6 +465,17 @@ function Local() {
                 max={5}
                 required
               />
+              <label>
+                <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
+                  Imagem de Avaliação:
+                </p>
+                <div style={{width: '100%', boxSizing: 'border-box'}}>
+                  <input
+                    type="file"
+                    //onChange={(event) => setImagemAvaliacao(event.target.files[0])}
+                  />
+                </div>
+              </label>
               <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
               </p>
             </label>
