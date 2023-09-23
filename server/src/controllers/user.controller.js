@@ -3,9 +3,9 @@ import ratingSerivce from '../services/rating.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {nome,email,senha} = req.body;//
+    const {nome,email,senha,idade,sexo,conquistas,favoritos} = req.body;//
 
-  if (!nome || !email || !senha ) {
+  if (!nome || !email || !senha || !sexo || !idade ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
   }
 
@@ -20,7 +20,12 @@ const create = async(req,res)  => {
     usuario:{
       id:user._id,
       nome,
-      email
+      email,
+      idade,
+      conquistas,
+      sexo,
+      favoritos
+
       //
     }
   });
@@ -66,9 +71,9 @@ const findByEmail = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {nome,email,senha,adm} = req.body;//
+  try{const {nome,email,senha,adm,idade,sexo,conquistas,favoritos} = req.body;//
 
-  if (!nome && !email && !senha && !adm ) {
+  if (!nome && !email && !senha && !adm && !idade && !sexo && !conquistas && !favoritos) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
@@ -79,8 +84,11 @@ const update = async(req,res) => {
     nome,
     email,
     senha,
-    adm
-    //
+    adm,
+    idade,
+    sexo,
+    conquistas,
+    favoritos
   );
   
   res.send({message:"Usuário atualizado com sucesso"})

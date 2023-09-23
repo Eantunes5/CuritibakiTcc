@@ -26,6 +26,11 @@ const RatingSchema = new mongoose.Schema({
     required:false,
     default:"",
   },
+  foto: {
+    type: String,
+    required:true,
+    default:"",
+  },
 }) 
 
 const Rating = mongoose.model("Avaliacao", RatingSchema);

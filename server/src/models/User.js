@@ -20,10 +20,30 @@ const UserSchema = new mongoose.Schema({
   adm : {
     type: Boolean,
     required:true,
-    default: false
+    default: false,
   },
-  //
-
+  favoritos: [
+    {
+      type: String, 
+      required:true,
+      default: [],
+    },
+  ],
+  sexo : {
+    type: String,
+    required:true,
+  },
+  idade : {
+    type: String,
+    required:true,
+  },
+  conquistas: [
+    {
+      type: String, 
+      required:true,
+      default: [],
+    },
+  ]
 })
 
 UserSchema.pre("save", async function(next){

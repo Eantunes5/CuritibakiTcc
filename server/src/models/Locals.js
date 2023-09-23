@@ -37,7 +37,7 @@ const LocaisSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
-})
+}) 
 
 const Locais = mongoose.model("Locais", LocaisSchema);
 
