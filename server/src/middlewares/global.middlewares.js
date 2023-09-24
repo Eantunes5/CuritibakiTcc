@@ -110,4 +110,21 @@ export const validEmergency = async (req,res,next) => {
 }
 };
 
+export const validConquest = async (req,res,next) => {
+  try{
+  const id = req.params.id;
 
+  const conquest = await conquestSerivce.findByIdService(id);
+
+  if (!conquest) {
+    return res.status(400).send({ message: "Conquista não encontrada" });
+  }
+
+  req.id = id;
+  req.conquest = conquest;
+  
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
