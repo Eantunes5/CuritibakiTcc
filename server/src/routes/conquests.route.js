@@ -10,4 +10,4 @@ router.get('/:id',validId,validConquest, conquestsController.findById);
 router.patch('/:id',validId,validConquest, conquestsController.update);
 router.delete('/:id',validId,validConquest, conquestsController.deleteById);
 
-export default  router;
+export default router;

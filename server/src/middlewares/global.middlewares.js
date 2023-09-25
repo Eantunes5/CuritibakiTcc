@@ -3,6 +3,7 @@ import userSerivce from '../services/user.serivce.js';
 import localsSerivce from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
 import emergencySerivce from '../services/emergency.serivce.js';
+import conquestsSerivce from '../services/conquests.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -114,7 +115,7 @@ export const validConquest = async (req,res,next) => {
   try{
   const id = req.params.id;
 
-  const conquest = await conquestSerivce.findByIdService(id);
+  const conquest = await conquestsSerivce.findByIdService(id);
 
   if (!conquest) {
     return res.status(400).send({ message: "Conquista não encontrada" });
