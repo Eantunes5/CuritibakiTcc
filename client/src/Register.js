@@ -40,7 +40,6 @@ function Register() {
       alert_text.innerHTML = 'AS SENHAS DEVEM SER IGUAIS'
       return;
     }
-    console.log("email 43:"+email)
 
     // Verifica se o email já está em uso
     axiosInstance
@@ -52,7 +51,6 @@ function Register() {
           alert('Este email já está em uso. Por favor, escolha outro email.');
         } else {
           // Realiza o registro se o email estiver disponível
-          console.log("email 55:"+email)
           axiosInstance
             .post(`${url}/user`, {
               nome,
@@ -64,7 +62,6 @@ function Register() {
             .then(response => {
               console.log(response.statusText);
               if (response.statusText === 'Created') {
-                console.log("email 67:"+email)
                 axiosInstance
                 .post(`${url}/auth/verificar-email`, {
                   email

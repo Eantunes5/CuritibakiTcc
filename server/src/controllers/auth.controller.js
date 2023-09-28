@@ -35,46 +35,12 @@ const login = async (req,res) => {
 
 };
 
-
-/*
-const verificarEnviarEmailHelper = async (User, res) =>{
-
-  const user = userSerivce.findByEmailService({User.email})
-
-  const user = await userSerivce.findByEmailService({email:email});
-
-
-  if(!user) {
-    throw res.status(400).send("Usuario ja existente")
-  }
-
-  if(user.verificado){
-    throw res.status(401).send("Email ja foi verificado")
-  }
-
-  const token = generateToken({
-    email: user.email,
-    verifyToken: user.verifyToken
-  })
-
-  const template = {
-    from: emailDefault,
-    subject: 'Confirme seu email',
-    html: templateVerificarEmail({
-      url: config.appFrontUrl,
-      username: user.nome,
-      userToken: token
-    })
-  }
-  sendEmail(user, template)
-
-};*/
-
-
 const templateVerificarEmail = Handlebars.compile(conteudoTemplateConfirmarEmail)
 
 const verificarEnviarEmailController = async (req,res) => {
   
+  const url = process.env.APP_FRONT_URL
+  console.log("URL:  " + url);
   try {
     const email = req.body.email
     const user = await userSerivce.findByEmailService({email:email});
@@ -83,24 +49,14 @@ const verificarEnviarEmailController = async (req,res) => {
 
     const token = generateToken({
       email: user[0].email,
-      verifyToken: user[0].verifyToken
+      verifyTokenEmail: user[0].verifyTokenEmail
     })
-  /*
-    const template = {
-      from: emailDefault,
-      subject: 'Confirme seu email',
-      html: templateVerificarEmail({
-        url: config.appFrontUrl,
-        username: user[0].nome,
-        userToken: token
-      })
-    }
-    */
+
     sendEmail(user[0], emailDefault, 'Confirme seu email', 
       templateVerificarEmail({
-        url: config.appFrontUrl,
+        url: url,
         username: user[0].nome,
-        userToken: token
+        verifyTokenEmail: token
       })
     )
 
@@ -120,4 +76,56 @@ const verificarEnviarEmailController = async (req,res) => {
 
 };
 
-export { login, verificarEnviarEmailController };
+async function confirmarTokenEmail(token) {
+  try {
+    const {email, verifyTokenEmail} = jwt.verify(
+      token,
+      authSecret.secret
+    ) 
+    console.log("token: "+ verifyTokenEmail + "email: " + email)
+    return {email, verifyTokenEmail}
+  } catch {
+    //throw res.status(401, 'token invalido')
+  }
+}
+
+async function confirmarTokenEmailHelper(token) {
+  try {
+    const {email, verifyTokenEmail} = confirmarTokenEmail(token)
+    const userJaVerificado = userSerivce.findByEmailService({email:email});
+
+    if (!userJaVerificado) {
+      //throw res.status(404, 'usuario nao encontrado')
+    }
+
+    if (userJaVerificado[0].verificado) {
+      //throw res.status(401, 'esse usuario ja verificou o email')
+    }
+
+    if (userJaVerificado[0].verifyTokenEmail !== verifyTokenEmail) {
+      //throw res.status(401, 'token invalido para esse email')
+    }
+
+    const userId = userJaVerificado[0]._id
+
+    const updateUser = userSerivce.updateVerifyUserById(userId, true, '')
+
+    return updateUser
+
+  } catch (error) {
+
+  }
+}
+
+const confirmarEmailController = async (req,res) => {
+  try {
+    const token = req.body.token
+    const user = await confirmarTokenEmailHelper(token)
+    res.status(200).send(user)
+  } catch (error) {
+    
+  }
+}
+
+
+export { login, verificarEnviarEmailController, confirmarEmailController };

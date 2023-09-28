@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import randomstring from 'randomstring'
 
 const UserSchema = new mongoose.Schema({
   nome : {
@@ -44,7 +45,7 @@ const UserSchema = new mongoose.Schema({
       default: [],
     },
   ],
-  verifyToken: {
+  verifyTokenEmail: {
     type: String,
     required:false,
   },
@@ -57,6 +58,10 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre("save", async function(next){
   this.senha = await bcrypt.hash(this.senha, 10);
+  this.verifyTokenEmail = randomstring.generate({
+    length: 8,
+    charset: 'numeric'
+  })
   next();
 });
 
