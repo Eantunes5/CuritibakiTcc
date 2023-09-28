@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import randomstring from 'randomstring'
 import conquestsSerivce from '../services/conquests.serivce.js';
 
 const UserSchema = new mongoose.Schema({
@@ -37,6 +38,15 @@ const UserSchema = new mongoose.Schema({
   idade : {
     type: String,
     required:true,
+  },
+  verifyTokenEmail: {
+    type: String,
+    required:false,
+  },
+  verificado: {
+    type: Boolean,
+    required:false,
+    default:false,
   },
   conquistas: [{
     nome: {
@@ -79,6 +89,10 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre("save", async function(next){
   this.senha = await bcrypt.hash(this.senha, 10);
+  this.verifyTokenEmail = randomstring.generate({
+    length: 8,
+    charset: 'numeric'
+  })
   next();
 });
 

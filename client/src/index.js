@@ -21,6 +21,7 @@ import UpdateDeleteEmergencia from './UpdateDeleteEmergencia';
 import RegisterEmergencia from './RegisterEmergencia';
 import Perfil from './Perfil';
 import AdicionarLocal from './AdicionarLocal';
+import ConfirmarEmail from './ConfirmarEmail';
 
 
 
@@ -44,7 +45,8 @@ root.render(
       <Route path="/RegisterEmergencia" element={<RegisterEmergencia />} />
       <Route path="/Perfil" element={<Perfil />} />
       <Route path="/AdicionarLocal" element={<AdicionarLocal />} />
-      <Route path="/pontos/local/:id" element={<Local />}
+      <Route path="/pontos/local/:id" element={<Local />} />
+      <Route path="/verificar-email" element={<ConfirmarEmail />}
       
       
 />
