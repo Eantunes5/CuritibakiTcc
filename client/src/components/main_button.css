@@ -11,6 +11,7 @@
     margin-bottom: 10px;
   }
   .main-buttons .button-option {
+    color: white;
     width: 300px;
     height: 50px;
     background-image: linear-gradient(-90deg,#2C24C4,#2464E4);
@@ -21,6 +22,8 @@
     -1px 1px 0 #000,  /* Sombra inferior esquerda */
     1px 1px 0 #000;
     opacity: 90%;
+    border: none;
+    border-radius: 10px;
   }
   .button-on, .button-option:hover{
     opacity: 100% !important;

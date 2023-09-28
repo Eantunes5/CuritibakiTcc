@@ -12,7 +12,36 @@ function Perfil() {
   const [sexoUsuario, setSexoUsuario] = useState('');
   const [favoritos, setFavoritos] = useState([]); // Novo estado para a lista de favoritos
   const [favoritosDetalhes, setFavoritosDetalhes] = useState([]); // Novo estado para os detalhes dos locais favoritos
+  const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
 
+  const handleEditarClick = () => {
+    // Quando o botão "Editar" é clicado, entre no modo de edição
+    setEditMode(true);
+  };
+
+  const handleConfirmarClick = async () => {
+    // Quando o botão "Confirmar" é clicado, saia do modo de edição e atualize os dados no servidor
+    setEditMode(false);
+
+    try {
+      const userId = localStorage.getItem('userId');
+      const url = process.env.REACT_APP_API_URL;
+
+      // Envie os dados atualizados para o servidor
+      await axios.put(`${url}/user/${userId}`, {
+        nome: nomeUsuario,
+        email: emailUsuario,
+        idade: idadeUsuario,
+        sexo: sexoUsuario,
+      });
+
+      // Atualize os dados do usuário na tela
+      // Seu código para buscar os dados do usuário novamente aqui...
+
+    } catch (error) {
+      console.error('Erro ao atualizar os dados do usuário:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchUsuario = async () => {
@@ -92,12 +121,43 @@ function Perfil() {
               alt="Imagem de Perfil"
               className="avatar-image"
             />
-          </div>
-          <div className="profile-info">
-            <h2>{nomeUsuario}</h2>
-            <p>Email: {emailUsuario}</p>
-            <p>Idade: {idadeUsuario} anos</p>
-            <p>Sexo: {sexoUsuario}</p>
+          </div><div className="profile-info">
+            {editMode ? ( // Se estiver no modo de edição, exiba campos de entrada
+              <>
+                <input
+                  type="text"
+                  value={nomeUsuario}
+                  onChange={(e) => setNomeUsuario(e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={emailUsuario}
+                  onChange={(e) => setEmailUsuario(e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={idadeUsuario}
+                  onChange={(e) => setIdadeUsuario(e.target.value)}
+                />
+                <input
+                  type="text"
+                  value={sexoUsuario}
+                  onChange={(e) => setSexoUsuario(e.target.value)}
+                />
+              </>
+            ) : (
+              <>
+                <h2>{nomeUsuario}</h2>
+                <p>Email: {emailUsuario}</p>
+                <p>Idade: {idadeUsuario} anos</p>
+                <p>Sexo: {sexoUsuario}</p>
+              </>
+            )}
+            {editMode ? ( // Exiba o botão "Confirmar" no modo de edição
+              <button onClick={handleConfirmarClick}>Confirmar</button>
+            ) : (
+              <button onClick={handleEditarClick}>Editar</button>
+            )}
           </div>
         </div>
         <div className="profile-sections">
@@ -111,12 +171,12 @@ function Perfil() {
           </div>
           <div className="profile-section">
             <h3>Favoritos</h3>
-            <ul>
+            <ul style={{display: 'flex',alignItems: 'center'}}>
               {favoritosDetalhes.map((local, index) => (
                 <li key={local._id}>
                   {/* Use o componente Link para fazer a imagem clicável */}
                   <Link to={`/pontos/Local/${local._id}`}>
-                    <img src={local.foto} alt={`Local ${local.nome}`} />
+                    <img src={local.foto} alt={`Local ${local.nome}`} style={{maxWidth: '300px'}}/>
                   </Link>
                 </li>
               ))}
