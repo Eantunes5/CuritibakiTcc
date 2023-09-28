@@ -31,6 +31,7 @@ function Local() {
   const [reply, setReply] = useState({});
   const [replyTo, setReplyTo] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [favoritado, setFavoritado] = useState(false);
 
   const { id } = useParams();
 
@@ -159,6 +160,68 @@ function Local() {
     fetchAvaliacoes();
   }, [id]);
 
+  useEffect(() => {
+    // Verifique se o local está nos favoritos do usuário quando o componente for montado
+    const fetchFavoritos = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          return;
+        }
+
+        const url = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${url}/user/${userId}`);
+        const userData = response.data;
+
+        // Verifique se o ID do local está nos favoritos do usuário
+        setFavoritado(userData.favoritos.includes(id));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchFavoritos();
+  }, [id]);
+
+  // Função para adicionar ou remover o local dos favoritos do usuário
+  const toggleFavorito = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        alert('Você precisa estar logado para favoritar um local!');
+        return;
+      }
+
+      const url = process.env.REACT_APP_API_URL;
+      
+      // Obtenha a lista de favoritos atual do usuário
+      const response = await axios.get(`${url}/user/${userId}`);
+      const userData = response.data;
+      const favoritos = userData.favoritos || [];
+
+      // Verifique se o ID do local já está nos favoritos
+      const localIndex = favoritos.indexOf(id);
+
+      if (localIndex !== -1) {
+        // Se o local já estiver nos favoritos, remova-o
+        favoritos.splice(localIndex, 1);
+      } else {
+        // Se o local não estiver nos favoritos, adicione-o
+        favoritos.push(id);
+      }
+
+      // Atualize a lista de favoritos do usuário no servidor
+      await axios.patch(`${url}/user/${userId}`, { favoritos });
+
+      // Atualize o estado para refletir se o local está favoritado ou não
+      setFavoritado(localIndex === -1);
+
+      alert(`Local ${localIndex === -1 ? 'adicionado aos' : 'removido dos'} favoritos com sucesso!`);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
   
@@ -273,6 +336,19 @@ function Local() {
         </div>
       </div>
       <div className='infos_pontos_container'>
+        <div className="div_name_container">
+          <div className="div_name_local">
+            <p className="ponto_name">{nome}</p>
+            {/* Adicione o botão de favoritar e a lógica para alternar entre favoritar e desfavoritar */}
+            <button
+              className="favoritar-button"
+              onClick={toggleFavorito}
+            >
+              {favoritado ? 'Remover dos Favoritos' : 'Favoritar'}
+              <img src={emptyStarIcon} alt="Favoritar" />
+            </button>
+          </div>
+        </div>
         <div className='card_ponto'>
           <p className='ponto_name'>
             <img className='icons_infos' src={infoIcon} alt=''/>
