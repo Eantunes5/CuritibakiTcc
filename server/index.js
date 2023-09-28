@@ -11,6 +11,7 @@ import emergencyRoute from './src/routes/emergency.route.js';
 import conquestsRoute from './src/routes/conquests.route.js';
 import analyticsRoute from './src/routes/analytics.route.js';
 import complaintsRoute from './src/routes/complaints.route.js';
+import localsAuxRoute from './src/routes/localsAux.route.js';
 
 dotenv.config();
 
@@ -30,5 +31,6 @@ app.use("/emergency", emergencyRoute);
 app.use("/conquests", conquestsRoute);
 app.use("/analytics", analyticsRoute);
 app.use("/complaints", complaintsRoute);
+app.use("/localsAux", localsAuxRoute);
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));

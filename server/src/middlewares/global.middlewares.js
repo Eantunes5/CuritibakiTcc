@@ -6,6 +6,7 @@ import emergencySerivce from '../services/emergency.serivce.js';
 import conquestsSerivce from '../services/conquests.serivce.js';
 import complaintsSerivce from '../services/complaints.serivce.js';
 import analyticsSerivce from '../services/analytics.serivce.js';
+import localsAuxSerivce from '../services/localsAux.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -161,6 +162,24 @@ export const validAnalytics = async (req,res,next) => {
 
   req.id = id;
   req.analytics = analytics;
+
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validLocalAux = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const local = await localsAuxSerivce.findByIdService(id);
+
+  if (!local) {
+    return res.status(400).send({ message: "Local não encontrado" });
+  }
+
+  req.id = id;
+  req.locals = local;
 
   next();
 } catch (err) {
