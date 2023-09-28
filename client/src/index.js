@@ -22,6 +22,7 @@ import RegisterEmergencia from './RegisterEmergencia';
 import Perfil from './Perfil';
 import AdicionarLocal from './AdicionarLocal';
 import ConfirmarEmail from './ConfirmarEmail';
+import TelaAceitacao from './TelaAceitacao';
 
 
 
@@ -46,6 +47,7 @@ root.render(
       <Route path="/Perfil" element={<Perfil />} />
       <Route path="/AdicionarLocal" element={<AdicionarLocal />} />
       <Route path="/pontos/local/:id" element={<Local />} />
+      <Route path="/LocalAux" element={<TelaAceitacao />} />
       <Route path="/verificar-email" element={<ConfirmarEmail />}
       
       
