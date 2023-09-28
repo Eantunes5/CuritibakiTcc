@@ -1,16 +1,9 @@
-// import '../App.css'
+import '../App.css'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import userIcon from '../imgs/user-solid.svg'
 import logoutIcon from '../imgs/logout-solid.svg'
 import { Link, useNavigate } from 'react-router-dom';
-import './header.css';
-
-
-import logoHeader from '../imgs/logo-escuro.png'
-import LangSelector from './langSelector';
-import MenuHeader from './menuHeader';
-
 
 function Header(){
 
@@ -59,33 +52,13 @@ function Header(){
 
     return(
         <div id="div_header">
-
-          <div id='div_header_img'>
-              <Link to='/'>
-                  <img src={logoHeader}></img>
-              </Link>
-          </div>
-
-          <div style={{display : 'flex', alignItems: 'center'}}>
-
-          <LangSelector/>
-          {isUserLoggedIn && (
-            <MenuHeader/>
-            // <Link to='/perfil'>
-            //   <button className='container_button_profile'>
-            //     <img className='icon_buttons' src={userIcon} alt=''/>
-            //     <p>
-            //     Olá, {nomeUsuario}
-            //     </p>
-            //   </button>
-            // </Link>
-
-            // <div className='container_button_logout'>
-            //   <div className='header_username'>Olá, {nomeUsuario}</div>
-            //   <button onClick={handleLogout} id='button_logout' title='Logout'>
-            //     <img className='icon_buttons' src={logoutIcon} alt=''/>
-            //   </button>
-            // </div>
+            {isUserLoggedIn && (
+            <div className='container_button_logout'>
+              <div className='header_username'>Olá, {nomeUsuario}</div>
+              <button onClick={handleLogout} id='button_logout' title='Logout'>
+                <img className='icon_buttons' src={logoutIcon} alt=''/>
+              </button>
+            </div>
             )}
             {!isUserLoggedIn && (
             <Link to='/login'>
@@ -93,13 +66,7 @@ function Header(){
                     <img className='icon_buttons' src={userIcon} alt=''/>
                 </button>
             </Link>
-            )} 
-          <label class="switch">
-            <input type="checkbox"/>
-            <span class="slider round"></span>
-          </label>
-          </div>
-            
+            )}
         </div>
     )
 }

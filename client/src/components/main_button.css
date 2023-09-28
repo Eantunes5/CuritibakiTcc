@@ -1,0 +1,30 @@
+
+.main-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .main-buttons .button-option {
+    width: 300px;
+    height: 50px;
+    background-image: linear-gradient(-90deg,#2C24C4,#2464E4);
+    font-size: 25px;
+    text-shadow:
+    -1px -1px 0 #000, /* Sombra superior esquerda */
+    1px -1px 0 #000,  /* Sombra superior direita */
+    -1px 1px 0 #000,  /* Sombra inferior esquerda */
+    1px 1px 0 #000;
+    opacity: 90%;
+  }
+  .button-on, .button-option:hover{
+    opacity: 100% !important;
+  }
+  .button-off{
+    opacity: 85% !important;
+  }

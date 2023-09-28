@@ -5,6 +5,8 @@ import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
 import CardEmergencia from './components/cards_emergencia';
 
+import icon from './imgs/iconE.png'
+
 function Emergencia() {
   const [users, setUsers] = useState([]);
 
@@ -27,9 +29,15 @@ function Emergencia() {
       <SelectButtons page='emergencia'/>
       <div className='div_container_cards_pontos'>
         <br></br>
-        <PontosTitle text='TELEFONES ÚTEIS'/>
-        <div className='div_container_cards_emergencia'>
-        {users.map((user) => (
+        <div className='info-container'>
+        <div className='info-title'>
+          <div className='info-text-icon'>
+            <img src={icon}></img>
+            <p>TELEFONES ÚTEIS!</p>
+          </div>
+          <div className='divider'></div>
+          <div className='emergencia-content'>
+          {users.map((user) => (
 
             <CardEmergencia
               nome={user.nome}
@@ -37,7 +45,13 @@ function Emergencia() {
               url_img={user.logo}
               />
               
-          ))}
+            ))}
+          </div>
+        </div>
+      </div>  
+        {/* <PontosTitle text='TELEFONES ÚTEIS'/> */}
+        <div className='div_container_cards_emergencia'>
+          {/* <button ><a href='tel:190'></a></button> */}
         </div>
       </div>
     </div>
