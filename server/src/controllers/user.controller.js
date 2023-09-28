@@ -111,6 +111,50 @@ const update = async(req,res) => {
 }
 };
 
+const updateConquests = async (req, res) => {
+  try {
+
+    const userId = req.user._id; 
+    
+    const user = await userSerivce.findByIdService(userId);
+    
+    if (!user) {
+      return res.status(404).send({ message: 'Usuário não encontrado' });
+    }
+    
+    const { categoria, progresso } = req.body;
+
+    user.conquistas.forEach((conquista) => {
+      if (conquista.categoria === categoria) {
+        conquista.progresso += progresso;
+        if (conquista.progresso >= conquista.meta) {
+          conquista.ativa = true;
+        }
+
+      }
+    });
+    
+    const {nome,email,senha,adm,idade,sexo,conquistas,favoritos} = user;
+
+    await userSerivce.updateService(
+      userId,
+      nome,
+      email,
+      senha,
+      adm,
+      idade,
+      sexo,
+      conquistas,
+      favoritos
+    );
+
+
+    res.status(200).send({ message: 'Progresso atualizado com sucesso' });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 const deleteById = async(req,res) => {
   try{const id = req.id;
 
@@ -131,4 +175,4 @@ const deleteById = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, findByEmail, update, deleteById };
+export default { create, findAll, findById, findByEmail, update, deleteById, updateConquests };
