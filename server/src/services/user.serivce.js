@@ -12,6 +12,8 @@ const updateService = (id,nome,email,senha,adm,idade,sexo,conquistas,favoritos) 
 
 const deleteService = (id) => User.deleteOne({_id: id});
 
+const updateVerifyUserById = (id) => User.findOneAndUpdate({_id: id}, {verificado, verifyTokenEmail})
+
 export default {
   createService,
   findAllService,
@@ -19,4 +21,5 @@ export default {
   findByEmailService,
   updateService,
   deleteService,
+  updateVerifyUserById
 };

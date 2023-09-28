@@ -3,7 +3,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
-import alertIcon from './imgs/circle-exclamation-solid.svg'
+import alertIcon from './imgs/circle-exclamation-solid.svg';
+import Alert from '@mui/material/Alert'
 
 function Register() {
   const axiosInstance = axios.create({
@@ -17,6 +18,9 @@ function Register() {
   const [confirmarSenha, setConfirmarPassword] = useState('');
   const [idade, setIdade] = useState(''); // Adicione o estado para idade
   const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
+  const [sucesso, setSucesso] = useState(false);
+
+  const url = process.env.REACT_APP_API_URL;
 
   const navigate = useNavigate();
 
@@ -38,7 +42,6 @@ function Register() {
     }
 
     // Verifica se o email já está em uso
-    const url = process.env.REACT_APP_API_URL;
     axiosInstance
       .get(`${url}/user?email=${email}`)
       .then(response => {
@@ -53,14 +56,19 @@ function Register() {
               nome,
               email,
               senha,
-              idade, // Inclua a idade no objeto enviado à API
-              sexo   // Inclua o sexo no objeto enviado à API
+              sexo,  // Inclua o sexo no objeto enviado à API
+              idade // Inclua a idade no objeto enviado à API
             })
             .then(response => {
               console.log(response.statusText);
               if (response.statusText === 'Created') {
-                alert('Registro realizado com sucesso!');
-                navigate("/login");
+                axiosInstance
+                .post(`${url}/auth/verificar-email`, {
+                  email
+                })
+                //alert('Registro realizado com sucesso!');
+                //navigate("/login");
+                setSucesso(true)
               }
             })
             .catch(error => {
@@ -85,14 +93,19 @@ function Register() {
       <Logo/>
       <div className="div_container_login_info">
         <div className="form_container">
-          <form id='login' onSubmit={handleSubmit}>
+        
+        {sucesso ? <Alert variant="outlined" severity="success">
+              Registro realizado com sucesso! 
+              Um email foi enviado para confirmar seu cadastro
+        </Alert> : null}
+          <form id='login' onSubmit={handleSubmit}>     
             <h1>Registrar</h1>
 
-            <div className="div_alert_error">
+           {/* <div className="div_alert_error">
               <img className="icons_alert" src={alertIcon}/>
               <div className="text_alert"></div>
               <img className="icons_alert" src={alertIcon}/>
-            </div>
+            </div>*/}
 
             <br/><br/>
             {/* Nome */}
