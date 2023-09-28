@@ -5,6 +5,7 @@ import ratingSerivce from '../services/rating.serivce.js';
 import emergencySerivce from '../services/emergency.serivce.js';
 import conquestsSerivce from '../services/conquests.serivce.js';
 import complaintsSerivce from '../services/complaints.serivce.js';
+import analyticsSerivce from '../services/analytics.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -142,6 +143,24 @@ export const validComplaints = async (req,res,next) => {
 
   req.id = id;
   req.complaints = complaints;
+
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validAnalytics = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const analytics = await analyticsSerivce.findByIdService(id);
+
+  if (!analytics) {
+    return res.status(400).send({ message: "Proposta de melhoria não encontrada" });
+  }
+
+  req.id = id;
+  req.analytics = analytics;
 
   next();
 } catch (err) {
