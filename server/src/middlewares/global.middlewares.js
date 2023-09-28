@@ -4,6 +4,7 @@ import localsSerivce from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
 import emergencySerivce from '../services/emergency.serivce.js';
 import conquestsSerivce from '../services/conquests.serivce.js';
+import complaintsSerivce from '../services/complaints.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -124,6 +125,24 @@ export const validConquest = async (req,res,next) => {
   req.id = id;
   req.conquest = conquest;
   
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validComplaints = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const complaints = await complaintsSerivce.findByIdService(id);
+
+  if (!complaints) {
+    return res.status(400).send({ message: "Reclamação não encontrada" });
+  }
+
+  req.id = id;
+  req.complaints = complaints;
+
   next();
 } catch (err) {
   res.status(500).send( {message: err.message})

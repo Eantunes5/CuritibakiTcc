@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import conquestsSerivce from '../services/conquests.serivce.js';
 
 const UserSchema = new mongoose.Schema({
   nome : {
@@ -37,13 +38,43 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
-  conquistas: [
-    {
-      type: String, 
-      required:true,
-      default: [],
+  conquistas: [{
+    nome: {
+      type: String,
+      required: true,
     },
-  ]
+    descricao: {
+      type: String,
+      required: true,
+    },
+    premio: {
+      type: String,
+      required: true,
+    },
+    categoria: {
+      type: String,
+      required: true,
+    },
+    foto: {
+      type: String,
+      required: true,
+    },
+    meta: {
+      type: Number,
+      required: true,
+      default: 40,
+    },
+    progresso: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    ativa: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  }],
 })
 
 UserSchema.pre("save", async function(next){
