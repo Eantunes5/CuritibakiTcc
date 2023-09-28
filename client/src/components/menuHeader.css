@@ -82,6 +82,8 @@
   background-color: #fff;
   padding: 5px;
   gap: 10px;
+  border: none;
+  border-radius: 5px;
 }
 .container_button_profile:hover{
   background-color: #f2f2f2;
