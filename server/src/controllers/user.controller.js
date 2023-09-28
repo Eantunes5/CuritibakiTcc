@@ -1,13 +1,23 @@
 import userSerivce  from '../services/user.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
+import conquestsSerivce from '../services/conquests.serivce.js';
 
 const create = async(req,res)  => {
   try{
     const {nome,email,senha,idade,sexo,conquistas,favoritos} = req.body;//
+    const conquests = await conquestsSerivce.findAllService();
 
   if (!nome || !email || !senha || !sexo || !idade ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
   }
+
+  for (let i = 0; i < conquests.length; i++) {
+    let aux = conquests[i]
+    console.log(aux)
+  }
+
+
+  req.body.conquistas = conquests;
 
   const user = await userSerivce.createService(req.body);
 

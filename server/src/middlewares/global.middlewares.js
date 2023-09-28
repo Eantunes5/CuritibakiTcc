@@ -4,6 +4,9 @@ import localsSerivce from '../services/locals.serivce.js';
 import ratingSerivce from '../services/rating.serivce.js';
 import emergencySerivce from '../services/emergency.serivce.js';
 import conquestsSerivce from '../services/conquests.serivce.js';
+import complaintsSerivce from '../services/complaints.serivce.js';
+import analyticsSerivce from '../services/analytics.serivce.js';
+import localsAuxSerivce from '../services/localsAux.serivce.js';
 
 export const validId = (req,res,next) => {
   try{const id = req.params.id;
@@ -124,6 +127,60 @@ export const validConquest = async (req,res,next) => {
   req.id = id;
   req.conquest = conquest;
   
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validComplaints = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const complaints = await complaintsSerivce.findByIdService(id);
+
+  if (!complaints) {
+    return res.status(400).send({ message: "Reclamação não encontrada" });
+  }
+
+  req.id = id;
+  req.complaints = complaints;
+
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validAnalytics = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const analytics = await analyticsSerivce.findByIdService(id);
+
+  if (!analytics) {
+    return res.status(400).send({ message: "Proposta de melhoria não encontrada" });
+  }
+
+  req.id = id;
+  req.analytics = analytics;
+
+  next();
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+export const validLocalAux = async (req,res,next) => {
+  try{const id = req.params.id;
+ 
+  const local = await localsAuxSerivce.findByIdService(id);
+
+  if (!local) {
+    return res.status(400).send({ message: "Local não encontrado" });
+  }
+
+  req.id = id;
+  req.locals = local;
+
   next();
 } catch (err) {
   res.status(500).send( {message: err.message})
