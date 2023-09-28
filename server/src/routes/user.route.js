@@ -5,6 +5,7 @@ import {validId,validUser, validEmail}  from '../middlewares/global.middlewares.
 const router = Router();
 
 router.post('/', userController.create);
+router.post('/update-conquests/:id',validId,validUser, userController.updateConquests);
 router.get('/', userController.findAll);
 router.get('/:id',validId,validUser, userController.findById);
 router.get('/email/:email',validEmail, userController.findByEmail);
