@@ -10,6 +10,8 @@ import starIcon from './imgs/star-solid.svg';
 import emptyStarIcon from './imgs/star-regular.svg';
 import userIcon from './imgs/user-solid.svg'
 import deleteIcon from './imgs/xmark-solid.svg'
+import { useRef } from "react"
+
 
 function Local() {
   const [nome, setNome] = useState('');
@@ -160,6 +162,23 @@ function Local() {
     fetchAvaliacoes();
   }, [id]);
 
+  const fileInputRef = useRef(null);
+
+  function convertToBase64(e) {
+    const file = e.target.files[0];
+
+    var reader = new FileReader();
+    reader.onload = () => {
+      //console.log(reader.result); //base64 string
+      setFoto(reader.result);
+    };
+    reader.onerror = error => {
+      console.log("Error: ", error);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   useEffect(() => {
     // Verifique se o local está nos favoritos do usuário quando o componente for montado
     const fetchFavoritos = async () => {
@@ -238,6 +257,7 @@ function Local() {
       Locals_id: id,
       Users_id: userId,
       Comentario_Pai_Id: comentarioPaiId, // Adicione o ID da avaliação pai
+      foto: foto
     };
   
     enviarAvaliacao(novaAvaliacao);
@@ -404,6 +424,9 @@ function Local() {
               <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
               {avaliacao.usuario.nome}
             </div>
+            <div>
+              <img src={avaliacao.foto} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
+            </div>
 
             {isAdmin || avaliacao.usuario._id === localStorage.getItem('userId') ? (
               <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteComment(avaliacao._id)}>
@@ -541,17 +564,17 @@ function Local() {
                 max={5}
                 required
               />
-              <label>
-                <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
-                  Imagem de Avaliação:
-                </p>
-                <div style={{width: '100%', boxSizing: 'border-box'}}>
-                  <input
-                    type="file"
-                    //onChange={(event) => setImagemAvaliacao(event.target.files[0])}
-                  />
-                </div>
-              </label>
+                <label for="foto"><a style={{color: '#ff4747'}}>*</a> Foto <img  title='Tamanho max: 80kb'/></label><br/>
+            <input
+              type="file"
+              accept='image/*'
+              name="foto"
+              id="foto"
+              ref={fileInputRef}
+              style={{border: 'none'}}
+              onChange={convertToBase64}
+              required
+            />
               <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
               </p>
             </label>
