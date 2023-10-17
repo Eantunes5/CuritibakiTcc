@@ -10,9 +10,23 @@ function Perfil() {
   const [emailUsuario, setEmailUsuario] = useState('');
   const [idadeUsuario, setIdadeUsuario] = useState('');
   const [sexoUsuario, setSexoUsuario] = useState('');
+  const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para a foto de perfil
   const [favoritos, setFavoritos] = useState([]); // Novo estado para a lista de favoritos
   const [favoritosDetalhes, setFavoritosDetalhes] = useState([]); // Novo estado para os detalhes dos locais favoritos
   const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
+
+    // Função para lidar com a seleção de arquivo
+    const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Defina a imagem de perfil com a imagem carregada
+          setFotoPerfil(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
 
   const handleEditarClick = () => {
     // Quando o botão "Editar" é clicado, entre no modo de edição
@@ -61,6 +75,7 @@ function Perfil() {
         setEmailUsuario(data.email);
         setIdadeUsuario(data.idade);
         setSexoUsuario(data.sexo);
+        setFotoPerfil(data.fotoPerfil); // Defina a foto de perfil a partir dos dados do usuário
       } catch (error) {
         console.error('Error:', error);
       }
@@ -115,12 +130,21 @@ function Perfil() {
       <div style={{ height: '75px' }}></div>
       <div className="profile-container">
         <div className="profile-header">
-          <div className="profile-avatar">
+        <div className="profile-avatar">
+            {/* Exiba a imagem de perfil ou o ícone padrão */}
             <img
-              src={defaultIcon}
+              src={fotoPerfil || defaultIcon}
               alt="Imagem de Perfil"
               className="avatar-image"
             />
+            {/* Adicione o campo de entrada de arquivo para carregar uma nova imagem de perfil */}
+            {editMode && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            )}
           </div><div className="profile-info">
             {editMode ? ( // Se estiver no modo de edição, exiba campos de entrada
               <>
