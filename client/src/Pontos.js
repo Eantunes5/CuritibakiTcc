@@ -52,12 +52,12 @@ function Pontos() {
   return (
     <div className="App">
       <Header/>
-      <div className="logo-central-index">
+      <div className="logo-central-carousel">
         <img src={logo}></img>
         VENHA CONHECER CURITIBA!
+      <MainButton ativo="pontos"/>
       </div>
       <ImageCarousel/>
-      <MainButton ativo="pontos"/>
 
       
 

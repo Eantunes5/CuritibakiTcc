@@ -11,23 +11,23 @@
     margin-bottom: 10px;
   }
   .main-buttons .button-option {
-    color: white;
-    width: 300px;
+    /* color: white; */
+    width: 273px;
     height: 50px;
-    background-image: linear-gradient(-90deg,#2C24C4,#2464E4);
-    font-size: 25px;
-    text-shadow:
-    -1px -1px 0 #000, /* Sombra superior esquerda */
-    1px -1px 0 #000,  /* Sombra superior direita */
-    -1px 1px 0 #000,  /* Sombra inferior esquerda */
-    1px 1px 0 #000;
-    opacity: 90%;
+    background-color: white;
+    /* background-image: linear-gradient(-90deg,#2C24C4,#2464E4); */
+    font-size: 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 25px;
+    color: #111;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: solid 2px #fff;
+
+    transition: background-color 0.3s, color 0.3s;
   }
   .button-on, .button-option:hover{
-    opacity: 100% !important;
-  }
-  .button-off{
-    opacity: 85% !important;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
   }

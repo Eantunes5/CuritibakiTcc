@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react"
 import Header from './components/header';
-import ImageCarousel from './components/carrossel';
+import ImageCarouselIndex from './components/carrosselIndex';
 import MainButton from './components/main_buttons';
 import { useNavigate } from "react-router-dom";
 
@@ -41,10 +41,10 @@ function App() {
       <div className="logo-central-index">
         <img src={logo}></img>
         VENHA CONHECER CURITIBA!
+        <MainButton ativo=""/>
       </div>
-      <ImageCarousel/>
-      <MainButton ativo=""/>
-      <div className='info-container'>
+      <ImageCarouselIndex/>
+       <div className='info-container'>
         <div className='info-title'>
           <div className='info-text-icon'>
             <img src={icon}></img>
@@ -63,7 +63,7 @@ function App() {
             </p>
           </div>
         </div>
-      </div>
+      </div> 
 
     </div>
   )

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './carrossel.css'
+import './carrosselIndex.css'
 
-const ImageCarousel = () => {
+const ImageCarouselIndex = () => {
   return (
-    <div id='carrossel'>
+    <div id='carrosselIndex'>
         <Carousel showThumbs={false} showStatus={false} autoPlay={true} interval={5000} infiniteLoop={true}>
             <div>
                 <img src="https://c4.wallpaperflare.com/wallpaper/673/190/326/parks-flowers-garden-curitiba-wallpaper-preview.jpg" alt="Imagem 2" />
@@ -21,4 +21,4 @@ const ImageCarousel = () => {
   );
 };
 
-export default ImageCarousel;
+export default ImageCarouselIndex;
