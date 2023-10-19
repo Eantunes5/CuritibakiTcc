@@ -1,4 +1,4 @@
-import '../App.css'
+import './cards_pontos.css'
 import React, { useEffect, useState }from "react";
 
 import { Link } from 'react-router-dom';
@@ -32,15 +32,12 @@ function CardsPontos(tipo){
     return(
         <div className='div_container_card'>
         {users.map((item, i) => {
-            if(item.nome.length > 20){
-              var font_size = {fontSize : '25px'};
-            }
             if(item.tipo == tipo.tipo){
               return(
                 <div className="card">
                   <Link to={`Local/${item._id}`} className='card_content'>
                     <img src={`${item.foto}`} alt=''></img>
-                    <p className='card_text' style={font_size}>{item.nome}</p>
+                    <p className='card_text'>{item.nome}</p>
                   </Link>
                 </div>
               )
