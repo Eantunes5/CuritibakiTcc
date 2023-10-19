@@ -7,9 +7,14 @@ import { Link } from 'react-router-dom';
 function PontosTitle(text){
     return(
         <div className='div_separator'>
-            <img className='icon_left' src={PointerLeft} alt=''/>
-            {text.text}
-            <img className='icon_right' src={PointerLeft} alt=''/>
+            <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                <img className='icon_left' src={PointerLeft} alt=''/>
+                {text.text}
+            </div>
+            <div 
+            className='divider'
+            ></div>
+            {/* <img className='icon_right' src={PointerLeft} alt=''/> */}
         </div>
     )
 }
