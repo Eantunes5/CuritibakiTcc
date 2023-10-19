@@ -1,4 +1,4 @@
-import '../App.css';
+import './cards_pontos.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

@@ -44,7 +44,7 @@ function App() {
         <MainButton ativo=""/>
       </div>
       <ImageCarouselIndex/>
-       <div className='info-container'>
+      {/* <div className='info-container'>
         <div className='info-title'>
           <div className='info-text-icon'>
             <img src={icon}></img>
@@ -63,7 +63,7 @@ function App() {
             </p>
           </div>
         </div>
-      </div> 
+      </div>  */}
 
     </div>
   )
