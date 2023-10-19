@@ -95,7 +95,7 @@ function Pontos() {
           </div>
         </div>
 
-        <PontosTitle text={tipo === 'ponto' ? 'PONTOS TURISTICOS' : tipo === 'parque' ? 'PARQUES' : 'SHOPPINGS'} />
+        <PontosTitle text={tipo === 'ponto' ? 'PONTOS TURISTICOS' : tipo === 'parque' ? 'PARQUES' : tipo === 'shopping' ? 'SHOPPINGS' : 'TODOS'} />
         <CardsPontos tipo={tipo} locais={users} />
       </div>
     </div>
