@@ -2,7 +2,6 @@
     background-color: transparent;
     border: none;
     padding: 0 !important;
-    margin: 10px;
 }
 .card_emergencia_button:hover{
     background-color: transparent !important;
@@ -11,7 +10,7 @@
 .card_emergencia{
     height: 60px;
     width: 275px;
-    padding: 10px;
+    padding: 5px 10px;
     background-image: linear-gradient(-90deg,#2C24C4,#2464E4);
     border-radius: 15px;
     display: flex;
@@ -25,18 +24,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotate(90deg);
 }
 .card_emergencia_img > img{
     height: 100%;
 }
 
 .card_text_emergencia{
-    font-size: 35px;
-    /* line-height: 50px; */
+    font-size: 2vh;
+    /* line-height: 45px; */
     font-weight: 600;
-    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 0 0 5px black, 0 0 5px black, 0 0 0.5px black;
+    font-family: "Poppins", sans-serif;
     color: white;
     text-align: center;
     text-transform: uppercase;

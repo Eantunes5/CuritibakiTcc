@@ -548,10 +548,11 @@ justify-content: center;
   gap: 15px;
   margin-left: 5%;
 }
-.emergencia-content{
+.emergencia_content{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 15px;
 }
 
 
