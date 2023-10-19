@@ -57,6 +57,34 @@ const findById = async(req,res) => {
   }
 };
 
+const findAllByName = async(req,res)  => {
+  try{
+    const locals = await localsSerivce.findByNameService(req.params.nome);
+  
+  if(locals.length === 0){
+    return res.status(400).send({message: "Não há locais cadastrados"});
+  }
+
+  res.send(locals)
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
+const findAllByType = async(req,res)  => {
+  try{
+    const locals = await localsSerivce.findByTypeService(req.params.tipo);
+  
+  if(locals.length === 0){
+    return res.status(400).send({message: "Não há locais cadastrados"});
+  }
+
+  res.send(locals)
+} catch (err) {
+  res.status(500).send( {message: err.message})
+}
+};
+
 const update = async(req,res) => {
   try{const {nome,slug,tipo,sobre,horarios,ingressos,endereco,foto,iframe} = req.body;
   
@@ -106,4 +134,4 @@ const deleteById = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, update, deleteById };
+export default { create, findAll, findById, findAllByName, findAllByType, update, deleteById };
