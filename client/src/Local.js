@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import SmallHeader from './components/small_header';
+import Header from './components/header';
 import infoIcon from './imgs/circle-info-solid.svg'
 import timeIcon from './imgs/clock-solid.svg';
 import ticketIcon from './imgs/ticket-solid.svg';
@@ -34,6 +34,7 @@ function Local() {
   const [replyTo, setReplyTo] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [favoritado, setFavoritado] = useState(false);
+  
 
   const { id } = useParams();
 
@@ -235,7 +236,7 @@ function Local() {
       // Atualize o estado para refletir se o local está favoritado ou não
       setFavoritado(localIndex === -1);
 
-      alert(`Local ${localIndex === -1 ? 'adicionado aos' : 'removido dos'} favoritos com sucesso!`);
+      // alert(`Local ${localIndex === -1 ? 'adicionado aos' : 'removido dos'} favoritos com sucesso!`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -346,29 +347,34 @@ function Local() {
 
   return (
     <div>
-      <SmallHeader/>
-      <div className='local_img'>
-        <img src={foto} alt=''/>
-      </div>
-      <div className='div_name_container'>
+      <Header/>
+      {/* ADICIONAR CARROSSEL DINAMICO*/}
+        <div className='local_img'>
+          <img src={foto} alt=''/>
+          <div className='local_name'>
+            {nome}
+            <button
+              className="favoritar_button"
+              onClick={toggleFavorito}
+            >
+              <img src={favoritado ? emptyStarIcon : starIcon} className={favoritado ? "favoritar_button_off": "favoritar_button_on"} alt="Favoritar" />
+            </button>
+          </div>
+        </div>
+      {/* ADICIONAR CARROSSEL DINAMICO*/}
+      {/* <div className='div_name_container'>
         <div className='div_name_local'>
           <p className='ponto_name'>{nome}</p>
-        </div>
-      </div>
-      <div className='infos_pontos_container'>
-        <div className="div_name_container">
-          <div className="div_name_local">
-            <p className="ponto_name">{nome}</p>
-            {/* Adicione o botão de favoritar e a lógica para alternar entre favoritar e desfavoritar */}
-            <button
+          <button
               className="favoritar-button"
               onClick={toggleFavorito}
             >
               {favoritado ? 'Remover dos Favoritos' : 'Favoritar'}
               <img src={emptyStarIcon} alt="Favoritar" />
             </button>
-          </div>
         </div>
+      </div> */}
+      <div className='infos_pontos_container'>
         <div className='card_ponto'>
           <p className='ponto_name'>
             <img className='icons_infos' src={infoIcon} alt=''/>
