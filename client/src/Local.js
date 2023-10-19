@@ -181,6 +181,7 @@ function Local() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // Verifique se o local está nos favoritos do usuário quando o componente for montado
     const fetchFavoritos = async () => {
       try {
