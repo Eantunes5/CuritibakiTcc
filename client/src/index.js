@@ -23,6 +23,7 @@ import Perfil from './Perfil';
 import AdicionarLocal from './AdicionarLocal';
 import ConfirmarEmail from './ConfirmarEmail';
 import TelaAceitacao from './TelaAceitacao';
+import i18n from './i18n'; // Importe a configuração do i18next
 
 
 
