@@ -11,6 +11,9 @@ import emptyStarIcon from './imgs/star-regular.svg';
 import userIcon from './imgs/user-solid.svg'
 import deleteIcon from './imgs/xmark-solid.svg'
 import { useRef } from "react"
+import PontosTitle from './components/pontos_title';
+import './Local.css'
+import ImageCarouselPontos from './components/carrossel_pontos';
 
 
 function Local() {
@@ -343,6 +346,27 @@ function Local() {
         setNota('');
         closeForm(); // Fechar o formulário após enviar a resposta
   };
+
+  const renderStars = (numberOfStars) => {
+    const starFilled = <img className='icons_avaliacao' src={starIcon} alt='' />;
+    const starEmpty = <img className='icons_avaliacao' src={emptyStarIcon} alt='' />;  
+
+    const stars = [];
+    for (let i = 0; i < numberOfStars; i++) {
+      stars.push(starFilled);
+    }
+    for (let i = numberOfStars; i < 5; i++) {
+      stars.push(starEmpty);
+    }
+
+    return (
+      <p className='card_text' style={{ lineHeight: '25px', marginLeft: '50px', textAlign: 'start' }}>
+        {stars.map((star, index) => (
+          <span key={index}>{star}</span>
+        ))}
+      </p>
+    );
+  }
   
   const isLoggedIn = !!localStorage.getItem('token'); // Verificar se o usuário está logado
 
@@ -376,64 +400,57 @@ function Local() {
         </div>
       </div> */}
       <div className='infos_pontos_container'>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={infoIcon} alt=''/>
-            SOBRE O LOCAL
-          </p>
-          <p className='ponto_infos_text'>
-            {sobre}
-          </p>
-        </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={timeIcon} alt=''/>
-            HORÁRIOS
-          </p>
-          <p className='ponto_infos_text'>
-            {horarios}
-          </p>
-        </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={ticketIcon} alt=''/>
-            INGRESSOS
-          </p>
-          <p className='ponto_infos_text'>
-            {ingressos}
-          </p>
-        </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={mapIcon} alt=''/>
-            COMO CHEGAR
-          </p>
-          <p className='ponto_infos_text'>
-            {endereco}
-            <br></br>
-            <iframe src={iframe} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </p>
-        </div>
-      </div>
-      <div className='container_comments'>
-        <p className='card_text'>
-          <img className='icons_infos' src={starIcon} alt=''/>
-          AVALIAÇÕES
-          <img className='icons_infos' src={starIcon} alt=''/>
+        <PontosTitle text={'Sobre o local'}/>
+        <p className='ponto_infos_text'>
+          {sobre}
         </p>
-        <div className='container_card_comment'>
-        {avaliacoes
+        <div className='infos_pontos_half'>
+          <div className='info_block'>
+            <PontosTitle text={'Horários'}/>
+            <p className='ponto_infos_text'>
+              {horarios}
+            </p>
+          </div>
+          <div className='info_block'>
+            <PontosTitle text={'Ingressos'}/>
+            <p className='ponto_infos_text'>
+              {ingressos}
+            </p>
+          </div>
+        </div>
+
+        <div className='infos_pontos_half'>
+          <div className='info_block'>
+            <PontosTitle text={'Como chegar'}/>
+            <p className='ponto_infos_text'>
+              {endereco}
+              <iframe src={iframe} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </p>
+          </div>
+          <div className='info_block'>
+            <PontosTitle text={'Galeria'}/>
+            <p className='ponto_infos_text'>
+              <ImageCarouselPontos/>
+            </p>
+          </div>
+        </div>
+        <br></br>
+        <div className='divider'></div>
+        <PontosTitle text={'Avaliações'}/>
+        <div className='container_comments'>
+          <div className='container_card_comment'>
+          {avaliacoes
         .filter((avaliacao) => avaliacao.Comentario_Pai_id === "")
         .map((avaliacao) => (
           <div className='card_comment'>
-            <p className='card_text' id='card_text_av'>
-            <div>
-              <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-              {avaliacao.usuario.nome}
-            </div>
-            <div>
+            <p className='card_comment_name' id='card_text_av'>
+              <div className='card_img_name'>
+                <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
+                <div className='card_comment_username'>{avaliacao.usuario.nome}</div>
+              </div>
+            {/* <div>
               <img src={avaliacao.foto} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-            </div>
+            </div> */}
 
             {isAdmin || avaliacao.usuario._id === localStorage.getItem('userId') ? (
               <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteComment(avaliacao._id)}>
@@ -441,57 +458,12 @@ function Local() {
               </button>
             ) : null}
             </p>
-            <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
+            {renderStars(parseInt(avaliacao.nota))}
+            <p className='card_comment_text'>
               {avaliacao.comentario}
             </p>
           <div>
           </div>
-            { avaliacao.nota == '1' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '2' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '3' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '4' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '5' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                </p>
-              )
-            }
 
             <div>
             {respostas
@@ -535,9 +507,15 @@ function Local() {
             
           </div>
           ))}
-          
+          </div>
+        </div>
 
-            {/* COLOCA UMA VALIDAÇÃO PRA SUMIR COM ESSE SETOR, DPS EU ARRUMO OQ VAI APARECER E OQ N VAI */}
+
+
+      </div>
+      <div className='container_comments'>
+        <div className='container_card_comment'>
+
 
 
           <div className='contato_faq colored_background_opacity'>

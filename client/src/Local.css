@@ -1,0 +1,91 @@
+.ponto_infos_text{
+    font-size: 2vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    margin: 0px 2.5vw;
+    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+    color: white;
+    text-align: left !important;
+}
+.ponto_infos_text iframe{
+    border: none;
+    border-radius: 25px;
+    margin-top: 10px;
+}
+.infos_pontos_half{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.info_block{
+    width: 50%; /* Ajuste o preenchimento conforme necessário */
+    box-sizing: border-box; /* Incluir padding na largura */
+}
+
+@media (max-width: 750px) {
+    .infos_pontos_half {
+        flex-direction: column;
+    }
+    .info_block{
+        width: 100%;
+    }
+  }
+
+
+.container_comments{
+    width: 100%;
+    height: fit-content;
+}
+.container_card_comment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+.card_comment{
+    width: 92vw;
+    /* height: fit-content; */
+    padding: 10px;
+    padding-bottom: 15px;
+    background-color:#1f1f1f;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
+    border-radius: 12px;
+}
+.card_comment_name {
+    font-size: 2vh;
+    line-height: 45px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+    font-family: "Poppins", sans-serif;
+    color: #eee;
+    text-transform: uppercase;
+    margin: 0;
+}
+.card_comment_name .icons_infos{
+    margin: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+}
+.card_comment_username{
+    line-height: 35px;
+}
+.card_img_name{
+    display: flex;
+    gap: 15px;
+}
+.card_comment_text{
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-size: 2vh;
+    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
+    font-family: "Poppins", sans-serif;
+    color: #eee;
+}
+
+
+/* .card_comment > .card_text{
+    text-align: left;
+  } */
