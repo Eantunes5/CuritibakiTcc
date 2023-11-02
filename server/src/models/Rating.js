@@ -28,7 +28,7 @@ const RatingSchema = new mongoose.Schema({
   },
   foto: {
     type: String,
-    required:true,
+    required:false,
     default:"",
   },
 }) 
