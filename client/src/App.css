@@ -503,10 +503,7 @@ justify-content: center;
   text-transform: uppercase;
   margin: 0;
 }
-#card_text_av{
-  display: flex;
-  justify-content: space-between;
-}
+
 .delete_icon{
   filter: invert(100%);
 }
@@ -517,19 +514,7 @@ justify-content: center;
   border: none;
   cursor: pointer;
 }
-.button_responder_av{
-  height: 25px;
-  width: 50%;
-  max-width: 160px;
-  border: none;
-  background-color: transparent;
-  font-size: 16px;
-  text-shadow: 0.5px 0.5px 1px black, 0 0 0.5em black, 0 0 0.2em black;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  cursor: pointer;
-  margin-top: 5px;
-}
+
 
 /*
 //////////////////////////////////////////////////////////////////////
@@ -733,7 +718,6 @@ input[type='submit' i], .buttons_admin{
   align-items: center;
   flex-direction: column;
   padding-bottom: 15px;
-  border-bottom: #2663E5 solid 5px;
 }
 .card_ponto{
   margin-top: 15px;
@@ -756,34 +740,10 @@ input[type='submit' i], .buttons_admin{
 }
 
 
-.card_resposta{
-    width: 80%;
-    height: fit-content;
-    padding: 10px;
-    padding-bottom: 15px;
-    background-color:#363636;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
-    border-radius: 12px;
-    margin-left: 5%;
-    margin-top: 15px;
-}
-.icons_resposta{
-  filter: invert(100%);
-  height: 20px;
 
-}
-.text_resposta_nome{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-}
-.text_resposta{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-  padding-left: 10px;
-}
+
+
+
 .icons_avaliacao{
   width: 20px;
   margin: 0;
@@ -810,7 +770,7 @@ textarea {
   width: 30px;
   margin-left: 15px;
 }
-.enviar_avaliacao, .att_local{
+.att_local{
   margin-top: 15px;
   float: right;
   background-color: #2662e5;

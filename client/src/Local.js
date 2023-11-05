@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from './components/header';
-import infoIcon from './imgs/circle-info-solid.svg'
+import commentIcon from './imgs/comment-regular.svg'
 import timeIcon from './imgs/clock-solid.svg';
 import ticketIcon from './imgs/ticket-solid.svg';
 import mapIcon from './imgs/map-solid.svg';
@@ -25,7 +25,13 @@ function Local() {
   const [endereco, setEndereco] = useState('');
   const [foto, setFoto] = useState('');
   const [avaliacoes, setAvaliacoes] = useState([]);
+
+
   const [nota, setNota] = useState('');
+  const [hover, setHover] = useState(0);
+
+
+
   const [comentario, setComentario] = useState('');
   const [iframe, setIframe] = useState('');
   const [comentarioPaiId, setComentarioPaiId] = useState(''); 
@@ -37,6 +43,7 @@ function Local() {
   const [replyTo, setReplyTo] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [favoritado, setFavoritado] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
 
   const { id } = useParams();
@@ -367,6 +374,37 @@ function Local() {
       </p>
     );
   }
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target.className === 'modal') {
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleMouseOver = (star) => {
+    setHover(star);
+  };
+  const handleMouseLeave = () => {
+    setHover(0);
+  };
+  const handleClick = (star) => {
+    setNota(star);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+
+
   
   const isLoggedIn = !!localStorage.getItem('token'); // Verificar se o usuário está logado
 
@@ -435,15 +473,85 @@ function Local() {
           </div>
         </div>
         <br></br>
-        <div className='divider'></div>
         <PontosTitle text={'Avaliações'}/>
+        <button className="button_avaliacao" onClick={openModal}>
+          Avaliar!
+          </button>
+        {isModalOpen && (
+
+
+
+
+        <div className="modal" onClick={handleOutsideClick}>
+          <div className="modal_content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p className='avaliacao_name'>{nome}</p>
+            <form onSubmit={handleSubmit}>
+              <label style={{display: 'flex', justifyContent: 'center'}}>
+                {[1, 2, 3, 4, 5].map((star) => {
+                  return (
+                    <span
+                      key={star}
+                      style={{ fontSize: '30px', color: (star <= (hover || nota)) ? '#FFD700' : '#C0C0C0', cursor: 'pointer'}}
+                      onMouseOver={() => handleMouseOver(star)}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => handleClick(star)}
+                    >
+                      ★
+                    </span>
+                  );
+                })}
+              </label>
+            <label>
+              <div className="textbox_avaliacao">
+                <textarea
+                  value={comentario}
+                  onChange={(event) => setComentario(event.target.value)}
+                  required
+                  placeholder='Escreva seu comentário...'
+                />
+              </div>
+            </label>
+
+            <label>
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <button
+                  className='image_avaliacao'
+                  onClick={handleButtonClick}
+                >
+                  Carregar Imagem
+                </button>
+              </div>
+              <input
+                type="file"
+                accept='image/*'
+                name="foto"
+                id="foto"
+                ref={fileInputRef}
+                style={{display: 'none'}}
+                onChange={convertToBase64}
+                required
+              />
+            </label>
+            <button type="submit" className='enviar_avaliacao'>Enviar</button>
+            
+          </form>
+          </div>
+        </div>
+
+
+
+
+
+      )}
+
         <div className='container_comments'>
           <div className='container_card_comment'>
           {avaliacoes
         .filter((avaliacao) => avaliacao.Comentario_Pai_id === "")
         .map((avaliacao) => (
           <div className='card_comment'>
-            <p className='card_comment_name' id='card_text_av'>
+            <p className='card_comment_name card_text_av'>
               <div className='card_img_name'>
                 <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
                 <div className='card_comment_username'>{avaliacao.usuario.nome}</div>
@@ -463,32 +571,8 @@ function Local() {
               {avaliacao.comentario}
             </p>
           <div>
-          </div>
-
-            <div>
-            {respostas
-            .filter((resposta) => resposta.Comentario_Pai_id === avaliacao._id)
-            .map(resposta => (
-              <div key={resposta._id} className="card_resposta">
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <div style={{display: 'flex'}}>
-                    <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-                    <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
-                  </div>
-                  {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
-                    <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
-                      <img className='delete_icon' src={deleteIcon} alt='' />
-                    </button>
-                  ) : null}
-                </div>
-                <p className='text_resposta'>{resposta.comentario}</p>
-              </div>
-            ))}
-            </div>
-
-            <br></br>
-            <div style={{width: '100%', border: '1px solid #a3a3a3'}}></div>
-            <br></br>
+          <br></br>
+            <div style={{width: '100%', border: '1px solid #a3a3a3', marginBottom: '5px'}}></div>
             <div style={{width: '100%'}}>
               {replyTo === avaliacao._id ? (
                 <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
@@ -504,7 +588,27 @@ function Local() {
                 <button className='button_responder_av' onClick={() => openForm(avaliacao._id)}>Responder</button>
               )}
             </div>
-            
+          </div>
+            <div>
+            {respostas
+            .filter((resposta) => resposta.Comentario_Pai_id === avaliacao._id)
+            .map(resposta => (
+              <div key={resposta._id} className="card_resposta">
+                <div className='card_comment_name card_text_res'>
+                  <div className='card_img_name'>
+                    <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
+                    <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
+                  </div>
+                  {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
+                    <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
+                      <img className='delete_icon' src={deleteIcon} alt='' />
+                    </button>
+                  ) : null}
+                </div>
+                <p className='text_resposta'>{resposta.comentario}</p>
+              </div>
+            ))}
+            </div>
           </div>
           ))}
           </div>
@@ -513,61 +617,7 @@ function Local() {
 
 
       </div>
-      <div className='container_comments'>
-        <div className='container_card_comment'>
 
-
-
-          <div className='contato_faq colored_background_opacity'>
-          <p className='card_text'>
-          JÁ VISITOU ESTE LOCAL? FAÇA UMA AVALIAÇÃO!
-          </p>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
-                Comentário:
-              </p>
-              <div style={{width: '100%', boxSizing: 'border-box',}}>
-                <textarea
-                  value={comentario}
-                  onChange={(event) => setComentario(event.target.value)}
-                  required
-                  placeholder='Escreva seu comentário...'
-                />
-              </div>
-            </label>
-            <br/>
-            <label>
-              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
-                Nota:
-                <input
-                id='input_nota'
-                type="number"
-                value={nota}
-                onChange={(event) => setNota(event.target.value)}
-                min={1}
-                max={5}
-                required
-              />
-                <label for="foto"><a style={{color: '#ff4747'}}>*</a> Foto <img  title='Tamanho max: 80kb'/></label><br/>
-            <input
-              type="file"
-              accept='image/*'
-              name="foto"
-              id="foto"
-              ref={fileInputRef}
-              style={{border: 'none'}}
-              onChange={convertToBase64}
-              required
-            />
-              <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
-              </p>
-            </label>
-            
-          </form>
-        </div>
-        </div>   
-      </div>
 
     </div>
   );
