@@ -4,6 +4,8 @@ import './Perfil.css';
 import Header from './components/header';
 import defaultIcon from './imgs/user-solid.svg';
 import { Link } from 'react-router-dom'; // Importe o componente Link
+import { useTranslation } from 'react-i18next';
+
 
 function Perfil() {
   const [nomeUsuario, setNomeUsuario] = useState('');
@@ -14,6 +16,8 @@ function Perfil() {
   const [favoritos, setFavoritos] = useState([]); // Novo estado para a lista de favoritos
   const [favoritosDetalhes, setFavoritosDetalhes] = useState([]); // Novo estado para os detalhes dos locais favoritos
   const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
+  const { t } = useTranslation();
+
 
     // Função para lidar com a seleção de arquivo
     const handleFileChange = (e) => {
@@ -172,21 +176,21 @@ function Perfil() {
             ) : (
               <>
                 <h2>{nomeUsuario}</h2>
-                <p>Email: {emailUsuario}</p>
-                <p>Idade: {idadeUsuario} anos</p>
-                <p>Sexo: {sexoUsuario}</p>
+                <p>{t('Email')} {emailUsuario}</p>
+                <p>{t('Idade')} {idadeUsuario} {t('anos')}</p>
+                <p>{t('Sexo')} {sexoUsuario}</p>
               </>
             )}
             {editMode ? ( // Exiba o botão "Confirmar" no modo de edição
-              <button onClick={handleConfirmarClick}>Confirmar</button>
+              <button onClick={handleConfirmarClick}>{t('Confirmar')}</button>
             ) : (
-              <button onClick={handleEditarClick}>Editar</button>
+              <button onClick={handleEditarClick}>{t('Editar')}</button>
             )}
           </div>
         </div>
         <div className="profile-sections">
           <div className="profile-section">
-            <h3>Conquistas</h3>
+            <h3>{t('Conquistas')}</h3>
             <ul>
               <li>Conquista 1</li>
               <li>Conquista 2</li>
@@ -194,7 +198,7 @@ function Perfil() {
             </ul>
           </div>
           <div className="profile-section">
-            <h3>Favoritos</h3>
+            <h3>{t('Favoritos')}</h3>
             <ul style={{display: 'flex',alignItems: 'center'}}>
               {favoritosDetalhes.map((local, index) => (
                 <li key={local._id}>

@@ -1,4 +1,6 @@
 {
+        "translation": {
+
           "hello": "Olá",
           "world": "Mundo",
           "welcome": "Bem-vindo",
@@ -108,5 +110,7 @@
           "adults": "Adultos",
           "children": "Crianças",
           "search_results": "Resultados da Pesquisa",
-          "emergencies":"Emergências"
+          "emergencies":"Emergências",
+          "VENHA CONHECER CURITIBA!": "VENHA CONHECER CURITIBA!"
+        }
   }

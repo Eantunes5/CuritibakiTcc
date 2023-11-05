@@ -8,12 +8,14 @@ import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
 import CardsPontos from './components/cards_pontos';
 import SmallHeader from './components/small_header';
+import { useTranslation } from 'react-i18next';
 
 function Pontos() {
   const [users, setUsers] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tipo, setTipo] = useState('todos');
+  const { t } = useTranslation();
 
   useEffect(() => {
     getUsers();
@@ -57,7 +59,7 @@ function Pontos() {
       <Header />
       <div className="logo-central-carousel">
         <img src={logo} alt="logo" />
-        VENHA CONHECER CURITIBA!
+        {t('VENHA CONHECER CURITIBA!')}
         <MainButton ativo="pontos" />
       </div>
       <ImageCarousel />
@@ -66,7 +68,7 @@ function Pontos() {
         <div className="divider" />
         <div className="sidebar-filters-search">
           <div>
-            <label htmlFor="tipo">Tipo do Local</label>
+            <label htmlFor="tipo">{t('Tipo do Local')}</label>
             <br />
             <select
               style={{ cursor: 'pointer' }}
@@ -75,9 +77,9 @@ function Pontos() {
               value={tipo}
               onChange={(e) => setTipo(e.target.value)}
             >
-              <option value="todos">Todos</option>
-              <option value="ponto">Ponto</option>
-              <option value="parque">Parque</option>
+              <option value="todos">{t('Todos')}</option>
+              <option value="ponto">{t('Ponto')}</option>
+              <option value="parque">{t('Parque')}</option>
               <option value="shopping">Shopping</option>
             </select>
           </div>
@@ -85,13 +87,13 @@ function Pontos() {
             {/* Barra de pesquisa */}
             <input
               type="text"
-              placeholder="Pesquisar por nome..."
+              placeholder={t('Pesquisar por nome...')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />{' '}
             <br />
             {/* Botão de pesquisa */}
-            <button onClick={handleSearch}>Procurar</button>
+            <button onClick={handleSearch}>{t('Procurar')}</button>
           </div>
         </div>
 
