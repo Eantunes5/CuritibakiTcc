@@ -1,5 +1,6 @@
 import './App.css';
 import React from "react"
+import Header from './components/header';
 import SmallHeader from './components/small_header';
 import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
@@ -9,10 +10,12 @@ function Faq() {
 
   return (
     <div>
-      <SmallHeader/>
-      <SelectButtons page='faq'/>
+      <Header/>
+      <div style={{height: '75px'}}></div>
+      <PontosTitle text="Perguntas Frequentes" />
+
+
       <div className='div_container_cards_pontos'>
-        <PontosTitle text='PERGUNTAS FREQUENTES'/>
         <div className='div_container_cards_emergencia'>
         <CardFaq
           pergunta='ONDE COMPRAR INGRESSOS PARA A LINHA DE TURISMO?'

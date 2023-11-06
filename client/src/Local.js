@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import SmallHeader from './components/small_header';
-import infoIcon from './imgs/circle-info-solid.svg'
+import Header from './components/header';
+import commentIcon from './imgs/comment-regular.svg'
 import timeIcon from './imgs/clock-solid.svg';
 import ticketIcon from './imgs/ticket-solid.svg';
 import mapIcon from './imgs/map-solid.svg';
@@ -11,6 +11,9 @@ import emptyStarIcon from './imgs/star-regular.svg';
 import userIcon from './imgs/user-solid.svg'
 import deleteIcon from './imgs/xmark-solid.svg'
 import { useRef } from "react"
+import PontosTitle from './components/pontos_title';
+import './Local.css'
+import ImageCarouselPontos from './components/carrossel_pontos';
 
 
 function Local() {
@@ -22,7 +25,13 @@ function Local() {
   const [endereco, setEndereco] = useState('');
   const [foto, setFoto] = useState('');
   const [avaliacoes, setAvaliacoes] = useState([]);
+  const [fotoLocal, setFotoLocal] = useState('');
+
   const [nota, setNota] = useState('');
+  const [hover, setHover] = useState(0);
+
+
+
   const [comentario, setComentario] = useState('');
   const [iframe, setIframe] = useState('');
   const [comentarioPaiId, setComentarioPaiId] = useState(''); 
@@ -34,6 +43,8 @@ function Local() {
   const [replyTo, setReplyTo] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [favoritado, setFavoritado] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   const { id } = useParams();
 
@@ -113,7 +124,7 @@ function Local() {
         setHorarios(data.horarios);
         setIngressos(data.ingressos);
         setEndereco(data.endereco);
-        setFoto(data.foto);
+        setFotoLocal(data.foto);
         setIframe(data.iframe)
       } catch (error) {
         console.error('Error:', error);
@@ -180,6 +191,7 @@ function Local() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     // Verifique se o local está nos favoritos do usuário quando o componente for montado
     const fetchFavoritos = async () => {
       try {
@@ -235,7 +247,7 @@ function Local() {
       // Atualize o estado para refletir se o local está favoritado ou não
       setFavoritado(localIndex === -1);
 
-      alert(`Local ${localIndex === -1 ? 'adicionado aos' : 'removido dos'} favoritos com sucesso!`);
+      // alert(`Local ${localIndex === -1 ? 'adicionado aos' : 'removido dos'} favoritos com sucesso!`);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -341,92 +353,217 @@ function Local() {
         setNota('');
         closeForm(); // Fechar o formulário após enviar a resposta
   };
+
+  const renderStars = (numberOfStars) => {
+    const starFilled = <img className='icons_avaliacao' src={starIcon} alt='' />;
+    const starEmpty = <img className='icons_avaliacao' src={emptyStarIcon} alt='' />;  
+
+    const stars = [];
+    for (let i = 0; i < numberOfStars; i++) {
+      stars.push(starFilled);
+    }
+    for (let i = numberOfStars; i < 5; i++) {
+      stars.push(starEmpty);
+    }
+
+    return (
+      <p className='card_text' style={{ lineHeight: '25px', marginLeft: '50px', textAlign: 'start' }}>
+        {stars.map((star, index) => (
+          <span key={index}>{star}</span>
+        ))}
+      </p>
+    );
+  }
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target.className === 'modal') {
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleMouseOver = (star) => {
+    setHover(star);
+  };
+  const handleMouseLeave = () => {
+    setHover(0);
+  };
+  const handleClick = (star) => {
+    setNota(star);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+
+
   
   const isLoggedIn = !!localStorage.getItem('token'); // Verificar se o usuário está logado
 
   return (
     <div>
-      <SmallHeader/>
-      <div className='local_img'>
-        <img src={foto} alt=''/>
-      </div>
-      <div className='div_name_container'>
+      <Header/>
+      {/* ADICIONAR CARROSSEL DINAMICO*/}
+        <div className='local_img'>
+          <img src={fotoLocal} alt=''/>
+          <div className='local_name'>
+            {nome}
+            <button
+              className="favoritar_button"
+              onClick={toggleFavorito}
+            >
+              <img src={favoritado ? starIcon : emptyStarIcon } className={favoritado ? "favoritar_button_on": "favoritar_button_off"} alt="Favoritar" />
+            </button>
+          </div>
+        </div>
+      {/* ADICIONAR CARROSSEL DINAMICO*/}
+      {/* <div className='div_name_container'>
         <div className='div_name_local'>
           <p className='ponto_name'>{nome}</p>
-        </div>
-      </div>
-      <div className='infos_pontos_container'>
-        <div className="div_name_container">
-          <div className="div_name_local">
-            <p className="ponto_name">{nome}</p>
-            {/* Adicione o botão de favoritar e a lógica para alternar entre favoritar e desfavoritar */}
-            <button
+          <button
               className="favoritar-button"
               onClick={toggleFavorito}
             >
               {favoritado ? 'Remover dos Favoritos' : 'Favoritar'}
               <img src={emptyStarIcon} alt="Favoritar" />
             </button>
+        </div>
+      </div> */}
+      <div className='infos_pontos_container'>
+        <PontosTitle text={'Sobre o local'}/>
+        <p className='ponto_infos_text'>
+          {sobre}
+        </p>
+        <div className='infos_pontos_half'>
+          <div className='info_block'>
+            <PontosTitle text={'Horários'}/>
+            <p className='ponto_infos_text'>
+              {horarios}
+            </p>
+          </div>
+          <div className='info_block'>
+            <PontosTitle text={'Ingressos'}/>
+            <p className='ponto_infos_text'>
+              {ingressos}
+            </p>
           </div>
         </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={infoIcon} alt=''/>
-            SOBRE O LOCAL
-          </p>
-          <p className='ponto_infos_text'>
-            {sobre}
-          </p>
+
+        <div className='infos_pontos_half'>
+          <div className='info_block'>
+            <PontosTitle text={'Como chegar'}/>
+            <p className='ponto_infos_text'>
+              {endereco}
+              <iframe src={iframe} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </p>
+          </div>
+          <div className='info_block'>
+            <PontosTitle text={'Galeria'}/>
+            <p className='ponto_infos_text'>
+              <ImageCarouselPontos/>
+            </p>
+          </div>
         </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={timeIcon} alt=''/>
-            HORÁRIOS
-          </p>
-          <p className='ponto_infos_text'>
-            {horarios}
-          </p>
+        <br></br>
+        <PontosTitle text={'Avaliações'}/>
+        <button className="button_avaliacao" onClick={openModal}>
+          Avaliar!
+          </button>
+        {isModalOpen && (
+
+
+
+
+        <div className="modal" onClick={handleOutsideClick}>
+          <div className="modal_content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p className='avaliacao_name'>{nome}</p>
+            <form onSubmit={handleSubmit}>
+              <label style={{display: 'flex', justifyContent: 'center'}}>
+                {[1, 2, 3, 4, 5].map((star) => {
+                  return (
+                    <span
+                      key={star}
+                      style={{ fontSize: '30px', color: (star <= (hover || nota)) ? '#FFD700' : '#C0C0C0', cursor: 'pointer'}}
+                      onMouseOver={() => handleMouseOver(star)}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => handleClick(star)}
+                    >
+                      ★
+                    </span>
+                  );
+                })}
+              </label>
+            <label>
+              <div className="textbox_avaliacao">
+                <textarea
+                  value={comentario}
+                  onChange={(event) => setComentario(event.target.value)}
+                  required
+                  placeholder='Escreva seu comentário...'
+                />
+              </div>
+            </label>
+
+            <label>
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <button
+                  className='image_avaliacao'
+                  onClick={handleButtonClick}
+                >
+                  Carregar Imagem
+                </button>
+              </div>
+              {foto && (
+              <div className="selected-image">
+                <img src={foto} alt="Selected" />
+              </div>
+              )}
+              <input
+                type="file"
+                accept='image/*'
+                name="foto"
+                id="foto"
+                ref={fileInputRef}
+                style={{display: 'none'}}
+                onChange={convertToBase64}
+                required
+              />
+            </label>
+            <button type="submit" className='enviar_avaliacao'>Enviar</button>
+            
+          </form>
+          </div>
         </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={ticketIcon} alt=''/>
-            INGRESSOS
-          </p>
-          <p className='ponto_infos_text'>
-            {ingressos}
-          </p>
-        </div>
-        <div className='card_ponto'>
-          <p className='ponto_name'>
-            <img className='icons_infos' src={mapIcon} alt=''/>
-            COMO CHEGAR
-          </p>
-          <p className='ponto_infos_text'>
-            {endereco}
-            <br></br>
-            <iframe src={iframe} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </p>
-        </div>
-      </div>
-      <div className='container_comments'>
-        <p className='card_text'>
-          <img className='icons_infos' src={starIcon} alt=''/>
-          AVALIAÇÕES
-          <img className='icons_infos' src={starIcon} alt=''/>
-        </p>
-        <div className='container_card_comment'>
-        {avaliacoes
+
+
+
+
+
+      )}
+
+        <div className='container_comments'>
+          <div className='container_card_comment'>
+          {avaliacoes
         .filter((avaliacao) => avaliacao.Comentario_Pai_id === "")
         .map((avaliacao) => (
           <div className='card_comment'>
-            <p className='card_text' id='card_text_av'>
-            <div>
-              <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-              {avaliacao.usuario.nome}
-            </div>
-            <div>
+            <p className='card_comment_name card_text_av'>
+              <div className='card_img_name'>
+                <img className='icons_infos' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
+                <div className='card_comment_username'>{avaliacao.usuario.nome}</div>
+              </div>
+            {/* <div>
               <img src={avaliacao.foto} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-            </div>
+            </div> */}
 
             {isAdmin || avaliacao.usuario._id === localStorage.getItem('userId') ? (
               <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteComment(avaliacao._id)}>
@@ -434,82 +571,13 @@ function Local() {
               </button>
             ) : null}
             </p>
-            <p className='card_text' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px'}}>
+            {renderStars(parseInt(avaliacao.nota))}
+            <p className='card_comment_text'>
               {avaliacao.comentario}
             </p>
           <div>
-          </div>
-            { avaliacao.nota == '1' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '2' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '3' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '4' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={emptyStarIcon} alt=''/>
-                </p>
-              ) ||
-              avaliacao.nota == '5' && (
-                <p className='card_text' style={{lineHeight: '25px', marginRight: '10px', textAlign: 'end'}}>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                  <img className='icons_avaliacao' src={starIcon} alt=''/>
-                </p>
-              )
-            }
-
-            <div>
-            {respostas
-            .filter((resposta) => resposta.Comentario_Pai_id === avaliacao._id)
-            .map(resposta => (
-              <div key={resposta._id} className="card_resposta">
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <div style={{display: 'flex'}}>
-                    <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px', width: '30px'}}/>
-                    <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
-                  </div>
-                  {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
-                    <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
-                      <img className='delete_icon' src={deleteIcon} alt='' />
-                    </button>
-                  ) : null}
-                </div>
-                <p className='text_resposta'>{resposta.comentario}</p>
-              </div>
-            ))}
-            </div>
-
-            <br></br>
-            <div style={{width: '100%', border: '1px solid #a3a3a3'}}></div>
-            <br></br>
+          <br></br>
+            <div style={{width: '100%', border: '1px solid #a3a3a3', marginBottom: '5px'}}></div>
             <div style={{width: '100%'}}>
               {replyTo === avaliacao._id ? (
                 <form onSubmit={(event) => handleSubmitReply(avaliacao._id, event)}>
@@ -525,64 +593,36 @@ function Local() {
                 <button className='button_responder_av' onClick={() => openForm(avaliacao._id)}>Responder</button>
               )}
             </div>
-            
+          </div>
+            <div>
+            {respostas
+            .filter((resposta) => resposta.Comentario_Pai_id === avaliacao._id)
+            .map(resposta => (
+              <div key={resposta._id} className="card_resposta">
+                <div className='card_comment_name card_text_res'>
+                  <div className='card_img_name'>
+                    <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
+                    <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
+                  </div>
+                  {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
+                    <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
+                      <img className='delete_icon' src={deleteIcon} alt='' />
+                    </button>
+                  ) : null}
+                </div>
+                <p className='text_resposta'>{resposta.comentario}</p>
+              </div>
+            ))}
+            </div>
           </div>
           ))}
-          
-
-            {/* COLOCA UMA VALIDAÇÃO PRA SUMIR COM ESSE SETOR, DPS EU ARRUMO OQ VAI APARECER E OQ N VAI */}
-
-
-          <div className='contato_faq colored_background_opacity'>
-          <p className='card_text'>
-          JÁ VISITOU ESTE LOCAL? FAÇA UMA AVALIAÇÃO!
-          </p>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
-                Comentário:
-              </p>
-              <div style={{width: '100%', boxSizing: 'border-box',}}>
-                <textarea
-                  value={comentario}
-                  onChange={(event) => setComentario(event.target.value)}
-                  required
-                  placeholder='Escreva seu comentário...'
-                />
-              </div>
-            </label>
-            <br/>
-            <label>
-              <p className='card_text ' style={{fontSize : '20px', lineHeight: '25px', color: '#f0f0f0', textTransform: 'none', marginLeft: '10px', textAlign: 'left'}}>
-                Nota:
-                <input
-                id='input_nota'
-                type="number"
-                value={nota}
-                onChange={(event) => setNota(event.target.value)}
-                min={1}
-                max={5}
-                required
-              />
-                <label for="foto"><a style={{color: '#ff4747'}}>*</a> Foto <img  title='Tamanho max: 80kb'/></label><br/>
-            <input
-              type="file"
-              accept='image/*'
-              name="foto"
-              id="foto"
-              ref={fileInputRef}
-              style={{border: 'none'}}
-              onChange={convertToBase64}
-              required
-            />
-              <button type="submit" className='enviar_avaliacao btn_submit'>Enviar Avaliação</button>
-              </p>
-            </label>
-            
-          </form>
+          </div>
         </div>
-        </div>   
+
+
+
       </div>
+
 
     </div>
   );

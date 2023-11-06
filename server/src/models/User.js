@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     required:true,
     default: false,
   },
+  foto: {
+    type: String,
+    required: false,
+  },
   favoritos: [
     {
       type: String, 
@@ -71,7 +75,8 @@ const UserSchema = new mongoose.Schema({
     },
     foto: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
     meta: {
       type: Number,

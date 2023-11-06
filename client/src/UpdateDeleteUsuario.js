@@ -177,6 +177,8 @@ function UpdateDeleteUsuario() {
                   <td style={{padding: '0 15px'}}>{item.adm == true ? 'Adm' : 'User'}</td>
                   <td style={{padding: '0 15px'}}>{i}</td>
                   <td style={{padding: '0 15px'}}>{item._id}</td>
+                  <td style={{padding: '0 15px'}}>{item.idade}</td>
+                  <td style={{padding: '0 15px'}}>{item.sexo}</td>
                  {/*  */}
 
                 </tr>

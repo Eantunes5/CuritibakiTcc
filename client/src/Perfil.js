@@ -4,6 +4,8 @@ import './Perfil.css';
 import Header from './components/header';
 import defaultIcon from './imgs/user-solid.svg';
 import { Link } from 'react-router-dom'; // Importe o componente Link
+import { useTranslation } from 'react-i18next';
+
 
 function Perfil() {
   const [nomeUsuario, setNomeUsuario] = useState('');
@@ -14,18 +16,27 @@ function Perfil() {
   const [favoritos, setFavoritos] = useState([]); // Novo estado para a lista de favoritos
   const [favoritosDetalhes, setFavoritosDetalhes] = useState([]); // Novo estado para os detalhes dos locais favoritos
   const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
+  const { t } = useTranslation();
 
+
+
+  function convertToBase64(file) {
+    var reader = new FileReader();
+    reader.onload = () => {
+      setFotoPerfil(reader.result); // Defina a imagem de perfil como Base64
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+    reader.readAsDataURL(file);
+  }
     // Função para lidar com a seleção de arquivo
     const handleFileChange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          // Defina a imagem de perfil com a imagem carregada
-          setFotoPerfil(reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
+        // Chame a função para converter a imagem em Base64
+        convertToBase64(file);
+      }     
     };
 
   const handleEditarClick = () => {
@@ -42,11 +53,12 @@ function Perfil() {
       const url = process.env.REACT_APP_API_URL;
 
       // Envie os dados atualizados para o servidor
-      await axios.put(`${url}/user/${userId}`, {
+      await axios.patch(`${url}/user/${userId}`, {
         nome: nomeUsuario,
         email: emailUsuario,
         idade: idadeUsuario,
         sexo: sexoUsuario,
+        foto: fotoPerfil,
       });
 
       // Atualize os dados do usuário na tela
@@ -75,7 +87,7 @@ function Perfil() {
         setEmailUsuario(data.email);
         setIdadeUsuario(data.idade);
         setSexoUsuario(data.sexo);
-        setFotoPerfil(data.fotoPerfil); // Defina a foto de perfil a partir dos dados do usuário
+        setFotoPerfil(data.foto); // Defina a foto de perfil a partir dos dados do usuário
       } catch (error) {
         console.error('Error:', error);
       }
@@ -172,21 +184,21 @@ function Perfil() {
             ) : (
               <>
                 <h2>{nomeUsuario}</h2>
-                <p>Email: {emailUsuario}</p>
-                <p>Idade: {idadeUsuario} anos</p>
-                <p>Sexo: {sexoUsuario}</p>
+                <p>{t('Email')} {emailUsuario}</p>
+                <p>{t('Idade')} {idadeUsuario} {t('anos')}</p>
+                <p>{t('Sexo')} {sexoUsuario}</p>
               </>
             )}
             {editMode ? ( // Exiba o botão "Confirmar" no modo de edição
-              <button onClick={handleConfirmarClick}>Confirmar</button>
+              <button onClick={handleConfirmarClick}>{t('Confirmar')}</button>
             ) : (
-              <button onClick={handleEditarClick}>Editar</button>
+              <button onClick={handleEditarClick}>{t('Editar')}</button>
             )}
           </div>
         </div>
         <div className="profile-sections">
           <div className="profile-section">
-            <h3>Conquistas</h3>
+            <h3>{t('Conquistas')}</h3>
             <ul>
               <li>Conquista 1</li>
               <li>Conquista 2</li>
@@ -194,7 +206,7 @@ function Perfil() {
             </ul>
           </div>
           <div className="profile-section">
-            <h3>Favoritos</h3>
+            <h3>{t('Favoritos')}</h3>
             <ul style={{display: 'flex',alignItems: 'center'}}>
               {favoritosDetalhes.map((local, index) => (
                 <li key={local._id}>

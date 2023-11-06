@@ -1,10 +1,14 @@
-import './App.css';
+import './components/login_register.css';
 import axios from "axios";
+import Header from './components/header';
+import ImageCarouselIndex from './components/carrosselIndex';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import alertIcon from './imgs/circle-exclamation-solid.svg';
 import Alert from '@mui/material/Alert'
+import { useTranslation } from 'react-i18next';
+
 
 function Register() {
   const axiosInstance = axios.create({
@@ -19,6 +23,9 @@ function Register() {
   const [idade, setIdade] = useState(''); // Adicione o estado para idade
   const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
   const [sucesso, setSucesso] = useState(false);
+  const [foto, setFoto] = useState('');
+  const { t } = useTranslation();
+
 
   const url = process.env.REACT_APP_API_URL;
 
@@ -57,7 +64,8 @@ function Register() {
               email,
               senha,
               sexo,  // Inclua o sexo no objeto enviado à API
-              idade // Inclua a idade no objeto enviado à API
+              idade,
+              foto:'' // Inclua a idade no objeto enviado à API
             })
             .then(response => {
               console.log(response.statusText);
@@ -89,17 +97,17 @@ function Register() {
   };
 
   return (
-    <div id='page_register'>
-      <Logo/>
-      <div className="div_container_login_info">
+    <div className="outer_container">
+      <Header/>
+      <div className="dark_overlay"></div>
+      <div className="div_container_register_info">
         <div className="form_container">
         
         {sucesso ? <Alert variant="outlined" severity="success">
-              Registro realizado com sucesso! 
-              Um email foi enviado para confirmar seu cadastro
+            {t('Registro realizado com sucesso! Um email foi enviado para confirmar seu cadastro')}
         </Alert> : null}
           <form id='login' onSubmit={handleSubmit}>     
-            <h1>Registrar</h1>
+            <h1>{t('Registrar')}</h1>
 
            {/* <div className="div_alert_error">
               <img className="icons_alert" src={alertIcon}/>
@@ -109,7 +117,7 @@ function Register() {
 
             <br/><br/>
             {/* Nome */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> NOME:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('NOME:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -122,7 +130,7 @@ function Register() {
             />
             <br/>
             {/* Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('EMAIL:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -135,7 +143,7 @@ function Register() {
             />
             <br/>
             {/* Confirmar Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR EMAIL:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR EMAIL:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -148,7 +156,7 @@ function Register() {
             />
             <br/>
             {/* Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> SENHA:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('SENHA:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -161,7 +169,7 @@ function Register() {
             />
             <br/>
             {/* Confirmar Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> CONFIRMAR SENHA:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR SENHA:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -174,7 +182,7 @@ function Register() {
             />
             <br/>
             {/* Idade */}
-            <span className="legenda">IDADE:</span>
+            <span className="legenda">{t('IDADE')}</span>
             <br/>
             <input
               className="inp_login"
@@ -186,7 +194,7 @@ function Register() {
             />
             <br/>
             {/* Sexo */}
-            <span className="legenda">SEXO:</span>
+            <span className="legenda">{t('SEXO:')}</span>
             <br/>
             <input
               className="inp_login"
@@ -200,11 +208,12 @@ function Register() {
             <input type="submit" value="Registrar" className='btn_submit'/>
             <br/><br/>
             <Link to='/Login'>
-              <span className="to_register">Já tem uma conta? Clique aqui!</span>
+              <span className="to_register">{t('Já tem uma conta? Clique aqui!')}</span>
             </Link>
           </form>
         </div>
       </div>
+      <ImageCarouselIndex/>
     </div>
   );
 }

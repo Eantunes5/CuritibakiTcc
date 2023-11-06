@@ -1,4 +1,7 @@
 import axios from "axios";
+import Header from './components/header';
+import ImageCarouselIndex from './components/carrosselIndex';
+import './components/login_register.css';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
@@ -93,8 +96,9 @@ function Login() {
   const [senha, setPassword] = useState("");
 
   return (
-    <div id='page_login'>
-      <Logo/>
+    <div className="outer_container">
+      <Header/>
+      <div className="dark_overlay"></div>
       <div className="div_container_login_info">
         <div className="form_container">
           <form action='' id='login' method='' onSubmit={handleSubmit}>
@@ -138,6 +142,7 @@ function Login() {
           </form>
         </div>
       </div>
+      <ImageCarouselIndex/>
     </div>
   );
 }

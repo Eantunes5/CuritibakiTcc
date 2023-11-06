@@ -339,6 +339,9 @@ justify-content: center;
 //                                                                  // 
 //////////////////////////////////////////////////////////////////////
 */
+.outer_container {
+  position: relative;
+}
 #page_login, #page_register{
   padding-top: 75px;
   display: flex;
@@ -348,11 +351,23 @@ justify-content: center;
 .div_container_login_info{
   width: 96%;
   max-width: 500px;
-  height: 350px;
-  margin-top: 75px;
   height: fit-content;
-
+  position: absolute;
+  z-index: 99;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%);
 }
+.dark_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+}
+
 .form_container{
   display: flex;
   align-items: center;
@@ -367,12 +382,12 @@ justify-content: center;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
-.form_container > form > h1{
+/* .form_container > form > h1{
   color: white;
   font-size: 35px;
   font-weight: 800;
   text-align: center;
-}
+} */
 .legenda{
   font-size: 11px;
   color: rgba(177, 177, 177, 0.3);
@@ -386,7 +401,7 @@ justify-content: center;
   height: 35px;
   width: 300px;
 }
-.btn_submit{
+/* .btn_submit{
   cursor: pointer;
   border: none;
   border-radius: 8px;
@@ -400,7 +415,7 @@ justify-content: center;
   font-size: 16px;
   font-weight: 600;
   text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-}
+} */
 
 .to_register{
   font-size: 13px;
@@ -488,30 +503,11 @@ justify-content: center;
 .icon_right{
   transform: rotate(90deg);
 }
-.div_container_card{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-}
 
-.card{
-  width: 95%;
-  max-width: 450px;
-  height: fit-content;
-  min-height: 225px;
-  background-image: linear-gradient(45deg, #2663E5 50%, #2B26C1 50%);
-  border-radius: 15px;
-  padding: 0.3%
-}
-.card_content > img{
-  width: 100%;
-  max-height: 175px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.card_text, .ponto_name, .ponto_infos_text{
+
+
+
+.ponto_name{
   font-size: 35px;
   line-height: 50px;
   font-weight: 600;
@@ -522,10 +518,7 @@ justify-content: center;
   text-transform: uppercase;
   margin: 0;
 }
-#card_text_av{
-  display: flex;
-  justify-content: space-between;
-}
+
 .delete_icon{
   filter: invert(100%);
 }
@@ -536,19 +529,7 @@ justify-content: center;
   border: none;
   cursor: pointer;
 }
-.button_responder_av{
-  height: 25px;
-  width: 50%;
-  max-width: 160px;
-  border: none;
-  background-color: transparent;
-  font-size: 16px;
-  text-shadow: 0.5px 0.5px 1px black, 0 0 0.5em black, 0 0 0.2em black;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  cursor: pointer;
-  margin-top: 5px;
-}
+
 
 /*
 //////////////////////////////////////////////////////////////////////
@@ -567,10 +548,11 @@ justify-content: center;
   gap: 15px;
   margin-left: 5%;
 }
-.emergencia-content{
+.emergencia_content{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 15px;
 }
 
 
@@ -620,7 +602,7 @@ option{
   height: 100px;
   border-radius: 0px;
 }
-input[type='submit' i], .buttons_admin{
+.buttons_admin{
   background-image: linear-gradient(45deg, #2663E5 50%, #2B26C1 50%);
   margin-left: 6px;
   border-radius: 10px;
@@ -643,7 +625,7 @@ input[type='submit' i], .buttons_admin{
 //////////////////////////////////////////////////////////////////////
 */
 
-.card_faq, .contato_faq, .card_ponto, .card_comment{
+.card_ponto{
   width: 80%;
   height: fit-content;
   padding: 10px;
@@ -651,9 +633,6 @@ input[type='submit' i], .buttons_admin{
   background-color:#1f1f1f;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
   border-radius: 12px;
-}
-.contato_faq{
-  background-image: linear-gradient(45deg, #2663E5 50%, #2B26C1 50%);
 }
 
 /*
@@ -672,11 +651,53 @@ input[type='submit' i], .buttons_admin{
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-top: 5px solid #2B26C1;
+  position: relative;
 }
 .local_img > img{
   width: 100%;
+  object-fit: cover;
 }
+.local_name{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px;
+  border-radius: 0 10px 0 0;
+  font-size: 3vh;
+  font-weight: bold;
+  display: flex;
+}
+.favoritar_button{
+  border: none;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  margin-left: 15px;
+  background-color: transparent;
+}
+.favoritar_button img {
+  width: 28px;
+  height: 28px;
+}
+.favoritar_button_off{
+  filter: invert(100%);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+.favoritar_button_off:hover{
+  transform: scale(1.3);
+}
+.favoritar_button_on{
+  filter: brightness(0) saturate(100%) invert(87%) sepia(24%) saturate(5259%) hue-rotate(0deg) brightness(104%) contrast(103%);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+.favoritar_button_on:hover{
+  transform: scale(1.3);
+}
+
 .div_name_container{
   width: 100%;
   border: none;
@@ -695,7 +716,7 @@ input[type='submit' i], .buttons_admin{
   border-radius: 10px 10px 0 0;
   position: relative;
 }
-.ponto_name, .ponto_infos_text{
+.ponto_name{
   font-size: 45px;
   margin: 0px 25px;
   line-height: 45px;
@@ -709,7 +730,6 @@ input[type='submit' i], .buttons_admin{
   align-items: center;
   flex-direction: column;
   padding-bottom: 15px;
-  border-bottom: #2663E5 solid 5px;
 }
 .card_ponto{
   margin-top: 15px;
@@ -730,53 +750,17 @@ input[type='submit' i], .buttons_admin{
   width: 100%;
   height: 300px;
 }
-.container_comments{
-  width: 100%;
-  height: fit-content;
-  border-top: #2B26C1 solid 5px;
-}
-.card_comment > .card_text{
-  text-align: left;
-}
-.card_resposta{
-    width: 80%;
-    height: fit-content;
-    padding: 10px;
-    padding-bottom: 15px;
-    background-color:#363636;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199);
-    border-radius: 12px;
-    margin-left: 5%;
-    margin-top: 15px;
-}
-.icons_resposta{
-  filter: invert(100%);
-  height: 20px;
 
-}
-.text_resposta_nome{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-}
-.text_resposta{
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-  padding-left: 10px;
-}
+
+
+
+
+
 .icons_avaliacao{
   width: 20px;
   margin: 0;
 }
-.container_card_comment{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 15px;
-}
+
 textarea {
   width: 99% !important;
   height: 50px;
@@ -798,7 +782,7 @@ textarea {
   width: 30px;
   margin-left: 15px;
 }
-.enviar_avaliacao, .att_local{
+.att_local{
   margin-top: 15px;
   float: right;
   background-color: #2662e5;
