@@ -46,11 +46,12 @@ function Perfil() {
       const url = process.env.REACT_APP_API_URL;
 
       // Envie os dados atualizados para o servidor
-      await axios.put(`${url}/user/${userId}`, {
+      await axios.patch(`${url}/user/${userId}`, {
         nome: nomeUsuario,
         email: emailUsuario,
         idade: idadeUsuario,
         sexo: sexoUsuario,
+        foto: fotoPerfil,
       });
 
       // Atualize os dados do usuário na tela
