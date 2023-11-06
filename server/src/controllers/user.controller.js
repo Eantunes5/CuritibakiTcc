@@ -82,9 +82,9 @@ const findByEmail = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {nome,email,senha,adm,idade,sexo,conquistas,favoritos} = req.body;//
+  try{const {nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos} = req.body;//
 
-  if (!nome && !email && !senha && !adm && !idade && !sexo && !conquistas && !favoritos) {
+  if (!nome && !email && !senha && !adm && !idade && !sexo  && !foto && !conquistas && !favoritos) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
@@ -98,6 +98,7 @@ const update = async(req,res) => {
     adm,
     idade,
     sexo,
+    foto,
     conquistas,
     favoritos
   );

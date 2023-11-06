@@ -87,7 +87,7 @@ function Perfil() {
         setEmailUsuario(data.email);
         setIdadeUsuario(data.idade);
         setSexoUsuario(data.sexo);
-        setFotoPerfil(data.fotoPerfil); // Defina a foto de perfil a partir dos dados do usuário
+        setFotoPerfil(data.foto); // Defina a foto de perfil a partir dos dados do usuário
       } catch (error) {
         console.error('Error:', error);
       }

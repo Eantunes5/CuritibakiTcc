@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     required:true,
     default: false,
   },
+  foto: {
+    type: String,
+    required: false,
+  },
   favoritos: [
     {
       type: String, 
