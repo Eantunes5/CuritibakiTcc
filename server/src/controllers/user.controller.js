@@ -4,7 +4,7 @@ import conquestsSerivce from '../services/conquests.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {nome,email,senha,idade,sexo,conquistas,favoritos} = req.body;//
+    const {nome,email,senha,idade,sexo,conquistas,foto,favoritos} = req.body;//
     const conquests = await conquestsSerivce.findAllService();
 
   if (!nome || !email || !senha || !sexo || !idade ) {
@@ -34,9 +34,8 @@ const create = async(req,res)  => {
       idade,
       conquistas,
       sexo,
+      foto,
       favoritos
-
-      //
     }
   });
 } catch (err) {
@@ -81,9 +80,9 @@ const findByEmail = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {nome,email,senha,adm,idade,sexo,conquistas,favoritos} = req.body;//
+  try{const {nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos} = req.body;//
 
-  if (!nome && !email && !senha && !adm && !idade && !sexo && !conquistas && !favoritos) {
+  if (!nome && !email && !senha && !adm && !idade && !sexo && !conquistas && !favoritos && !foto) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
@@ -97,6 +96,7 @@ const update = async(req,res) => {
     adm,
     idade,
     sexo,
+    foto,
     conquistas,
     favoritos
   );

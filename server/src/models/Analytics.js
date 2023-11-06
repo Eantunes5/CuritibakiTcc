@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const AnalyticsSchema = new mongoose.Schema({
-    motivoVisita : {
+      motivoVisita : {
         type: String,
         required:true,
       },
@@ -21,7 +21,6 @@ const AnalyticsSchema = new mongoose.Schema({
         type: String,
         required:true,
       },
-
 }) 
 
 const Analytics = mongoose.model("Analytics", AnalyticsSchema);

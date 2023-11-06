@@ -8,7 +8,9 @@ const findByIdService = (id) => User.findById(id);
 
 const findByEmailService = (email) => User.find(email);
 
-const updateService = (id,nome,email,senha,adm,idade,sexo,conquistas,favoritos) => User.findOneAndUpdate({_id: id},{nome,email,senha,adm,idade,sexo,conquistas,favoritos});
+const updateService = (id,nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos) => User.findOneAndUpdate({_id: id},{nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos});
+
+const updateService1 = (id,conquistas) => User.findOneAndUpdate({_id: id},{conquistas});
 
 const deleteService = (id) => User.deleteOne({_id: id});
 
@@ -21,5 +23,6 @@ export default {
   findByEmailService,
   updateService,
   deleteService,
-  updateVerifyUserById
+  updateVerifyUserById,
+  updateService1
 };
