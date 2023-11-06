@@ -420,7 +420,7 @@ function Local() {
               className="favoritar_button"
               onClick={toggleFavorito}
             >
-              <img src={favoritado ? emptyStarIcon : starIcon} className={favoritado ? "favoritar_button_off": "favoritar_button_on"} alt="Favoritar" />
+              <img src={favoritado ? starIcon : emptyStarIcon } className={favoritado ? "favoritar_button_on": "favoritar_button_off"} alt="Favoritar" />
             </button>
           </div>
         </div>
