@@ -67,7 +67,8 @@ const UserSchema = new mongoose.Schema({
     },
     foto: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
     meta: {
       type: Number,
