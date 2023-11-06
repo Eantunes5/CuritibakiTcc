@@ -19,17 +19,24 @@ function Perfil() {
   const { t } = useTranslation();
 
 
+
+  function convertToBase64(file) {
+    var reader = new FileReader();
+    reader.onload = () => {
+      setFotoPerfil(reader.result); // Defina a imagem de perfil como Base64
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+    reader.readAsDataURL(file);
+  }
     // Função para lidar com a seleção de arquivo
     const handleFileChange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          // Defina a imagem de perfil com a imagem carregada
-          setFotoPerfil(reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
+        // Chame a função para converter a imagem em Base64
+        convertToBase64(file);
+      }     
     };
 
   const handleEditarClick = () => {

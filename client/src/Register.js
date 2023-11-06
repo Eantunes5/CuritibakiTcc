@@ -21,6 +21,7 @@ function Register() {
   const [idade, setIdade] = useState(''); // Adicione o estado para idade
   const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
   const [sucesso, setSucesso] = useState(false);
+  const [foto, setFoto] = useState('');
   const { t } = useTranslation();
 
 
@@ -61,7 +62,8 @@ function Register() {
               email,
               senha,
               sexo,  // Inclua o sexo no objeto enviado à API
-              idade // Inclua a idade no objeto enviado à API
+              idade,
+              foto:'' // Inclua a idade no objeto enviado à API
             })
             .then(response => {
               console.log(response.statusText);

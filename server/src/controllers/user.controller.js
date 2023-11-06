@@ -4,7 +4,7 @@ import conquestsSerivce from '../services/conquests.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {nome,email,senha,idade,sexo,conquistas,favoritos} = req.body;//
+    const {nome,email,senha,idade,sexo,conquistas,foto,favoritos} = req.body;//
     const conquests = await conquestsSerivce.findAllService();
 
   if (!nome || !email || !senha || !sexo || !idade ) {
@@ -34,6 +34,7 @@ const create = async(req,res)  => {
       idade,
       conquistas,
       sexo,
+      foto,
       favoritos
 
       //
