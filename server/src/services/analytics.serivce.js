@@ -6,7 +6,7 @@ const findAllService = () => Analytics.find();
 
 const findByIdService = (id) => Analytics.findById(id);
 
-const updateService = (id,motivoVisita,duracaoEstadia,origemVisitante,meiosDeTransporte,atividadesPreferidas) => Analytics.findOneAndUpdate({_id: id},{motivoVisita,duracaoEstadia,origemVisitante,meiosDeTransporte,atividadesPreferidas});
+const updateService = (id,idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem) => Analytics.findOneAndUpdate({_id: id},{idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem});
 
 const deleteService = (id) => Analytics.deleteOne({_id: id});
 
