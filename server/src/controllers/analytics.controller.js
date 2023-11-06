@@ -2,9 +2,9 @@ import analyticsSerivce  from '../services/analytics.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {id,motivoVisita,duracaoEstadia,origemVisitante,meiosDeTransporte,atividadesPreferidas} = req.body;
+    const {id, idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem} = req.body;
 
-  if (!motivoVisita || !duracaoEstadia || !origemVisitante || !meiosDeTransporte || !atividadesPreferidas) {
+  if (!idade || !estadoOrigem || !cidadeOrigem || !estadoCivil || !acomodacaoPrincipal || !tempoDeEstadia || !motivoDaViagem || !transporteDaViagem) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
   }
 
@@ -18,11 +18,14 @@ const create = async(req,res)  => {
     mensagem:"Analytics criado com sucesso",
     analytics:{
       id:analytics._id,
-      motivoVisita,
-      duracaoEstadia,
-      origemVisitante,
-      meiosDeTransporte,
-      atividadesPreferidas,
+      idade,
+      estadoOrigem,
+      cidadeOrigem,
+      estadoCivil,
+      acomodacaoPrincipal,
+      tempoDeEstadia,
+      motivoDaViagem,
+      transporteDaViagem
     }
   });
 } catch (err) {
@@ -53,21 +56,24 @@ const findById = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {motivoVisita,duracaoEstadia,origemVisitante,meiosDeTransporte,atividadesPreferidas} = req.body;
+  try{const {idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem} = req.body;
   
-  if (!motivoVisita & !duracaoEstadia & !origemVisitante & !meiosDeTransporte & !atividadesPreferidas) {
+  if (!idade & !estadoOrigem & !cidadeOrigem & !estadoCivil & !acomodacaoPrincipal & !tempoDeEstadia & !motivoDaViagem & !transporteDaViagem ) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
   const {id,analytics} = req;
 
   await analyticsSerivce.updateService(
-    id,
-    motivoVisita,
-    duracaoEstadia,
-    origemVisitante,
-    meiosDeTransporte,
-    atividadesPreferidas,
+      id,
+      idade,
+      estadoOrigem,
+      cidadeOrigem,
+      estadoCivil,
+      acomodacaoPrincipal,
+      tempoDeEstadia,
+      motivoDaViagem,
+      transporteDaViagem
   );
    
   res.send({message:"Analytics atualizado com sucesso"})

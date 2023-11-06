@@ -1,23 +1,35 @@
 import mongoose from 'mongoose';
 
 const AnalyticsSchema = new mongoose.Schema({
-      motivoVisita : {
+      idade : {
+        type: Number,
+        required:true,
+      },
+      estadoOrigem : {
         type: String,
         required:true,
       },
-      duracaoEstadia : {
+      cidadeOrigem : {
         type: String,
         required:true,
       },
-      origemVisitante : {
+      estadoCivil : {
         type: String,
         required:true,
       },
-      meiosDeTransporte : {
+      acomodacaoPrincipal : {
         type: String,
         required:true,
       },
-      atividadesPreferidas : {
+      tempoDeEstadia : {
+        type: String,
+        required:true,
+      },
+      motivoDaViagem : {
+        type: String,
+        required:true,
+      },
+      transportedaViagem : {
         type: String,
         required:true,
       },
