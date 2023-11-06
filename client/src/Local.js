@@ -25,7 +25,7 @@ function Local() {
   const [endereco, setEndereco] = useState('');
   const [foto, setFoto] = useState('');
   const [avaliacoes, setAvaliacoes] = useState([]);
-
+  const [fotoLocal, setFotoLocal] = useState('');
 
   const [nota, setNota] = useState('');
   const [hover, setHover] = useState(0);
@@ -124,7 +124,7 @@ function Local() {
         setHorarios(data.horarios);
         setIngressos(data.ingressos);
         setEndereco(data.endereco);
-        setFoto(data.foto);
+        setFotoLocal(data.foto);
         setIframe(data.iframe)
       } catch (error) {
         console.error('Error:', error);
@@ -413,7 +413,7 @@ function Local() {
       <Header/>
       {/* ADICIONAR CARROSSEL DINAMICO*/}
         <div className='local_img'>
-          <img src={foto} alt=''/>
+          <img src={fotoLocal} alt=''/>
           <div className='local_name'>
             {nome}
             <button
@@ -522,6 +522,11 @@ function Local() {
                   Carregar Imagem
                 </button>
               </div>
+              {foto && (
+              <div className="selected-image">
+                <img src={foto} alt="Selected" />
+              </div>
+              )}
               <input
                 type="file"
                 accept='image/*'
