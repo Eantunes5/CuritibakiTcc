@@ -52,10 +52,6 @@ const UserSchema = new mongoose.Schema({
     required:false,
     default:false,
   },
-  foto: {
-    type: String,
-    required:false,
-  },
   conquistas: [{
     nome: {
       type: String,
