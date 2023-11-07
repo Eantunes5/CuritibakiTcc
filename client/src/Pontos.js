@@ -57,12 +57,15 @@ function Pontos() {
   return (
     <div className="App">
       <Header />
-      <div className="logo-central-carousel">
-        <img src={logo} alt="logo" />
-        {t('VENHA CONHECER CURITIBA!')}
-        <MainButton ativo="pontos" />
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div className="logo-central-carousel">
+          <img src={logo} alt="logo" />
+          <br></br>
+          {t('VENHA CONHECER CURITIBA!')}
+          <MainButton ativo="pontos" />
+        </div>
+          <ImageCarousel />
       </div>
-      <ImageCarousel />
 
       <div className="div_container_cards_pontos">
         <div className="divider" />

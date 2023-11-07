@@ -41,10 +41,13 @@ function App() {
   return (
     <div>
       <Header/>
-      <div className="logo-central-index">
-        <img src={logo}></img>
-        {t('VENHA CONHECER CURITIBA!')}
-        <MainButton ativo=""/>
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div className="logo-central-index">
+          <img src={logo}></img>
+          <br></br>
+          {t('VENHA CONHECER CURITIBA!')}
+          <MainButton ativo=""/>
+        </div>
       </div>
       <ImageCarouselIndex/>
     </div>
