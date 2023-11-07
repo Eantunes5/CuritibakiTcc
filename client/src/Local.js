@@ -26,9 +26,11 @@ function Local() {
   const [foto, setFoto] = useState('');
   const [avaliacoes, setAvaliacoes] = useState([]);
   const [fotoLocal, setFotoLocal] = useState('');
+  
 
   const [nota, setNota] = useState('');
   const [hover, setHover] = useState(0);
+  const [imagemAmpliada, setImagemAmpliada] = useState(null);
 
 
 
@@ -316,13 +318,11 @@ function Local() {
   const openForm = (avaliacaoId) => {
     setReplyTo(avaliacaoId);
   };
-  
 
   const closeForm = () => {
     setReplyTo(null);
   };
   
-
   const handleReplyChange = (avaliacaoId, event) => {
     setReply((prevState) => ({
       ...prevState,
@@ -403,6 +403,13 @@ function Local() {
     fileInputRef.current.click();
   };
 
+  const abrirImagem = (url) => {
+    setImagemAmpliada(url);
+  };
+
+  const fecharImagem = () => {
+    setImagemAmpliada(null);
+  };
 
 
   
@@ -518,12 +525,13 @@ function Local() {
                 <button
                   className='image_avaliacao'
                   onClick={handleButtonClick}
+                  type="button"
                 >
                   Carregar Imagem
                 </button>
               </div>
               {foto && (
-              <div className="selected-image">
+              <div className="selected_image">
                 <img src={foto} alt="Selected" />
               </div>
               )}
@@ -575,6 +583,14 @@ function Local() {
             <p className='card_comment_text'>
               {avaliacao.comentario}
             </p>
+            <div>
+              <img src={avaliacao.foto} alt='' className='avaliacao_imagem' onClick={() => abrirImagem(avaliacao.foto)}/>
+              {imagemAmpliada && (
+                <div className='avaliacao_imagem_aberta_fundo' onClick={fecharImagem}>
+                  <img src={imagemAmpliada} alt='' className='avaliacao_imagem_aberta' />
+                </div>
+              )}
+            </div>
           <div>
           <br></br>
             <div style={{width: '100%', border: '1px solid #a3a3a3', marginBottom: '5px'}}></div>
@@ -603,6 +619,7 @@ function Local() {
                   <div className='card_img_name'>
                     <img className='icons_resposta' src={userIcon} alt=''  style={{marginBottom: '-5px'}}/>
                     <div className='text_resposta_nome'> {resposta.usuario.nome} </div>
+                    
                   </div>
                   {isAdmin || resposta.usuario._id === localStorage.getItem('userId') ? (
                     <button id='button_delete_av' title='Deletar' onClick={() => handleDeleteReply(resposta._id)}>
