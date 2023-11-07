@@ -130,11 +130,9 @@ const updateConquests = async (req, res) => {
         if (conquista.progresso >= conquista.meta) {
           conquista.ativa = true;
         }
-
       }
     });
-    
-    const {nome,email,senha,adm,idade,sexo,conquistas,favoritos} = user;
+    const {nome,email,senha,adm,idade,sexo,conquistas,favoritos,foto} = user;
 
     await userSerivce.updateService(
       userId,
@@ -142,12 +140,12 @@ const updateConquests = async (req, res) => {
       email,
       senha,
       adm,
+      foto,
       idade,
       sexo,
       conquistas,
       favoritos
     );
-
 
     res.status(200).send({ message: 'Progresso atualizado com sucesso' });
   } catch (err) {
