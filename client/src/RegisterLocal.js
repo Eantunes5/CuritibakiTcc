@@ -1,9 +1,10 @@
-import './App.css';
+import './RegisterLocal.css';
 import axios from "axios"
 import { useRef, useState } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
-import alertIcon from './imgs/circle-exclamation-solid.svg'
+import alertIcon from './imgs/circle-exclamation-solid.svg';
+import arrow from './imgs/chevron-down-solid.svg';
 
 function RegisterLocal() {
 
@@ -45,6 +46,18 @@ function RegisterLocal() {
 
   const fileInputRef = useRef(null);
 
+  function cleanIframeString(string) {
+    const regex = /<iframe.*src=["'](.*?)["']/;
+    const match = regex.exec(string);
+    const cleanedUrl = match ? match[1] : "";
+    return cleanedUrl;
+  }
+
+  const handleIframeChange = (event) => {
+    const cleanedUrl = cleanIframeString(event.target.value);
+    setIframe(cleanedUrl);
+  }
+
   function convertToBase64(e) {
     const file = e.target.files[0];
 
@@ -59,19 +72,25 @@ function RegisterLocal() {
 
     reader.readAsDataURL(file);
   }
-  
 
-  function cleanIframeString(string) {
-    const regex = /<iframe.*src=["'](.*?)["']/;
-    const match = regex.exec(string);
-    const cleanedUrl = match ? match[1] : "";
-    return cleanedUrl;
-  }
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
 
-  const handleIframeChange = (event) => {
-    const cleanedUrl = cleanIframeString(event.target.value);
-    setIframe(cleanedUrl);
-  }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Image = e.target.result;
+        setImagePreview(base64Image);
+        setFoto(base64Image);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+    setArrowRotated(!arrowRotated);
+  };
 
 
   const [nome, setNome] = useState('')
@@ -83,6 +102,9 @@ function RegisterLocal() {
   const [endereco, setEndereco] = useState('')
   const [foto, setFoto] = useState('')
   const [iframe, setIframe] = useState('')
+  const [imagePreview, setImagePreview] = useState(null);
+  const [formVisible, setFormVisible] = useState(true);
+  const [arrowRotated, setArrowRotated] = useState(false);
   //
 
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
@@ -95,26 +117,27 @@ function RegisterLocal() {
 
   return (
     <div>
-      <SmallHeader/>
       <div className='div_register_local'>
-        <div className='form_container'>
-        <form action="" id="login" method="post" onSubmit={handleSubmit}>
-          <h1>CADASTRAR LOCAL</h1>
-          <p className="item">
-            <label for="nome"><a style={{color: '#ff4747'}}>*</a> Nome </label><br/>
+        <div className='form_container_reg_local'>
+        <h1 onClick={toggleFormVisibility}>CADASTRAR LOCAL <img style={{height: '25px', filter: 'invert(100%)'}} className={arrowRotated ? 'arrow_h1_rotated' : 'arrow_h1_rotated_off'} src={arrow}></img></h1>
+        <form className={`form_reg_local ${formVisible ? 'form-visible' : 'form-hidden'}`} action="" method="post" onSubmit={handleSubmit}>
+
+          <label for="nome">
+          <p className="form_p_local"><a style={{color: '#ff4747'}}>* </a>Nome</p>
             <input
+              className='form_input_local'
               type="nome"
               name="nome"
               id="nome"
               value={nome}
               onChange={handleChangeNome}
               required
-            />
-          </p>
+            /></label>
 
-          <p className="item">
-            <label for="slug"><a style={{color: '#ff4747'}}>*</a> Slug </label><br/>
+          <label for="slug">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Slug</p>
             <input
+              className='form_input_local'
               style={{cursor: 'text'}}
               disabled
               type="slug"
@@ -122,104 +145,104 @@ function RegisterLocal() {
               id="slug"
               value={slug}
               readOnly
-            />
-          </p>
+            /></label>
 
-          <p className="item">
-            <label for="tipo"><a style={{color: '#ff4747'}}>*</a> Tipo </label><br/>
-            <select
-              style={{cursor: 'pointer'}}
-              name="tipo"
-              id="tipo"
-              value={tipo}
-              onChange={e => setTipo(e.target.value)}
-              required
-            >
-              <option value="">-Selecione Tipo-</option>
-              <option value="ponto">Ponto</option>
-              <option value="parque">Parque</option>
-              <option value="shopping">Shopping</option>
-            </select>
-          </p>
+          <label for="tipo">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Tipo</p>
+          <select
+            className='form_input_local'
+            style={{cursor: 'pointer', height: '37px', width:'85vw'}}
+            name="tipo"
+            id="tipo"
+            value={tipo}
+            onChange={e => setTipo(e.target.value)}
+            required
+          >
+            <option style={{width: '85vw'}} value="">-Selecione Tipo-</option>
+            <option style={{width: '85vw'}} value="ponto">Ponto</option>
+            <option style={{width: '85vw'}} value="parque">Parque</option>
+            <option style={{width: '85vw'}} value="shopping">Shopping</option>
+          </select></label>
+          
+          <label for="sobre">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Sobre</p>
+          <textarea
+            className='form_textarea_local'
+            type="sobre"
+            name="sobre"
+            id="sobre"
+            value={sobre}
+            onChange={e => setSobre(e.target.value)}
+            required
+          /></label>
 
-          <p className="item">
-            <label for="sobre"><a style={{color: '#ff4747'}}>*</a> Sobre </label><br/>
+          <label for="horarios">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Horários <img  title='Modelo:&#10;"(dia) à (dia), das xx:xx às xx:xx"&#10;ou&#10;"(dia) à (dia), Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/>
+            </p>
             <textarea
-              type="sobre"
-              name="sobre"
-              id="sobre"
-              value={sobre}
-              onChange={e => setSobre(e.target.value)}
-              required
-            />
-          </p>
-
-          <p className="item">
-            <label for="horarios"><a style={{color: '#ff4747'}}>*</a> Horários <img  title='Modelo:&#10;"(dia) à (dia), das xx:xx às xx:xx"&#10;ou&#10;"(dia) à (dia), Aberto 24 horas"'className="icon_alert_admin" src={alertIcon}/></label><br/>
-            <textarea
+              className='form_textarea_local'
               type="horarios"
               name="horarios"
               id="horarios"
               value={horarios}
               onChange={e => setHorarios(e.target.value)}
               required
-            />
-          </p>
+            /></label>
 
-          <p className="item">
-            <label for="ingressos"><a style={{color: '#ff4747'}}>*</a> Ingressos <img  title='Caso seja gratuito apenas "Entrada franca"'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <label for="ingressos">
+              <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Ingressos <img  title='Caso seja gratuito apenas "Entrada franca"'className="icon_alert_admin" src={alertIcon}/></p>
             <textarea
+              className='form_textarea_local'
               type="ingressos"
               name="ingressos"
               id="ingressos"
               value={ingressos}
               onChange={e => setIngressos(e.target.value)}
               required
-            />
-          </p>
+            /></label>
 
-          <p className="item">
-            <label for="endereco"><a style={{color: '#ff4747'}}>*</a> Endereco </label><br/>
+            <label for="endereco">
+              <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Endereco</p>
             <input
+              className='form_input_local'
               type="endereco"
               name="endereco"
               id="endereco"
               value={endereco}
               onChange={e => setEndereco(e.target.value)}
               required
-            />
-          </p>
+            /></label>
 
-          <p className="item">
-            <label for="foto"><a style={{color: '#ff4747'}}>*</a> Foto <img  title='Tamanho max: 80kb'className="icon_alert_admin" src={alertIcon}/></label><br/>
+            <label for="iframe">
+              <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Iframe <img  title='Insira o iframe completo, ele será corrigido automáticamente'className="icon_alert_admin" src={alertIcon}/></p>
             <input
-              type="file"
-              accept='image/*'
-              name="foto"
-              id="foto"
-              ref={fileInputRef}
-              style={{border: 'none'}}
-              onChange={convertToBase64}
-              required
-            />
-          </p>
-
-          <p className="item">
-            <label for="iframe"><a style={{color: '#ff4747'}}>*</a> Iframe <img  title='Insira o iframe completo, ele será corrigido automáticamente'className="icon_alert_admin" src={alertIcon}/></label><br/>
-            <input
+              className='form_input_local'
               type="iframe"
               name="iframe"
               id="iframe"
               value={iframe}
               onChange={e => setIframe(cleanIframeString(e.target.value))}
               required
-            />
-          </p>
-          
+            /></label>
 
-          <p className="item">
-            <input type="submit" value="Enviar" />
-          </p>
+            <label for="foto" className="custom-file-upload">
+              <p className="form_p_local"><a style={{ color: '#ff4747' }}>*</a> Foto<img title='Tamanho max: 80kb' className="icon_alert_admin" src={alertIcon} /></p>
+              <input
+                className='form_input_local'
+                type="file"
+                accept='image/*'
+                name="foto"
+                id="foto"
+                onChange={handleFileSelect}
+                required
+              /></label>
+            <div className="thumbnail">
+              {imagePreview && <img src={imagePreview} alt="Thumbnail"/>}
+            </div>
+
+            <label style={{display: 'flex', alignItems: 'center'}}>
+              <input className="form_submit_local" type="submit" value="Enviar" />
+            </label>
         </form>
         </div>
       </div>

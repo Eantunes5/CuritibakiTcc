@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import './HomeAdmin.css';
 import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "./components/small_header";
+import MenuAdmin from "./components/menu_admin";
 
 function HomeAdmin() {
+
+  const [menuAberto, setMenuAberto] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuAberto(!menuAberto);
+  }
+
+
+
+
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,15 +35,25 @@ function HomeAdmin() {
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
   if (!isAdmin) {
-    // Se o usuário não for um administrador, redirecionar para outra página
-    navigate("/"); // Redireciona para a página inicial
-    return null; // Evita a renderização da página atual
+    navigate("/"); 
+    return null;
   }
 
   return (
       <div>
+        <MenuAdmin/>
       {/* <SmallHeader/> */}
-      
+      {/* <div className={`menu ${menuAberto ? 'aberto' : ''}`}>
+        <div className="menu-icon" onClick={toggleMenu}>
+          &#9776;
+        </div>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+          <li>Item 4</li>
+        </ul>
+      </div>
       <div className='div_register_local'>
         <div className='form_container'>
         <form action="" id="login" method="post" className="admin_container">
@@ -66,7 +89,7 @@ function HomeAdmin() {
         </form>
 
       </div>
-    </div>
+    </div> */}
     </div>
   );
 }

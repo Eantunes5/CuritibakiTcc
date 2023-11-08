@@ -1,0 +1,103 @@
+.div_register_local{
+    width: 100%;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div_register_local h1{
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.form_container_reg_local{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* width: 100%; */
+    height: fit-content;
+    margin-top: 5px;
+    padding: 0 20px;
+    padding-bottom: 20px;
+    border-radius: 12px;
+    background: #1f1f1f;
+    /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.199); */
+    /* font-family: -apple-system, BlinkMacSystemFont, sans-serif; */
+  }
+.form_reg_local{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.form_p_local{
+    color: white;
+    margin: 0;
+    font-weight: bold;
+}
+.form_input_local{
+    width: 85vw;
+    max-width: 250px;
+    height: 25px;
+    border: 1px solid #313131;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+.form_textarea_local{
+    width: 85vw !important;
+    max-width: 250px;
+    height: 25px;
+    border: 1px solid #313131;
+    background-color: transparent;
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+}
+.form_textarea_local:focus{
+    background-color: white;
+    color: black;
+    font-size: 8px;
+    transform: scale(1.5);
+}
+.thumbnail img{
+    max-height: 55px;
+    max-width: 100px;
+}
+.form_submit_local{
+    width: 85vw;
+    max-width: 250px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #313131;
+    background-color: #313131;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.form-reg-local {
+    transition: all 0.5s ease;
+  }
+  
+  .form-hidden {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  .form-visible {
+    height: auto;
+    opacity: 1;
+  }
+  .arrow_h1_rotated{
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+  .arrow_h1_rotated_off{
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  

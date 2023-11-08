@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 import SmallHeader from './components/small_header';
+import CombinedLocalComponent from './AdminLocais';
 
 
 function UpdateDeleteLocal() {
@@ -130,7 +131,12 @@ function UpdateDeleteLocal() {
 
   return (
     <div>
-      <SmallHeader/>
+      {/* <SmallHeader/> */}
+      <div>
+
+      <CombinedLocalComponent/>
+      </div>
+
       <h1 className='card_text'>Update e Delete - Local </h1>
       <div className='container_update_table'>
         <div className='colored_background_opacity container_selector_admin'>
