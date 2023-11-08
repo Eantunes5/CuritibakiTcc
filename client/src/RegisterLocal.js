@@ -120,7 +120,7 @@ function RegisterLocal() {
       <div className='div_register_local'>
         <div className='form_container_reg_local'>
         <h1 onClick={toggleFormVisibility}>CADASTRAR LOCAL <img style={{height: '25px', filter: 'invert(100%)'}} className={arrowRotated ? 'arrow_h1_rotated' : 'arrow_h1_rotated_off'} src={arrow}></img></h1>
-        <form className={`form_reg_local ${formVisible ? 'form-visible' : 'form-hidden'}`} action="" method="post" onSubmit={handleSubmit}>
+        <form className={`form_reg_local ${formVisible ? 'form-hidden' : 'form-visible'}`} action="" method="post" onSubmit={handleSubmit}>
 
           <label for="nome">
           <p className="form_p_local"><a style={{color: '#ff4747'}}>* </a>Nome</p>
