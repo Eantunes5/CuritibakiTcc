@@ -117,7 +117,7 @@ function Register() {
 
             <br/><br/>
             {/* Nome */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('NOME:')}</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('NOME')}</span>
             <br/>
             <input
               className="inp_login"
@@ -130,7 +130,7 @@ function Register() {
             />
             <br/>
             {/* Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('EMAIL:')}</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('EMAIL')}</span>
             <br/>
             <input
               className="inp_login"
@@ -143,7 +143,7 @@ function Register() {
             />
             <br/>
             {/* Confirmar Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR EMAIL:')}</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR EMAIL')}</span>
             <br/>
             <input
               className="inp_login"
@@ -156,7 +156,7 @@ function Register() {
             />
             <br/>
             {/* Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('SENHA:')}</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('SENHA')}</span>
             <br/>
             <input
               className="inp_login"
@@ -169,7 +169,7 @@ function Register() {
             />
             <br/>
             {/* Confirmar Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR SENHA:')}</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR SENHA')}</span>
             <br/>
             <input
               className="inp_login"
@@ -194,7 +194,7 @@ function Register() {
             />
             <br/>
             {/* Sexo */}
-            <span className="legenda">{t('SEXO:')}</span>
+            <span className="legenda">{t('SEXO')}</span>
             <br/>
             <input
               className="inp_login"

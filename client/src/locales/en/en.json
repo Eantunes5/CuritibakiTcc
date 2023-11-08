@@ -130,12 +130,12 @@
       "Pesquisar por nome...":"Search by name...",
       "Registro realizado com sucesso! Um email foi enviado para confirmar seu cadastro":"Registration completed successfully! An email has been sent to confirm your registration",
       "Registrar":"Register",
-      "NOME:":"NAME:",
-      "CONFIRMAR EMAIL:":"CONFIRM EMAIL:",
-      "SENHA:":"PASSWORD:",
-      "CONFIRMAR SENHA:":"CONFIRM PASSWORD",
-      "IDADE:":"AGE",
-      "SEXO:":"SEX",
+      "NOME":"NAME:",
+      "CONFIRMAR EMAIL":"CONFIRM EMAIL:",
+      "SENHA":"PASSWORD:",
+      "CONFIRMAR SENHA":"CONFIRM PASSWORD",
+      "IDADE":"AGE",
+      "SEXO":"SEX",
       "Já tem uma conta? Clique aqui!":"Already has an account? Click here!"
   }
   

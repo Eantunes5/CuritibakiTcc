@@ -46,7 +46,10 @@ function Local() {
   const [showForm, setShowForm] = useState(false);
   const [favoritado, setFavoritado] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [achievements, setAchievements] = useState([]);
+  const [categoria, setCategoria] = useState('Avaliar');
+  const [progresso, setProgresso] = useState(1);
+
 
   const { id } = useParams();
 
@@ -270,16 +273,34 @@ function Local() {
       tipo: 'tipo da avaliação',
       Locals_id: id,
       Users_id: userId,
-      Comentario_Pai_Id: comentarioPaiId, // Adicione o ID da avaliação pai
-      foto: foto
+      Comentario_Pai_Id: comentarioPaiId,
+      foto: foto,
     };
   
+    // Increment achievement progress for reviewing
+    incrementAchievementProgress(userId);
+
     enviarAvaliacao(novaAvaliacao);
   
     setNota('');
     setComentario('');
-    setComentarioPaiId(''); // Limpe o ID da avaliação pai após o envio
+    setComentarioPaiId('');
   }
+  
+  function incrementAchievementProgress(userId) {
+  
+    const url = process.env.REACT_APP_API_URL;
+    // Atualize os achievements no servidor
+    axios
+      .post(`${url}/user/update-conquests/${userId}`, {categoria,progresso})
+      .then((response) => {
+        console.log('Achievement progress updated successfully.');
+      })
+      .catch((error) => {
+        console.error('Error updating achievement progress:', error);
+      });
+  }
+  
 
   function enviarAvaliacao(novaAvaliacao) {
     // Obtém o token de autenticação do localStorage
@@ -302,7 +323,7 @@ function Local() {
       .post(`${url}/rating`, novaAvaliacao, { headers })
       .then((response) => {
         alert('Obrigado pela avaliação!')
-        window.location.reload();
+        //window.location.reload();
         // Atualize o estado de avaliações se necessário
       })
       .catch((error) => {
