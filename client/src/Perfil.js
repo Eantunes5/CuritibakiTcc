@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Perfil.css';
 import Header from './components/header';
 import defaultIcon from './imgs/user-solid.svg';
+import editIcon from './imgs/pen-solid.svg';
+import deleteIcon from './imgs/xmark-solid.svg'
 import { Link } from 'react-router-dom'; // Importe o componente Link
 import { useTranslation } from 'react-i18next';
 
@@ -31,13 +33,21 @@ function Perfil() {
     reader.readAsDataURL(file);
   }
     // Função para lidar com a seleção de arquivo
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        // Chame a função para converter a imagem em Base64
-        convertToBase64(file);
-      }     
-    };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Chame a função para converter a imagem em Base64
+      convertToBase64(file);
+    } else {
+      setFotoPerfil('');
+    }
+  };
+
+  const handleRemoveImage = () => {
+    // Lógica para remover a imagem do perfil
+    // Atualiza a variável fotoPerfil para um valor vazio (ou null, dependendo da estrutura do seu banco de dados)
+    setFotoPerfil('');
+  };
 
   const handleEditarClick = () => {
     // Quando o botão "Editar" é clicado, entre no modo de edição
@@ -140,83 +150,121 @@ function Perfil() {
     <div>
       <Header />
       <div style={{ height: '75px' }}></div>
-      <div className="profile-container">
-        <div className="profile-header">
-        <div className="profile-avatar">
-            {/* Exiba a imagem de perfil ou o ícone padrão */}
-            <img
-              src={fotoPerfil || defaultIcon}
-              alt="Imagem de Perfil"
-              className="avatar-image"
-            />
-            {/* Adicione o campo de entrada de arquivo para carregar uma nova imagem de perfil */}
-            {editMode && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            )}
-          </div><div className="profile-info">
-            {editMode ? ( // Se estiver no modo de edição, exiba campos de entrada
-              <>
-                <input
-                  type="text"
-                  value={nomeUsuario}
-                  onChange={(e) => setNomeUsuario(e.target.value)}
+      <div style={{display:'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px'}}>
+        <div className='profile_header_container'>
+          <div className="profile_header">
+            <div className="profile_avatar">
+                <img src={fotoPerfil || defaultIcon} alt="Imagem de Perfil" className="avatar_image" style={{ filter: editMode ? 'brightness(50%)' : 'brightness(100%)' }}
                 />
-                <input
-                  type="text"
-                  value={emailUsuario}
-                  onChange={(e) => setEmailUsuario(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={idadeUsuario}
-                  onChange={(e) => setIdadeUsuario(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={sexoUsuario}
-                  onChange={(e) => setSexoUsuario(e.target.value)}
-                />
-              </>
-            ) : (
-              <>
-                <h2>{nomeUsuario}</h2>
-                <p>{t('Email')} {emailUsuario}</p>
-                <p>{t('Idade')} {idadeUsuario} {t('anos')}</p>
-                <p>{t('Sexo')} {sexoUsuario}</p>
-              </>
-            )}
-            {editMode ? ( // Exiba o botão "Confirmar" no modo de edição
-              <button onClick={handleConfirmarClick}>{t('Confirmar')}</button>
-            ) : (
-              <button onClick={handleEditarClick}>{t('Editar')}</button>
-            )}
+                {editMode && (
+                  <div className="edit_image">
+                    <span className='span_container'>
+                      <span style={{ fontSize: '40px' }}>+</span>
+                      <br />
+                      Alterar imagem
+                    </span>
+                    <input type="file" accept="image/*" onChange={handleFileChange}/>
+                </div>
+                )}
+                {editMode && fotoPerfil && (
+                  <button 
+                  onClick={handleRemoveImage}
+                  className='delete_image'
+                  >
+                    <img src={deleteIcon}></img>
+                  </button>
+                )}
+              </div>
+              <div className="profile_info">
+                {editMode ? ( // Se estiver no modo de edição, exiba campos de entrada
+                  <>
+                    <input
+                      className='input_name_edit'
+                      type="text"
+                      value={nomeUsuario}
+                      onChange={(e) => setNomeUsuario(e.target.value)}
+                    />
+
+                    <div className="divider" />
+                    
+                    <p style={{ display: 'flex', alignItems: 'center' }}>
+                      <b>{t('Email')}:</b>
+                    <input
+                      className='input_info_edit'
+                      type="text"
+                      value={emailUsuario}
+                      onChange={(e) => setEmailUsuario(e.target.value)}
+                      style={{ width: '100%', display: 'inline' }}
+                    />
+                    </p>
+                    <p>
+                      <b>{t('Idade')}:</b> 
+                      <select
+                        className='input_info_edit'
+                        value={idadeUsuario}
+                        onChange={(e) => setIdadeUsuario(e.target.value)}
+                        style={{ width: '100px' }}
+                      >
+                        {[...Array(100)].map((_, index) => (
+                          <option key={index + 1} value={index + 1}>{index + 1}</option>
+                        ))}
+                      </select> {t('anos')}</p>
+                    <p>
+                      <b>{t('Sexo')}:</b>
+                      <input
+                      className='input_info_edit'
+                      type="text"
+                      value={sexoUsuario}
+                      onChange={(e) => setSexoUsuario(e.target.value)}
+                    />
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h2>{nomeUsuario}</h2>
+                    <div className="divider" />
+                    <p><b>{t('Email')}:</b> {emailUsuario}</p>
+                    <p><b>{t('Idade')}:</b> {idadeUsuario} {t('anos')}</p>
+                    <p><b>{t('Sexo')}:</b> {sexoUsuario}</p>
+                  </>
+                )}
+                
+              </div>
+              {editMode ? ( // Exiba o botão "Confirmar" no modo de edição
+                  <button className="button_confirm_infos" onClick={handleConfirmarClick}>{t('Confirmar')}</button>
+                ) : (
+                  <button className="button_edit_infos" onClick={handleEditarClick}>
+                    <img src={editIcon} alt="Editar"></img>  
+                  </button>
+                )}
           </div>
         </div>
-        <div className="profile-sections">
-          <div className="profile-section">
-            <h3>{t('Conquistas')}</h3>
-            <ul>
-              <li>Conquista 1</li>
-              <li>Conquista 2</li>
-              <li>Conquista 3</li>
-            </ul>
-          </div>
-          <div className="profile-section">
-            <h3>{t('Favoritos')}</h3>
-            <ul style={{display: 'flex',alignItems: 'center'}}>
-              {favoritosDetalhes.map((local, index) => (
-                <li key={local._id}>
-                  {/* Use o componente Link para fazer a imagem clicável */}
-                  <Link to={`/pontos/Local/${local._id}`}>
-                    <img src={local.foto} alt={`Local ${local.nome}`} style={{maxWidth: '300px'}}/>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="profile_container">
+          <div className="profile_sections">
+            <div className="profile_section">
+              <h3>{t('Favoritos')}</h3>
+              <div className="divider" />
+              <ul className="favorito_list">
+                {favoritosDetalhes.map((local, index) => (
+                  <li className="card_favorito" key={local._id}>
+                    <Link to={`/pontos/Local/${local._id}`} className='card_favorito_content'>
+                      <img src={local.foto} alt={`Local ${local.nome}`}/>
+                      <p className='card_favorito_text'>{local.nome}</p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="profile_section">
+              <h3>{t('Conquistas')}</h3>
+              <div className="divider" />
+              <ul>
+                <li>Conquista 1</li>
+                <li>Conquista 2</li>
+                <li>Conquista 3</li>
+              </ul>
+            </div>
+            
           </div>
         </div>
       </div>
