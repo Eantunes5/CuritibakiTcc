@@ -49,6 +49,7 @@ function Local() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [achievements, setAchievements] = useState([]);
   const [categoria, setCategoria] = useState('Avaliar');
+  const [categoria2, setCategoria2] = useState('Fotografar');
   const [progresso, setProgresso] = useState(1);
 
 
@@ -248,7 +249,11 @@ function Local() {
       }
 
       // Atualize a lista de favoritos do usuário no servidor
-      await axios.patch(`${url}/user/${userId}`, { favoritos });
+      await axios.patch(`${url}/user/${userId}`, { favoritos })
+      .then((response) => {
+        // Após a primeira solicitação ser bem-sucedida, faça a segunda solicitação.
+        axios.post(`${url}/user/update-conquests/${userId}`, { "categoria": "Favoritar", "progresso": 1 });
+      });
 
       // Atualize o estado para refletir se o local está favoritado ou não
       setFavoritado(localIndex === -1);
@@ -289,18 +294,24 @@ function Local() {
   }
   
   function incrementAchievementProgress(userId) {
-  
     const url = process.env.REACT_APP_API_URL;
-    // Atualize os achievements no servidor
+  
     axios
-      .post(`${url}/user/update-conquests/${userId}`, {categoria,progresso})
+      .post(`${url}/user/update-conquests/${userId}`, { "categoria": "Avaliar", "progresso": 1 })
       .then((response) => {
-        console.log('Achievement progress updated successfully.');
+        console.log('Achievement "Avaliar" progress updated successfully.');
+  
+        // Após a primeira solicitação ser bem-sucedida, faça a segunda solicitação.
+        return axios.post(`${url}/user/update-conquests/${userId}`, { "categoria": "Fotografar", "progresso": 1 });
+      })
+      .then((response) => {
+        console.log('Achievement "Fotografar" progress updated successfully.');
       })
       .catch((error) => {
         console.error('Error updating achievement progress:', error);
       });
   }
+  
   
 
   function enviarAvaliacao(novaAvaliacao) {
