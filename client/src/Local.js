@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from './components/header';
+import FormAnalytic from './components/form_analytic';
 import commentIcon from './imgs/comment-regular.svg'
 import timeIcon from './imgs/clock-solid.svg';
 import ticketIcon from './imgs/ticket-solid.svg';
@@ -418,7 +419,7 @@ function Local() {
   return (
     <div>
       <Header/>
-      {/* ADICIONAR CARROSSEL DINAMICO*/}
+      {isLoggedIn ? (<FormAnalytic/>) : null}
         <div className='local_img'>
           <img src={fotoLocal} alt=''/>
           <div className='local_name'>
@@ -551,11 +552,6 @@ function Local() {
           </form>
           </div>
         </div>
-
-
-
-
-
       )}
 
         <div className='container_comments'>
@@ -635,12 +631,7 @@ function Local() {
           ))}
           </div>
         </div>
-
-
-
       </div>
-
-
     </div>
   );
 }

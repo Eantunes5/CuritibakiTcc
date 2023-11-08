@@ -225,7 +225,7 @@ function Perfil() {
                     <div className="divider" />
                     <p><b>{t('Email')}:</b> {emailUsuario}</p>
                     <p><b>{t('Idade')}:</b> {idadeUsuario} {t('anos')}</p>
-                    <p><b>{t('Sexo')}:</b> {sexoUsuario}</p>
+                    <p style={{textTransform: 'capitalize'}}><b>{t('Sexo')}:</b> {sexoUsuario}</p>
                   </>
                 )}
                 
