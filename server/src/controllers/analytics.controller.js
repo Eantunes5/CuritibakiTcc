@@ -3,7 +3,7 @@ import analyticsSerivce  from '../services/analytics.serivce.js';
 const create = async(req,res)  => {
   try{
     const {id, idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem} = req.body;
-
+  console.log(idade, estadoOrigem, cidadeOrigem, estadoCivil, acomodacaoPrincipal, tempoDeEstadia, motivoDaViagem, transporteDaViagem)
   if (!idade || !estadoOrigem || !cidadeOrigem || !estadoCivil || !acomodacaoPrincipal || !tempoDeEstadia || !motivoDaViagem || !transporteDaViagem) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
   }

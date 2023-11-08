@@ -18,6 +18,9 @@ dotenv.config();
 const port = process.env.PORT || 3001;
 const app = express();
 //var cors = require('cors')
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
+
 
 connectDatabase();
 app.use(express.json({limit: '50mb'}));

@@ -115,7 +115,7 @@ const updateConquests = async (req, res) => {
   try {
 
     const userId = req.user._id; 
-    
+    const id = userId;
     const user = await userSerivce.findByIdService(userId);
     
     if (!user) {
@@ -135,14 +135,14 @@ const updateConquests = async (req, res) => {
     const {nome,email,senha,adm,idade,sexo,conquistas,favoritos,foto} = user;
 
     await userSerivce.updateService(
-      userId,
+      id,
       nome,
       email,
       senha,
       adm,
-      foto,
       idade,
       sexo,
+      foto,
       conquistas,
       favoritos
     );
