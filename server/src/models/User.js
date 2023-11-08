@@ -90,6 +90,11 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   }],
+  form: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 })
 
 UserSchema.pre("save", async function(next){

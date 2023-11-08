@@ -32,12 +32,8 @@ const AnalyticsSchema = new mongoose.Schema({
       transporteDaViagem : {
         type: String,
         required:true,
-      },
-      form: {
-        type: Boolean,
-        required: true,
-        default: false,
       }
+      
 }) 
 
 const Analytics = mongoose.model("Analytics", AnalyticsSchema);

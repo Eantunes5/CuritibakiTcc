@@ -8,7 +8,7 @@ const findByIdService = (id) => User.findById(id);
 
 const findByEmailService = (email) => User.find(email);
 
-const updateService = (id,nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos) => User.findOneAndUpdate({_id: id},{nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos});
+const updateService = (id,nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos,form) => User.findOneAndUpdate({_id: id},{nome,email,senha,adm,idade,sexo,foto,conquistas,favoritos,form});
 
 const updateService1 = (id,conquistas) => User.findOneAndUpdate({_id: id},{conquistas});
 

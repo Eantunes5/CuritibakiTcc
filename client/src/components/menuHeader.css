@@ -84,6 +84,7 @@
   gap: 10px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 .container_button_profile:hover{
   background-color: #f2f2f2;

@@ -7,6 +7,7 @@ import usFlag from '../imgs/us.svg'
 import bars from '../imgs/bars-solid.svg'
 import userIcon from '../imgs/user-solid.svg'
 import logoutIcon from '../imgs/logout-solid.svg'
+import adminIcon from '../imgs/user-gear-solid.svg'
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ function MenuHeader(){
     const [selectedLang, setSelectedLang] = useState("PT");
     const [selectedFlag, setSelectedFlag] = useState(brazilFlag);
     const navigate = useNavigate();
+    const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
     const handleLogout = () => {
         // Limpar o token de autenticação armazenado
         localStorage.removeItem("token");
@@ -58,6 +60,14 @@ function MenuHeader(){
                     </button>
                 </Link>
             ))}
+            {isAdmin ? (
+                <Link to={'/homeAdmin'}>
+                    <button className='container_button_profile' onClick={null}>
+                        <img className='icon_buttons' src={adminIcon} alt=''/>
+                        <p>Admin</p>
+                    </button>
+                </Link>
+            ) : null}
             </ul>
         </div>
         </div>

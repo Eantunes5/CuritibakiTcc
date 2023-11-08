@@ -29,7 +29,8 @@ function HomeAdmin() {
 
   return (
       <div>
-      <SmallHeader/>
+      {/* <SmallHeader/> */}
+      
       <div className='div_register_local'>
         <div className='form_container'>
         <form action="" id="login" method="post" className="admin_container">
