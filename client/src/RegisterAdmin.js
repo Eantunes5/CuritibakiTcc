@@ -6,11 +6,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import alertIcon from './imgs/circle-exclamation-solid.svg';
+import arrow from './imgs/chevron-down-solid.svg';
 import Alert from '@mui/material/Alert'
 import { useTranslation } from 'react-i18next';
 
 
-function Register() {
+
+function RegisterAdmin() {
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL
   });
@@ -25,11 +27,12 @@ function Register() {
   const [sucesso, setSucesso] = useState(false);
   const [foto, setFoto] = useState('');
   const { t } = useTranslation();
+  const [formVisible, setFormVisible] = useState(true);
+  const [arrowRotated, setArrowRotated] = useState(false);
+  const [envioFeito, setEnvioFeito] = useState(false);
 
 
   const url = process.env.REACT_APP_API_URL;
-
-  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -99,6 +102,22 @@ function Register() {
         alert("Cadastro Incorreto")
         // Trate o erro de verificação de email aqui, se necessário
       });
+
+        setEnvioFeito(true);
+        alert_div.style = 'display: none'
+        setNome('');
+        setEmail('');
+        setPassword('');
+        setConfirmarEmail('');
+        setConfirmarPassword('');
+        setIdade('');
+        setSexo('');
+        setTimeout(() => {
+            setEnvioFeito(false);
+        }, 2000);
+
+      
+
   };
 
   function incrementAchievementProgress(userId) {
@@ -114,126 +133,112 @@ function Register() {
       });
   }
 
-  return (
-    <div className="outer_container">
-      <Header/>
-      <div className="dark_overlay"></div>
-      <div className="div_container_register_info">
-        <div className="form_container">
-        
-        {sucesso ? <Alert variant="outlined" severity="success">
-            {t('Registro realizado com sucesso! Um email foi enviado para confirmar seu cadastro')}
-        </Alert> : null}
-          <form id='login' onSubmit={handleSubmit}>     
-            <h1>{t('Registrar')}</h1>
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+    setArrowRotated(!arrowRotated);
+  };
 
-           <div className="div_alert_error">
-              <img className="icons_alert" src={alertIcon}/>
-              <div className="text_alert"></div>
-              <img className="icons_alert" src={alertIcon}/>
-            </div>
-
-            <br/><br/>
-            {/* Nome */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('NOME')}</span>
-            <br/>
+  return(
+    <div>
+      <div className='div_register_local'>
+        <div className='form_container_reg_local'>
+        <h1 onClick={toggleFormVisibility}>CADASTRAR USUÁRIO <img style={{height: '25px', filter: 'invert(100%)'}} className={arrowRotated ? 'arrow_h1_rotated' : 'arrow_h1_rotated_off'} src={arrow}></img></h1>
+        <form className={`form_reg_local ${formVisible ? 'form-hidden' : 'form-visible'}`} action="" method="post" onSubmit={handleSubmit}>
+            <div className="div_alert_error">
+                <img className="icons_alert" src={alertIcon}/>
+                <div className="text_alert"></div>
+                <img className="icons_alert" src={alertIcon}/>
+                </div>
+          <label>
+          <p className="form_p_local"><a style={{color: '#ff4747'}}>* </a>Nome</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="text"
               name="nome"
               id="nome"
               value={nome}
               onChange={e => setNome(e.target.value)}
               required
-            />
-            <br/>
-            {/* Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('EMAIL')}</span>
-            <br/>
+            /></label>
+
+          <label>
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Email</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="email"
               name="email"
               id="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-            />
-            <br/>
-            {/* Confirmar Email */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR EMAIL')}</span>
-            <br/>
-            <input
-              className="inp_login"
-              type="email"
+            /></label>
+          
+          <label>
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Confirmar Email</p>
+          <input
+            className='form_input_local'
+            type="email"
               name="email"
               id="email_conf"
               value={confirmarEmail}
               onChange={e => setConfirmarEmail(e.target.value)}
               required
-            />
-            <br/>
-            {/* Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('SENHA')}</span>
-            <br/>
+          /></label>
+
+          <label>
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Senha</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="password"
               name="password"
               id="password"
               value={senha}
               onChange={e => setPassword(e.target.value)}
               required
-            />
-            <br/>
-            {/* Confirmar Senha */}
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('CONFIRMAR SENHA')}</span>
-            <br/>
+            /></label>
+
+            <label>
+              <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Confirmar Senha</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="password"
               name="password"
               id="password_conf"
               value={confirmarSenha}
               onChange={e => setConfirmarPassword(e.target.value)}
               required
-            />
-            <br/>
-            {/* Idade */}
-            <span className="legenda">{t('IDADE')}</span>
-            <br/>
+            /></label>
+
+            <label>
+              <p className="form_p_local">Idade</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="text"
               name="idade"
               id="idade"
               value={idade}
               onChange={e => setIdade(e.target.value)}
-            />
-            <br/>
-            {/* Sexo */}
-            <span className="legenda">{t('SEXO')}</span>
-            <br/>
+            /></label>
+
+            <label>
+              <p className="form_p_local">Sexo</p>
             <input
-              className="inp_login"
+              className='form_input_local'
               type="text"
               name="sexo"
               id="sexo"
               value={sexo}
               onChange={e => setSexo(e.target.value)}
-            />
-            <br/><br/>
-            <input type="submit" value="Registrar" className='btn_submit'/>
-            <br/><br/>
-            <Link to='/Login'>
-              <span className="to_register">{t('Já tem uma conta? Clique aqui!')}</span>
-            </Link>
-          </form>
+            /></label>
+
+            <label style={{display: 'flex', alignItems: 'center'}}>
+              <input className="form_submit_local" type="submit" value={envioFeito ? "Registrado" : "Registrar"} />
+            </label>
+        </form>
         </div>
       </div>
-      <ImageCarouselIndex/>
     </div>
-  );
+  )
 }
 
-export default Register;
+export default RegisterAdmin;

@@ -6,6 +6,7 @@ import MenuAdmin from "./components/menu_admin";
 import RegisterLocal from "./RegisterLocal";
 import PontosTitle from "./components/pontos_title";
 import UpdateDeleteLocal from "./UpdateDeleteLocal";
+import RegisterAdmin from "./RegisterAdmin";
 
 function HomeAdmin() {
 
@@ -48,6 +49,9 @@ function HomeAdmin() {
         <PontosTitle text={'Locais'}/>
         <RegisterLocal/>
         <UpdateDeleteLocal/>
+        <PontosTitle text={'Usuários'}/>
+        <RegisterAdmin/>
+        <PontosTitle text={'Emergências'}/>
         
       {/* <SmallHeader/> */}
       {/* <div className={`menu ${menuAberto ? 'aberto' : ''}`}>
@@ -65,21 +69,7 @@ function HomeAdmin() {
         <div className='form_container'>
         <form action="" id="login" method="post" className="admin_container">
           <h1>ADMINISTRADOR</h1>
-          <Link to='/pontos'>
-            <button className="buttons_admin">Pontos</button>
-          </Link>
-          <Link to='/faq'>
-            <button className="buttons_admin">Faq</button>
-          </Link>
-          <Link to='/emergencia'>
-            <button className="buttons_admin">Emergencia</button>
-          </Link>
-          <Link to='/registerlocal'>
-            <button className="buttons_admin">Registrar Local</button>
-          </Link>
-          <Link to='/UpdateDeleteLocal'>
-            <button className="buttons_admin">Atualizar Locais</button>
-          </Link>
+
           <Link to='/register'>
             <button className="buttons_admin">Registrar Usuarios</button>
           </Link>

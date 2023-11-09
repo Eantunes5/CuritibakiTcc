@@ -24,7 +24,7 @@ function RegisterLocal() {
       .post(`${url}/locals`, { nome, slug, tipo, sobre, horarios, ingressos, endereco, foto, iframe }) //
       .then(response => {
         console.log(response)
-        alert("Local registrado com sucesso!");
+        // alert("Local registrado com sucesso!");
         // Handle response
       })
       .catch(error => {
@@ -35,6 +35,21 @@ function RegisterLocal() {
           // Handle other errors
         }
       });
+
+      setEnvioFeito(true);
+      setNome('');
+      setSlug('');
+      setTipo('');
+      setSobre('');
+      setHorarios('');
+      setIngressos('');
+      setEndereco('');
+      setIframe('');
+      setFoto('');
+      setImagePreview(null)
+      setTimeout(() => {
+        setEnvioFeito(false);
+    }, 2000);
   }
 
   const handleChangeNome = (event) => {
@@ -100,11 +115,12 @@ function RegisterLocal() {
   const [horarios, setHorarios] = useState('')
   const [ingressos, setIngressos] = useState('')
   const [endereco, setEndereco] = useState('')
-  const [foto, setFoto] = useState('')
   const [iframe, setIframe] = useState('')
+  const [foto, setFoto] = useState('')
   const [imagePreview, setImagePreview] = useState(null);
   const [formVisible, setFormVisible] = useState(true);
   const [arrowRotated, setArrowRotated] = useState(false);
+  const [envioFeito, setEnvioFeito] = useState(false);
   //
 
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
@@ -241,15 +257,12 @@ function RegisterLocal() {
             </div>
 
             <label style={{display: 'flex', alignItems: 'center'}}>
-              <input className="form_submit_local" type="submit" value="Enviar" />
+              <input className="form_submit_local" type="submit" value={envioFeito ? "Enviado" : "Enviar"} />
             </label>
         </form>
         </div>
       </div>
     </div>
-
-    
-  
   )
 }
 

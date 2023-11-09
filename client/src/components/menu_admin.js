@@ -16,8 +16,12 @@ const MenuAdmin = () => {
     const menuItems = [
       { path: '/homeAdmin', name: 'Gerenciamento' },
       { path: '/AdminLocais', name: 'Dashboard' },
-      { path: '/pagina3', name: 'Página 3' },
-      // Adicione mais itens conforme necessário
+    ];
+    const menuPages = [
+      { path: '/', name: 'Página Inicial' },
+      { path: '/pontos', name: 'Pontos' },
+      { path: '/emergencia', name: 'Emergências' },
+      { path: '/faq', name: 'FAQ' },
     ];
 
   return (
@@ -33,6 +37,15 @@ const MenuAdmin = () => {
             <img className='nome_logo_sidebar' src={nomeLogo}></img>
             <div className="divider_sidebar" />
           {menuItems.map((item, index) => (
+            <li key={index}>
+              <Link to={item.path} className={`link_sidebar ${location.pathname === item.path ? 'active' : ''}`}>
+                {item.name}
+                <img src={buttonArrow}></img>
+              </Link>
+            </li>
+          ))}
+          <div className="divider_sidebar" />
+          {menuPages.map((item, index) => (
             <li key={index}>
               <Link to={item.path} className={`link_sidebar ${location.pathname === item.path ? 'active' : ''}`}>
                 {item.name}
