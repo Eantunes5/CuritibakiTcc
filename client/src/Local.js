@@ -273,6 +273,36 @@ function Local() {
     }
   };
 
+  function enviarReclamacao(reclamacao) {
+
+    console.log("nome:? " + reclamacao.nome)
+    console.log("titulo: " + reclamacao.titulo)
+    console.log("descricao: " + reclamacao.descricao)
+    console.log("local : " + reclamacao.local)
+
+    const reclamacaoData = {
+      nome: reclamacao.nome, // Use o nome do usuário que avaliou
+      titulo: reclamacao.titulo,
+      descricao: reclamacao.descricao, // Use o comentário da avaliação
+      local: reclamacao.local, // Use o nome do local
+    };
+
+    const url = process.env.REACT_APP_API_URL;
+    // Cria a estrutura JSON para a reclamação
+
+    // Envia a reclamação para a rota de reclamações
+    const urlReclamacoes = `${url}/complaints`; // Altere a URL conforme necessário
+    axios
+      .post(urlReclamacoes, reclamacaoData)
+      .then((response) => {
+        alert('Obrigado pela reclamação!');
+        // Atualize o estado de avaliações se necessário
+      })
+      .catch((error) => {
+        alert('Ocorreu um erro ao enviar sua reclamação. Por favor, tente novamente!');
+      });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
   
@@ -291,11 +321,27 @@ function Local() {
       Comentario_Pai_Id: comentarioPaiId,
       foto: foto,
     };
+
+    const reclamacaoData = {
+      nome: nomeUsuario, // Use o nome do usuário que avaliou
+      titulo: 'Reclamação',
+      descricao: comentario, // Use o comentário da avaliação
+      local: nome, // Use o nome do local
+    };
   
     // Increment achievement progress for reviewing
     incrementAchievementProgress(userId);
 
-    enviarAvaliacao(novaAvaliacao);
+    console.log("Nota: " + nota)
+
+       // Verifica a classificação antes de enviar
+       if (nota == '1' || nota == '2') {
+        enviarReclamacao(reclamacaoData);
+          enviarAvaliacao(novaAvaliacao);
+      } else {
+        console.log("else")
+        enviarAvaliacao(novaAvaliacao);
+      }
   
     setNota('');
     setComentario('');
@@ -387,7 +433,7 @@ function Local() {
         }
     
       const novaAvaliacao = {
-        nota: '1',
+        nota: '5',
         comentario: reply[avaliacaoId],
         tipo: 'resposta',
         Locals_id: id,
