@@ -15,7 +15,7 @@ const MenuAdmin = () => {
   
     const menuItems = [
       { path: '/homeAdmin', name: 'Gerenciamento' },
-      { path: '/AdminLocais', name: 'Dashboard' },
+      { path: '/AdminDashboard', name: 'Dashboard' },
     ];
     const menuPages = [
       { path: '/', name: 'Página Inicial' },

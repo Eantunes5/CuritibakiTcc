@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './form_analytic.css'
 import acceptIcon from '../imgs/check-solid.svg'
 import denyIcon from '../imgs/xmark-solid.svg'
+import axios from 'axios';
+
 
 const estadoECidade = {
   'Acre': ['Rio Branco', 'Cruzeiro do Sul', 'Sena Madureira', 'Tarauacá', 'Feijó'],
@@ -43,162 +45,237 @@ const motivoViagemL = ['Negócios', 'Turismo', 'Educação', 'Saúde', 'Religiã
 const transporteViagemL = ['Avião', 'Carro', 'Trem', 'Ônibus', 'Navio', 'Bicicleta', 'A pé'];
 
 
-function FormAnalytic(){
-    const [isVisible, setIsVisible] = useState(false);
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const divRef = useRef();
-    const [formData, setFormData] = useState({
-      estadoOrigem: '',
-      cidadeOrigem: '',
-      estadoCivil: '',
-      acomodacaoPrincipal: '',
-      tempoEstadia: '',
-      motivoViagem: '',
-      transporteViagem: '',
-    });
+function FormAnalytic() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-          setIsVisible(true);
-        }, 3000); // div aparecerá após 3 segundos
-    
-        return () => {
-          clearTimeout(timer);
-        };
-    }, []);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const divRef = useRef();
+  const [formData, setFormData] = useState({
+    idade: 41,
+    estadoOrigem: '',
+    cidadeOrigem: '',
+    estadoCivil: '',
+    acomodacaoPrincipal: '',
+    tempoDeEstadia: '',
+    motivoDaViagem: '',
+    transporteDaViagem: '',
+  });
 
-    const handleClickOutside = (event) => {
-        if (divRef.current && !divRef.current.contains(event.target)) {
-          setIsVisible(false);
-          setIsFormVisible(false);
-        }
-      };
-    
-    useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
-        setIsVisible(true);
-    }, 3000); // div aparecerá após 3 segundos
+      setIsVisible(true);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (divRef.current && !divRef.current.contains(event.target)) {
+      setIsVisible(false);
+      setIsFormVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 3000);
 
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-        clearTimeout(timer);
-        document.removeEventListener('mousedown', handleClickOutside);
+      clearTimeout(timer);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-    }, []);
+  }, []);
 
-    const handleOpenForm = () => {
-      setIsFormVisible(true);
-    };
-  
-    const handleCloseForm = () => {
-      setIsFormVisible(false);
-      setIsVisible(false);
-    };
+  const handleOpenForm = () => {
+    setIsFormVisible(true);
+  };
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      if (name === 'estadoOrigem') {
-        setFormData({
-          ...formData,
-          [name]: value,
-          cidadeOrigem: '', // Reseta a cidade ao mudar o estado
-        });
-      } else {
-        setFormData({ ...formData, [name]: value });
-      }
-    };
+  const handleCloseForm = () => {
+    setIsFormVisible(false);
+    setIsVisible(false);
+  };
 
-    return(
-        <div>
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = process.env.REACT_APP_API_URL;
+
+    if (isSubmitting) {
+      return;
+    }
+
+    console.log('Dados do formulário a serem enviados:', formData);
+
+    setIsSubmitting(true);
+
+    axios
+      .post(`${url}/analytics`, formData)
+      .then((response) => {
+        console.log('Formulário enviado com sucesso:', response.data);
+        // Faça algo com a resposta, se necessário
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar o formulário:', error);
+        // Lide com erros de solicitação, se necessário
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        setIsFormVisible(false);
+        setIsVisible(false);
+      });
+  };
+
+  return (
+    <div>
       <div className={`overlay ${isVisible ? 'show' : ''}`} />
       <div ref={divRef} className={`content ${isVisible ? 'show' : ''}`}>
-        <span class="close_form" onClick={handleCloseForm}>×</span>
-        <p class="form_title">Turistando em Curitiba?</p>
-        <p class="form_intro_text">Poderia responder um pequeno questionário sobre você?</p>
+        <span className="close_form" onClick={handleSubmit}>
+          ×
+        </span>
+        <p className="form_title">Turistando em Curitiba?</p>
+        <p className="form_intro_text">
+          Poderia responder um pequeno questionário sobre você?
+        </p>
         {isFormVisible ? (
           <div className="form_container_local">
-            <form className='form_infos_analytics'>
+            <form className="form_infos_analytics" onSubmit={handleSubmit}>
               <label>
                 <p>Estado de Origem:</p>
-                <select name="estadoOrigem" value={formData.estadoOrigem} onChange={handleInputChange}>
+                <select
+                  name="estadoOrigem"
+                  value={formData.estadoOrigem}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o estado</option>
                   {estadoOrigemL.map((estado, index) => (
-                    <option key={index} value={estado}>{estado}</option>
+                    <option key={index} value={estado}>
+                      {estado}
+                    </option>
                   ))}
                 </select>
               </label>
               <label>
                 <p>Cidade de Origem:</p>
-                <select name="cidadeOrigem" value={formData.cidadeOrigem} onChange={handleInputChange}>
+                <select
+                  name="cidadeOrigem"
+                  value={formData.cidadeOrigem}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione a cidade</option>
-                  {formData.estadoOrigem && estadoECidade[formData.estadoOrigem].map((cidade, index) => (                    <option key={index} value={cidade}>{cidade}</option>
-                  ))}
+                  {formData.estadoOrigem &&
+                    estadoECidade[formData.estadoOrigem].map((cidade, index) => (
+                      <option key={index} value={cidade}>
+                        {cidade}
+                      </option>
+                    ))}
                 </select>
               </label>
               <label>
                 <p>Estado Civil:</p>
-                <select name="estadoCivil" value={formData.estadoCivil} onChange={handleInputChange}>
+                <select
+                  name="estadoCivil"
+                  value={formData.estadoCivil}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o estado civil</option>
                   {estadoCivilL.map((estadoCivil, index) => (
-                    <option key={index} value={estadoCivil}>{estadoCivil}</option>
+                    <option key={index} value={estadoCivil}>
+                      {estadoCivil}
+                    </option>
                   ))}
                 </select>
               </label>
               <label>
                 <p>Tipo da Acomodação:</p>
-                <select name="acomodacaoPrincipal" value={formData.acomodacaoPrincipal} onChange={handleInputChange}>
+                <select
+                  name="acomodacaoPrincipal"
+                  value={formData.acomodacaoPrincipal}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o tipo de acomodação</option>
                   {acomodacaoPrincipalL.map((acomodacao, index) => (
-                    <option key={index} value={acomodacao}>{acomodacao}</option>
+                    <option key={index} value={acomodacao}>
+                      {acomodacao}
+                    </option>
                   ))}
                 </select>
               </label>
               <label>
                 <p>Tempo de Estadia: (dias)</p>
-                <select name="tempoEstadia" value={formData.tempoEstadia} onChange={handleInputChange}>
+                <select
+                  name="tempoDeEstadia"
+                  value={formData.tempoDeEstadia}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o tempo de estadia</option>
                   {tempoEstadiaL.map((tempo, index) => (
-                    <option key={index} value={tempo}>{tempo}</option>
+                    <option key={index} value={tempo}>
+                      {tempo}
+                    </option>
                   ))}
                 </select>
               </label>
               <label>
                 <p>Motivo da Viagem:</p>
-                <select name="motivoViagem" value={formData.motivoViagem} onChange={handleInputChange}>
+                <select
+                  name="motivoDaViagem"
+                  value={formData.motivoDaViagem}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o motivo da viagem</option>
                   {motivoViagemL.map((motivo, index) => (
-                    <option key={index} value={motivo}>{motivo}</option>
+                    <option key={index} value={motivo}>
+                      {motivo}
+                    </option>
                   ))}
                 </select>
               </label>
               <label>
                 <p>Transporte para chegar na cidade:</p>
-                <select name="transporteViagem" value={formData.transporteViagem} onChange={handleInputChange}>
+                <select
+                  name="transporteDaViagem"
+                  value={formData.transporteDaViagem}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione o meio de transporte</option>
                   {transporteViagemL.map((transporte, index) => (
-                    <option key={index} value={transporte}>{transporte}</option>
+                    <option key={index} value={transporte}>
+                      {transporte}
+                    </option>
                   ))}
                 </select>
               </label>
-              <div className='container_buttons_form'>
-                <button type='submit' class="button_confirm_form_local">Confirmar</button>
+              <div className="container_buttons_form">
+                <button type="submit" className="button_confirm_form_local">
+                  Confirmar
+                </button>
               </div>
             </form>
           </div>
         ) : (
-          <div className='container_buttons_form'>
-            <button onClick={handleOpenForm} id='accept_button' className='button_form'>
-              <img src={acceptIcon}></img>
+          <div className="container_buttons_form">
+            <button onClick={handleOpenForm} id="accept_button" className="button_form">
+              <img src={acceptIcon} alt="Accept Icon" />
             </button>
-            <button onClick={handleCloseForm} id='deny_button' className='button_form'>
-              <img src={denyIcon}></img>
+            <button onClick={handleCloseForm} id="deny_button" className="button_form">
+              <img src={denyIcon} alt="Deny Icon" />
             </button>
           </div>
         )}
       </div>
     </div>
-    )
+  );
 }
 
 export default FormAnalytic;

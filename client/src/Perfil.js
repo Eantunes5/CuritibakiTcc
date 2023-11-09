@@ -16,7 +16,8 @@ function Perfil() {
   const [sexoUsuario, setSexoUsuario] = useState('');
   const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para a foto de perfil
   const [favoritos, setFavoritos] = useState([]); // Novo estado para a lista de favoritos
-  const [favoritosDetalhes, setFavoritosDetalhes] = useState([]); // Novo estado para os detalhes dos locais favoritos
+  const [favoritosDetalhes, setFavoritosDetalhes] = useState([]);
+  const [conquistas, setConquistas] = useState([]); // Novo estado para os detalhes dos locais favoritos
   const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
   const { t } = useTranslation();
 
@@ -131,8 +132,31 @@ function Perfil() {
       }
     };
 
+    const fetchConquistas = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+    
+        if (!userId) {
+          console.error('Usuário não logado');
+          return;
+        }
+    
+        const url = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${url}/user/${userId}`);
+    
+        if (response.data && response.data.conquistas) {
+          // Define as conquistas do usuário
+          setConquistas(response.data.conquistas);
+        }
+      } catch (error) {
+        console.error('Error fetching conquistas:', error);
+      }
+    };
+    
+
     fetchUsuario();
     fetchFavoritos();
+    fetchConquistas();
   }, []);
 
   const navigateToLocal = (localId) => {
@@ -259,10 +283,13 @@ function Perfil() {
               <h3>{t('Conquistas')}</h3>
               <div className="divider" />
               <ul>
-                <li>Conquista 1</li>
-                <li>Conquista 2</li>
-                <li>Conquista 3</li>
-              </ul>
+              {conquistas.map((conquista, index) => (
+                <li key={conquista._id}>
+                  {conquista.nome} - {conquista.descricao} - {conquista.progresso} - {conquista.meta}
+                  {/* Renderize outras informações da conquista, se necessário */}
+                </li>
+              ))}
+            </ul>
             </div>
             
           </div>
