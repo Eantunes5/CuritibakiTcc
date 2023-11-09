@@ -297,11 +297,11 @@ function Local() {
     axios
       .post(urlReclamacoes, reclamacaoData)
       .then((response) => {
-        alert('Obrigado pela reclamação!');
+        alert('Obrigado pela avaliação!');
         // Atualize o estado de avaliações se necessário
       })
       .catch((error) => {
-        alert('Ocorreu um erro ao enviar sua reclamação. Por favor, tente novamente!');
+        alert('Ocorreu um erro ao enviar sua avaliação. Por favor, tente novamente!');
       });
   }
 
