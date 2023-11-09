@@ -10,6 +10,7 @@ import RegisterAdmin from "./RegisterAdmin";
 import UpdateDeleteUsuario from "./UpdateDeleteUsuario";
 import RegisterEmergencia from "./RegisterEmergencia";
 import UpdateDeleteEmergencia from "./UpdateDeleteEmergencia";
+import TelaAceitacao from "./TelaAceitacao";
 
 function HomeAdmin() {
 
@@ -52,6 +53,7 @@ function HomeAdmin() {
         <PontosTitle text={'Locais'}/>
         <RegisterLocal/>
         <UpdateDeleteLocal/>
+        <TelaAceitacao/>
         <PontosTitle text={'Usuários'}/>
         <RegisterAdmin/>
         <UpdateDeleteUsuario/>

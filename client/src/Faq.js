@@ -1,12 +1,20 @@
 import './App.css';
-import React from "react"
+import React, {useState} from "react";
 import Header from './components/header';
 import SmallHeader from './components/small_header';
 import SelectButtons from './components/select_page';
 import PontosTitle from './components/pontos_title';
 import CardFaq from './components/cards_faq';
+import PointerLeft from './imgs/iconE.png'
+import AdicionarLocal from './AdicionarLocal';
+
 
 function Faq() {
+  const [showAnswer, setShowAnswer] = useState(false);
+
+    const toggleAnswer = () => {
+        setShowAnswer(!showAnswer);
+    };
 
   return (
     <div>
@@ -29,8 +37,9 @@ function Faq() {
           pergunta='AS INFORMAÇÕES SÃO CONFIÁVEIS?'
           resposta='R: Sim! Todas estão sendo tiradas de fontes oficiais, sendo atualizadas sempre que necessário.'
           />
-
-          <div className='contato_faq colored_background_opacity'>
+        
+        <AdicionarLocal/>
+          <div className='contato_faq'>
             <p className='card_text'>
             COMO FAÇO PARA ENTRAR EM CONTATO COM OS RESPONSÁVEIS DO SITE?
             </p>
