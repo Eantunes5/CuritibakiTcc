@@ -62,6 +62,29 @@ function FormAnalytic() {
     transporteDaViagem: '',
   });
 
+  const updateUserFormStatus = () => {
+    // Obtém o ID do usuário ou qualquer outra identificação do usuário
+    const userId = localStorage.getItem('userId'); // Substitua isso pelo seu método de obter o ID do usuário
+  
+    // Define o novo valor do atributo 'form' como 'true'
+    const updatedUserData = {
+      form: true,
+    };
+  
+    // Faça a solicitação PATCH para atualizar o atributo 'form' do usuário
+    const url = `${process.env.REACT_APP_API_URL}/user/${userId}`; // Substitua o URL correto
+    axios
+      .patch(url, updatedUserData)
+      .then((response) => {
+        console.log('Atualização do status do formulário com sucesso:', response.data);
+        // Você pode realizar ações adicionais, se necessário
+      })
+      .catch((error) => {
+        console.error('Erro ao atualizar o status do formulário:', error);
+        // Lide com erros de solicitação, se necessário
+      });
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -123,6 +146,7 @@ function FormAnalytic() {
       .post(`${url}/analytics`, formData)
       .then((response) => {
         console.log('Formulário enviado com sucesso:', response.data);
+        updateUserFormStatus();
         // Faça algo com a resposta, se necessário
       })
       .catch((error) => {
