@@ -183,6 +183,15 @@ function Local() {
   const fileInputRef = useRef(null);
 
   function convertToBase64(e) {
+    const url = process.env.REACT_APP_API_URL;
+    axios.post(`${url}/user/update-conquests/${userId}`, { "categoria": "Fotografar", "progresso": 1 })
+    .then((response) => {
+      console.log('Achievement "Fotografar" progress updated successfully.');
+    })
+    .catch((error) => {
+      console.error('Error updating achievement progress:', error);
+    });
+
     const file = e.target.files[0];
 
     var reader = new FileReader();
@@ -300,12 +309,6 @@ function Local() {
       .post(`${url}/user/update-conquests/${userId}`, { "categoria": "Avaliar", "progresso": 1 })
       .then((response) => {
         console.log('Achievement "Avaliar" progress updated successfully.');
-  
-        // Após a primeira solicitação ser bem-sucedida, faça a segunda solicitação.
-        return axios.post(`${url}/user/update-conquests/${userId}`, { "categoria": "Fotografar", "progresso": 1 });
-      })
-      .then((response) => {
-        console.log('Achievement "Fotografar" progress updated successfully.');
       })
       .catch((error) => {
         console.error('Error updating achievement progress:', error);
@@ -596,7 +599,6 @@ function Local() {
                 ref={fileInputRef}
                 style={{display: 'none'}}
                 onChange={convertToBase64}
-                required
               />
             </label>
             <button type="submit" className='enviar_avaliacao'>Enviar</button>
