@@ -7,6 +7,9 @@ import RegisterLocal from "./RegisterLocal";
 import PontosTitle from "./components/pontos_title";
 import UpdateDeleteLocal from "./UpdateDeleteLocal";
 import RegisterAdmin from "./RegisterAdmin";
+import UpdateDeleteUsuario from "./UpdateDeleteUsuario";
+import RegisterEmergencia from "./RegisterEmergencia";
+import UpdateDeleteEmergencia from "./UpdateDeleteEmergencia";
 
 function HomeAdmin() {
 
@@ -51,42 +54,10 @@ function HomeAdmin() {
         <UpdateDeleteLocal/>
         <PontosTitle text={'Usuários'}/>
         <RegisterAdmin/>
+        <UpdateDeleteUsuario/>
         <PontosTitle text={'Emergências'}/>
-        
-      {/* <SmallHeader/> */}
-      {/* <div className={`menu ${menuAberto ? 'aberto' : ''}`}>
-        <div className="menu-icon" onClick={toggleMenu}>
-          &#9776;
-        </div>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-        </ul>
-      </div>
-      <div className='div_register_local'>
-        <div className='form_container'>
-        <form action="" id="login" method="post" className="admin_container">
-          <h1>ADMINISTRADOR</h1>
-
-          <Link to='/register'>
-            <button className="buttons_admin">Registrar Usuarios</button>
-          </Link>
-          <Link to='/UpdateDeleteUsuario'>
-            <button className="buttons_admin">Atualizar Usuarios</button>
-          </Link>
-          <Link to='/RegisterEmergencia'>
-            <button className="buttons_admin">Registrar Emergencias</button>
-          </Link>
-          <Link to='/UpdateDeleteEmergencia'>
-            <button className="buttons_admin">Atualizar Emergencias</button>
-          </Link>
-          
-        </form>
-
-      </div>
-    </div> */}
+        {/* <RegisterEmergencia/> */}
+        {/* <UpdateDeleteEmergencia/> */}
     </div>
   );
 }

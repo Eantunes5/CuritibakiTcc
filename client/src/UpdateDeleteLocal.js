@@ -378,54 +378,7 @@ function UpdateDeleteLocal() {
             </table>
           </div>
         </div>
-      </div>
-
-      {/* <div className='container_update_table'>
-        <div className='table_container'>
-          <table className='table_admin'>
-            <thead>
-              <tr>
-                <td colSpan={2} className='td_head_buttons'>Operations</td>
-                <td>Nome</td>
-                <td>Slug</td>
-                <td>Tipo</td>
-                <td>Sobre</td>
-                <td>Horarios</td>
-                <td>Ingressos</td>
-                <td>Endereco</td>
-                <td>Foto</td>
-                <td>Iframe</td>
-                <td>Indice</td>
-                <td>ID</td>
-              </tr>
-            </thead>
-            <tbody style={{marginTop: '10px'}}>
-              {
-                users.map((item, i) =>
-                
-                  <tr key={i}>
-                    <td className='td_button'><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
-                    <td className='td_button'><button className='att_local btn_submit ' onClick={() => selectUser(i)}>Select</button></td>
-                    <td className='td_name'>{item.nome}</td>
-                    <td className='td_name'>{item.slug}</td>
-                    <td>{item.tipo}</td>
-                    <td><div className='td_sobre'>{item.sobre}</div></td>
-                    <td><div className='td_sobre'>{item.horarios}</div></td>
-                    <td><div className='td_sobre'>{item.ingressos}</div></td>
-                    <td><div className='td_sobre'>{item.endereco}</div></td>
-                    <td><div className='td_sobre td_break'>{item.foto}</div></td>
-                    <td><div className='td_sobre td_break'>{item.iframe}</div></td>
-                    <td>{i}</td>
-                    <td>{item._id}</td>
-                  </tr>
-                )
-              }
-            </tbody>
-          </table>
-        </div>
-      </div> */}
-      
-      
+      </div>      
     </div>
   );
 }

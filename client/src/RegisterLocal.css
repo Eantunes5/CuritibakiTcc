@@ -10,6 +10,7 @@
     width: 100%;
     text-align: center;
     cursor: pointer;
+    font-size: 28px;
 }
 .form_container_reg_local{
     display: flex;
