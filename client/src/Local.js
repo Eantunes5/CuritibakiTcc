@@ -506,12 +506,14 @@ function Local() {
 
 
   
-  const isLoggedIn = !!localStorage.getItem('token'); // Verificar se o usuário está logado
+  const isLoggedIn = !!localStorage.getItem('token');
 
   return (
     <div>
       <Header/>
-      {isLoggedIn ? (<FormAnalytic/>) : null}
+
+      {isLoggedIn ? (<FormAnalytic/>) : null} {/* Verificar se o usuário fez form */}
+
         <div className='local_img'>
           <img src={fotoLocal} alt=''/>
           <div className='local_name'>
@@ -525,13 +527,13 @@ function Local() {
           </div>
         </div>
         <div>
-          <label>
+          {/* <label>
             <input
               type="checkbox"
               onChange={visitado}
             />
             Marcar como visitado
-          </label>
+          </label> */}
         </div>
       {/* ADICIONAR CARROSSEL DINAMICO*/}
       {/* <div className='div_name_container'>

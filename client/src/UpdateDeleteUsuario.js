@@ -17,8 +17,9 @@ function UpdateDeleteUsuario() {
   const [email, setEmail] = useState('')
   const [adm, setAdm] = useState(Boolean)
   const [_id, setId]=useState(null) 
-  const [idade, setIdade] = useState(''); // Adicione o estado para idade
-  const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
+  const [idade, setIdade] = useState('');
+  const [sexo, setSexo] = useState(''); 
+  const [formUser, setFormUser] = useState(Boolean);
   const [arrowRotated, setArrowRotated] = useState(false);
   const [formVisible, setFormVisible] = useState(true);
   const [tableVisible, setTableVisible] = useState(true);
@@ -41,6 +42,7 @@ function UpdateDeleteUsuario() {
         setEmail(resp[0].email)
         setAdm(resp[0].adm)
         setId(resp[0]._id)
+        setFormUser(resp[0].form)
         //
       })
     })
@@ -66,9 +68,10 @@ function UpdateDeleteUsuario() {
         setEmail(item.email)
         setAdm(item.adm)
         setId(item._id)
-        setIdade(item.idade); // Adicione esta linha para definir a idade
-        setSexo(item.sexo);   // Adicione esta linha para definir o sexo
-        //
+        setIdade(item.idade);
+        setSexo(item.sexo); 
+        setFormUser(item.form)
+        console.log(item)
   }
 
   function updateUser() {
@@ -95,15 +98,6 @@ function UpdateDeleteUsuario() {
       })
     })
   }
-  
-
-  // const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
-
-  // if (!isAdmin) {
-  //   // Se o usuário não for um administrador, redirecionar para outra página
-  //   navigate("/"); // Redireciona para a página inicial
-  //   return null; // Evita a renderização da página atual
-  // }
 
   const toggleVisibility = () => {
     setFormVisible(!formVisible);
@@ -201,6 +195,7 @@ function UpdateDeleteUsuario() {
                 <td>Idade</td>
                 <td>Sexo</td>
                 <td>Foto</td>
+                <td style={{textAlign: 'center', width: '50px'}}>Form</td>
                 <td style={{textAlign: 'center', width: '50px'}}>Indice</td>
                 <td>ID</td>
               </tr>
@@ -232,6 +227,11 @@ function UpdateDeleteUsuario() {
                       </div>
                     )}  
                   </td>
+                  <td style={{textAlign: 'center'}}>{item.adm == true ? (
+                    <img className='form_check_icon' style={{height: '30px', width: '30px'}}src={checkIcon}></img>
+                  ) : (
+                    <img className='form_x_icon' style={{height: '30px', width: '30px'}}src={deleteIcon}></img>
+                  )}</td>
                   <td style={{textAlign: 'center'}}>{i}</td>
                   <td>{item._id}</td>
                 </tr>

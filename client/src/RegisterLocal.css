@@ -176,12 +176,13 @@
   .delete_button_table{
     border: 2px solid #fc4444;
   }
-  .edit_button_table img, .td_iframe button img{
+  .edit_button_table img, .td_iframe button img, .form_check_icon{
     filter: brightness(0) saturate(100%) invert(29%) sepia(64%) saturate(3064%) hue-rotate(213deg) brightness(93%) contrast(91%);
   }
-  .delete_button_table img{
+  .delete_button_table img, .form_x_icon{
     filter: brightness(0) saturate(100%) invert(50%) sepia(78%) saturate(4416%) hue-rotate(335deg) brightness(101%) contrast(97%);
   }
+  
   .td_sobre {
     max-width: 200px; /* Ajuste conforme necessário */
     overflow: hidden;
