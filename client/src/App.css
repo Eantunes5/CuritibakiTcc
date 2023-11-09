@@ -780,12 +780,7 @@ textarea {
   width: 30px;
   margin-left: 15px;
 }
-.att_local{
-  margin-top: 15px;
-  float: right;
-  background-color: #2662e5;
-  background-image: none;
-}
+
 .colored_background_opacity{
   background-image: linear-gradient(45deg, #2662e588 50%, #2B26C188 50%) !important;
 }
@@ -872,27 +867,27 @@ textarea {
   height: 100px;
   font-size: 16px;
 }
-.att_local{
+/* .att_local{
   background-color: #2662e5;
   float: none;
-}
-.table_container{
+} */
+/* .table_container{
   max-width: 1360px;
   max-height: 979px;
   width: 100%;
   box-sizing: border-box;
   overflow-x: scroll;
   overflow-y: scroll;
-}
-.table_admin{
+} */
+/* .table_admin{
   background-color:#1f1f1f;
   border: 1px solid #313131;
   border-collapse: collapse;
   text-align: center;
   color: white;
   padding: 10px
-}
-thead{
+} */
+/* thead{
   border: 1px solid #313131;
 }
 .td_head_buttons{
@@ -917,4 +912,4 @@ thead{
 .td_break {
   line-break: anywhere;
   width: 100px;
-}
+} */

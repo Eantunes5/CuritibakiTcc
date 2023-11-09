@@ -3,6 +3,9 @@ import './HomeAdmin.css';
 import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "./components/small_header";
 import MenuAdmin from "./components/menu_admin";
+import RegisterLocal from "./RegisterLocal";
+import PontosTitle from "./components/pontos_title";
+import UpdateDeleteLocal from "./UpdateDeleteLocal";
 
 function HomeAdmin() {
 
@@ -42,6 +45,10 @@ function HomeAdmin() {
   return (
       <div>
         <MenuAdmin/>
+        <PontosTitle text={'Locais'}/>
+        <RegisterLocal/>
+        <UpdateDeleteLocal/>
+        
       {/* <SmallHeader/> */}
       {/* <div className={`menu ${menuAberto ? 'aberto' : ''}`}>
         <div className="menu-icon" onClick={toggleMenu}>
