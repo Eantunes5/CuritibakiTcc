@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './RegisterLocal.css'
 
 import { Link, useNavigate } from "react-router-dom";
 import RegisterLocal from "./RegisterLocal";
@@ -40,6 +41,9 @@ function AdminDashboard(){
     <div>
       <MenuAdmin/>
       <div id="vizContainer" style={{width: '100%', height: '100%'}}/>
+      <form style={{display: 'flex', justifyContent: 'center'}} action="https://colab.research.google.com/drive/14z45iiYCwi5u3v_8bU1vT_dglfludw8f#scrollTo=nf_U6kt7qdRN">
+        <input className='button_collab' type="submit" value="Collab" />
+      </form>
     </div>
   )
 }
