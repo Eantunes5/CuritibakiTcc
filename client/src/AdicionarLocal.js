@@ -4,10 +4,14 @@ import { useRef, useState } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
 import alertIcon from './imgs/circle-exclamation-solid.svg'
+import { useTranslation } from 'react-i18next';
+
 
 function AdicionarLocal() {
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
 
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL
@@ -132,7 +136,7 @@ function AdicionarLocal() {
   return (
     <div style={{display: 'flex'}}>
       <div onClick={handleMostrarComponente} style={{cursor: 'pointer', width: '100%', height: '40px', backgroundColor: '#1f1f1f', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px', color: 'white', fontWeight: 'bold', borderRadius: '15px'}}>
-        <span >DESEJA SUGERIR UM LOCAL?</span>
+        <span >{t('DESEJA SUGERIR UM LOCAL?')}</span>
       </div>
       {mostrarComponente && (
         <div className="modal" onClick={handleOutsideClick}>
