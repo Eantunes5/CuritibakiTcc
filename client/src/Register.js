@@ -73,10 +73,15 @@ function Register() {
                 axiosInstance
                 .post(`${url}/auth/verificar-email`, {
                   email
+                }).then(() => {
+                  // Após o registro bem-sucedido, incrementar a conquista "Registrar"
+                  const userId = response.data.usuario.id;
+                  incrementAchievementProgress(userId);
+                  console.log("Aqui1: " + userId);
+
+                  // Em seguida, defina o estado de sucesso como verdadeiro
+                  setSucesso(true);
                 })
-                //alert('Registro realizado com sucesso!');
-                //navigate("/login");
-                setSucesso(true)
               }
             })
             .catch(error => {
@@ -95,6 +100,19 @@ function Register() {
         // Trate o erro de verificação de email aqui, se necessário
       });
   };
+
+  function incrementAchievementProgress(userId) {
+    const url = process.env.REACT_APP_API_URL;
+  
+    axios
+      .post(`${url}/user/update-conquests/${userId}`, { "categoria": "Registrar", "progresso": 1 })
+      .then((response) => {
+        console.log('Achievement "Registrar" progress updated successfully.');
+      })
+      .catch((error) => {
+        console.error('Error updating achievement progress:', error);
+      });
+  }
 
   return (
     <div className="outer_container">
