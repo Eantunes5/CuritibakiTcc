@@ -51,7 +51,7 @@ function Local() {
   const [categoria, setCategoria] = useState('Avaliar');
   const [categoria2, setCategoria2] = useState('Fotografar');
   const [progresso, setProgresso] = useState(1);
-
+  const userId = localStorage.getItem('userId');
 
   const { id } = useParams();
 
@@ -312,7 +312,18 @@ function Local() {
       });
   }
   
+  function visitado() {
+    const url = process.env.REACT_APP_API_URL;
   
+    axios
+      .post(`${url}/user/update-conquests/${userId}`, { "categoria": "Visitar", "progresso": 1 })
+      .then((response) => {
+        console.log('Achievement "Visitar" progress updated successfully.');
+      })
+      .catch((error) => {
+        console.error('Error updating achievement progress:', error);
+      });
+  }
 
   function enviarAvaliacao(novaAvaliacao) {
     // Obtém o token de autenticação do localStorage
@@ -463,6 +474,15 @@ function Local() {
               <img src={favoritado ? starIcon : emptyStarIcon } className={favoritado ? "favoritar_button_on": "favoritar_button_off"} alt="Favoritar" />
             </button>
           </div>
+        </div>
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              onChange={visitado}
+            />
+            Marcar como visitado
+          </label>
         </div>
       {/* ADICIONAR CARROSSEL DINAMICO*/}
       {/* <div className='div_name_container'>
