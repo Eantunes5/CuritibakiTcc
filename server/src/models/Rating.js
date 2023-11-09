@@ -31,6 +31,11 @@ const RatingSchema = new mongoose.Schema({
     required:false,
     default:"",
   },
+  emocao: {
+    type: String,
+    required:false,
+    default:"",
+  },
 }) 
 
 const Rating = mongoose.model("Avaliacao", RatingSchema);

@@ -8,6 +8,7 @@ const router = Router();
 router.post('/',authMiddleware, ratingController.create);
 router.get('/', ratingController.findAll);
 router.get('/:id_local',validRating, ratingController.findById);
+router.patch('/:id',validId, ratingController.update);
 router.delete('/:id',validId, ratingController.deleteById);
 router.delete('/delete/:id',validId, ratingController.deleteById2);
 

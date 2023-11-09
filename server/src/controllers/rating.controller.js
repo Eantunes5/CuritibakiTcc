@@ -2,7 +2,7 @@ import ratingSerivce  from '../services/rating.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {id,nota,comentario,tipo,Locals_id,Users_id,Comentario_Pai_id, foto} = req.body;
+    const {id,nota,comentario,tipo,Locals_id,Users_id,Comentario_Pai_id, foto, emocao} = req.body;
 
   if (!nota || !comentario || !tipo || !Locals_id || !Users_id ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar uma avaliação"});
@@ -50,6 +50,31 @@ const findById = async(req,res) => {
 }
 };
 
+const update = async(req,res) => {
+  try{const {emocao} = req.body;//
+
+  if (!emocao) {
+    res.status(400).send({mensagem:"Envie a emoção para atualizar"});
+  }
+
+  const {id,user} = req;
+  
+  await ratingSerivce.updateService(
+    id,
+    emocao
+  );
+  
+  res.send({message:"Rating atualizado com sucesso"})
+    
+} catch (err) {
+  if(err.message.includes('duplicate key error collection')) {
+    res.status(400).send( {message: 'Este email já está em uso'})
+  } else {
+  res.status(500).send( {message: err.message})}
+}
+};
+
+
 const deleteById = async(req,res) => {
   try{const id = req.id;
 
@@ -72,4 +97,4 @@ const deleteById2 = async(req,res) => {
 }
 };
 
-export default { create, findAll, findById, deleteById, deleteById2 };
+export default { create, findAll, findById, deleteById, deleteById2, update };
