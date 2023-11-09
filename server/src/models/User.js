@@ -77,7 +77,6 @@ const UserSchema = new mongoose.Schema({
     meta: {
       type: Number,
       required: true,
-      default: 40,
     },
     progresso: {
       type: Number,

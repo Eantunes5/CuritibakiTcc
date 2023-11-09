@@ -3,10 +3,10 @@ import userSerivce  from '../services/user.serivce.js';
 
 const create = async(req,res)  => {
   try{
-    const {nome,descricao,premio,categoria,foto} = req.body;
+    const {nome,descricao,premio,categoria,meta,foto} = req.body;
     const conqAux = req.body;
 
-  if (!nome || !descricao || !premio || !categoria || !foto ) {
+  if (!nome || !descricao || !premio || !categoria || !foto || !meta ) {
     res.status(400).send({mensagem:"Envie todos os campos para registrar"});
   }
  
@@ -20,10 +20,12 @@ const create = async(req,res)  => {
   
   for (let i = 0; i < users.length; i++) {
     users[i].conquistas.push(conqAux) 
+    console.log(users[i].conquistas)
 
     const id = users[i]._id;
     let conquistas = users[i].conquistas;
-  
+    console.log(users[i].conquistas)
+    console.log('------------------------')
     await userSerivce.updateService1(
       id,
       conquistas,
@@ -38,7 +40,9 @@ const create = async(req,res)  => {
       descricao,
       premio,
       categoria,
+      meta,
       foto
+      
     }
   });
 } catch (err) {
@@ -68,9 +72,9 @@ const findById = async(req,res) => {
 };
 
 const update = async(req,res) => {
-  try{const {nome,descricao,categoria,premio,foto} = req.body;
+  try{const {nome,descricao,categoria,meta,premio,foto} = req.body;
 
-  if (!nome || !descricao || !premio || !categoria || !foto ) {
+  if (!nome || !descricao || !premio || !categoria || !foto  || !meta) {
     res.status(400).send({mensagem:"Envie pelo menos um campo para atualizar"});
   }
 
@@ -86,6 +90,7 @@ const update = async(req,res) => {
     descricao,
     premio,
     categoria,
+    meta,
     foto
   }
 
@@ -111,6 +116,7 @@ const update = async(req,res) => {
     descricao,
     premio,
     categoria,
+    meta,
     foto)
 
   await conquestsSerivce.updateService(
@@ -119,6 +125,7 @@ const update = async(req,res) => {
     descricao,
     premio,
     categoria,
+    meta,
     foto
 );
 

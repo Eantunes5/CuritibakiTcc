@@ -21,6 +21,10 @@ const ConquistasSchema = new mongoose.Schema({
     type: String,
     required:true,
   },
+  meta : {
+    type: Number,
+    required:false,
+  }
 }) 
 
 const Conquistas = mongoose.model("Conquistas", ConquistasSchema);
