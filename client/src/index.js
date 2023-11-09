@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Register from './Register';
 import Login from './Login';
-import AdminLocais from './AdminLocais';
+import AdminDashboard from './AdminDashboard';
 import RegisterLocal from './RegisterLocal';
 import UpdateDeleteUsuario from './UpdateDeleteUsuario';
 import UpdateDeleteLocal from './UpdateDeleteLocal';
@@ -37,7 +37,7 @@ root.render(
       <Route path="/" element={<App  />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/RegisterLocal" element={<RegisterLocal />} />
-      <Route path='/AdminLocais' element={<AdminLocais/>}/>
+      <Route path='/AdminDashboard' element={<AdminDashboard/>}/>
       <Route path="/UpdateDeleteUsuario" element={<UpdateDeleteUsuario />} />
       <Route path="/UpdateDeleteLocal" element={<UpdateDeleteLocal />} />
       <Route path="/Login" element={<Login />} />

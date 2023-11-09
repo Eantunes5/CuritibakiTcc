@@ -1,8 +1,13 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import SmallHeader from './components/small_header';
+import arrow from './imgs/chevron-down-solid.svg';
+import editIcon from './imgs/pen-solid.svg';
+import deleteIcon from './imgs/xmark-solid.svg'
+import copyIcon from './imgs/copy-solid.svg'
+import checkIcon from './imgs/check-solid.svg'
 
+import SmallHeader from './components/small_header';
 
 function UpdateDeleteUsuario() {
   const navigate = useNavigate();
@@ -14,6 +19,11 @@ function UpdateDeleteUsuario() {
   const [_id, setId]=useState(null) 
   const [idade, setIdade] = useState(''); // Adicione o estado para idade
   const [sexo, setSexo] = useState('');   // Adicione o estado para sexo
+  const [arrowRotated, setArrowRotated] = useState(false);
+  const [formVisible, setFormVisible] = useState(true);
+  const [tableVisible, setTableVisible] = useState(true);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   //
 
@@ -87,108 +97,150 @@ function UpdateDeleteUsuario() {
   }
   
 
-  const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
+  // const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
-  if (!isAdmin) {
-    // Se o usuário não for um administrador, redirecionar para outra página
-    navigate("/"); // Redireciona para a página inicial
-    return null; // Evita a renderização da página atual
-  }
+  // if (!isAdmin) {
+  //   // Se o usuário não for um administrador, redirecionar para outra página
+  //   navigate("/"); // Redireciona para a página inicial
+  //   return null; // Evita a renderização da página atual
+  // }
+
+  const toggleVisibility = () => {
+    setFormVisible(!formVisible);
+    setArrowRotated(!arrowRotated);
+    setTableVisible(!tableVisible);
+  };
+  const openImageModal = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setImageModalOpen(true);
+  };
+  const closeImageModal = () => {
+    setSelectedImage('');
+    setImageModalOpen(false);
+  };
+
 
   return (
-    <div>
-      <SmallHeader/>
-      <h1 className='card_text'>Update e Delete - Usuario</h1>
-      <div style={{display: 'flex', alignItems: 'center',justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap'}}>
-      <div className='colored_background_opacity container_selector_admin'>
-        {/*  */}
-        <label>
-          <span>Nome</span>
-          <input type="text" value={nome} onChange={(e)=>{setNome(e.target.value)}} required /> 
-        </label>
-        {/*  */}
-        <label>
-          <span>Email</span>
-          <input type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}} required />
-        </label>
-        <label>
-          <span>Adm</span>
-          <select
+    <div className='div_register_local' style={{flexDirection: "column"}}>
+      <div className='form_container_reg_local' style={{width: 'calc(100% - 40px)'}}>
+      <h1 onClick={toggleVisibility}>GERENCIAR USUÁRIOS <img style={{height: '25px', filter: 'invert(100%)'}} className={arrowRotated ? 'arrow_h1_rotated' : 'arrow_h1_rotated_off'} src={arrow}></img></h1>
+        <form className={`form_reg_local ${formVisible ? 'form-hidden' : 'form-visible'}`} action="" method="post">
+
+            <label>
+            <p className="form_p_local">Nome</p>
+              <input
+                className='form_input_local'
+                type="text" 
+                value={nome} 
+                onChange={(e)=>{setNome(e.target.value)}} 
+                required
+              /></label>
+
+            <label>
+              <p className="form_p_local">Email</p>
+              <input
+                className='form_input_local'
+                type="text" 
+                value={email} 
+                onChange={(e)=>{setEmail(e.target.value)}} 
+                required 
+              /></label>
+
+            <label>
+              <p className="form_p_local">Adm</p>
+            <select
+              className='form_input_local'
               name="adm"
               id="adm"
               value={adm}
               onChange={e => setAdm(e.target.value)}
               required
             >
-              <option value="">-Selecione-</option>
-              <option value="1">Administrador</option>
-              <option value="0">Usuario</option>
-            </select>
-          
-        </label>
-        <label>
-            <span>Idade</span>
-            <input
-              type="text"
-              value={idade}
-              onChange={(e) => setIdade(e.target.value)}
-              required
-            />
-            <br />
-          </label>
-          <label>
-            <span>Sexo</span>
-            <input
-              type="text"
-              value={sexo}
-              onChange={(e) => setSexo(e.target.value)}
-              required
-            />
-            <br />
+              <option style={{width: '85vw'}} value="">-Selecione-</option>
+              <option style={{width: '85vw'}} value="0">Usuario</option>
+              <option style={{width: '85vw'}} value="1">Administrador</option>
+            </select></label>
+            
+            <label>
+              <p className="form_p_local">Idade</p>
+              <input
+                className='form_input_local'
+                type="text"
+                value={idade}
+                onChange={(e) => setIdade(e.target.value)}
+                required
+              /></label>
 
-        </label>
-        <div style={{width: '100%', textAlign: 'center'}}>
-          <button className='att_local btn_submit' onClick={updateUser} >Update User</button>  
+            <label>
+              <p className="form_p_local">Sexo</p>
+              <input
+                className='form_input_local'
+                type="text"
+                value={sexo}
+                onChange={(e) => setSexo(e.target.value)}
+                required
+              /></label>
+    
+              <label style={{display: 'flex', alignItems: 'center'}}>
+                <input className="form_submit_local" type="button" onClick={updateUser} value="Atualizar"/>
+              </label>
+        </form>
+
+
+
+
+        <div className={`table_outer_container ${tableVisible ? 'table-hidden' : 'table-visible'}`} style={{ overflowX: 'auto' }}>
+          <div className='table_container'>
+            <table className='table_admin'>
+            <thead>
+              <tr>
+                <td className='td_head_buttons' style={{textAlign: 'center'}}>Operations</td>
+                <td>Nome</td>
+                <td>Email</td>
+                <td>Adm</td>
+                <td>Idade</td>
+                <td>Sexo</td>
+                <td>Foto</td>
+                <td style={{textAlign: 'center', width: '50px'}}>Indice</td>
+                <td>ID</td>
+              </tr>
+            </thead>
+            <tbody style={{ marginTop: '10px' }}>
+              {users.map((item, i) => (
+                <tr key={i}>
+                  <td className='td_button' style={{textAlign: 'center'}}>
+                    <button className="edit_button_table" onClick={() => selectUser(i)}>
+                      <img src={editIcon} alt="Editar"></img>  
+                    </button>
+                    <button className='delete_button_table' onClick={() => deleteUser(item._id)}>
+                      <img src={deleteIcon}></img>
+                    </button>
+                  </td>
+                  <td className='td_name'>{item.nome}</td>
+                  <td className='td_name'>{item.email}</td>
+                  <td className='td_name'>{item.adm == true ? 'Administrador' : 'Usuário'}</td>
+                  <td className='td_name'>{item.idade}</td>
+                  <td className='td_name'>{item.sexo}</td>
+                  <td>
+                    {item.foto && <img onClick={() => openImageModal(item.foto)}src={item.foto} alt="Imagem" style={{ maxWidth: '100px', maxHeight: '50px', cursor:'pointer' }} />}
+                    {imageModalOpen && (
+                      <div className={`image-modal ${imageModalOpen ? 'modal-open' : 'modal-closed'}`}>
+                        <div className="image-modal-content">
+                          <span className="image-close" onClick={closeImageModal}>&times;</span>
+                          <img src={selectedImage} alt="Imagem ampliada" />
+                        </div>
+                      </div>
+                    )}  
+                  </td>
+                  <td style={{textAlign: 'center'}}>{i}</td>
+                  <td>{item._id}</td>
+                </tr>
+              ))}
+            </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div style={{ width: '100%', maxWidth: '850px', height: 'fit-content', display: 'flex', overflowX: 'scroll'}}>
-        <table className='table_admin'>
-          <thead>
-            <tr>
-              <td colSpan={2}>Operations</td>
-              <td>Nome</td>
-              <td>Email</td>
-              <td>Adm</td>
-              <td>Indice</td>
-              <td>ID</td>
-              <td>Idade</td>
-              <td>Sexo</td>
-              {/*  */}
-            </tr>
-          </thead>
-          <tbody>
-            {
-              users.map((item, i) =>
-                <tr key={i}>
-                  <td><button className='att_local btn_submit' onClick={() => deleteUser(item._id)}>Delete</button></td>
-                  <td><button className='att_local btn_submit' onClick={() => selectUser(i)}>Select</button></td>
-                  <td style={{padding: '0 15px'}}>{item.nome}</td>
-                  <td style={{padding: '0 15px'}}>{item.email}</td>
-                  <td style={{padding: '0 15px'}}>{item.adm == true ? 'Adm' : 'User'}</td>
-                  <td style={{padding: '0 15px'}}>{i}</td>
-                  <td style={{padding: '0 15px'}}>{item._id}</td>
-                  <td style={{padding: '0 15px'}}>{item.idade}</td>
-                  <td style={{padding: '0 15px'}}>{item.sexo}</td>
-                 {/*  */}
-
-                </tr>
-              )
-            }
-          </tbody>
-        </table>
-      </div>
-      </div>
-      
     </div>
   );
 }

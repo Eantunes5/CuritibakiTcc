@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import RegisterLocal from "./RegisterLocal";
 import MenuAdmin from "./components/menu_admin";
 
-function AdminLocais(){
+function AdminDashboard(){
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
 
@@ -20,4 +20,4 @@ function AdminLocais(){
   )
 }
 
-export default AdminLocais;
+export default AdminDashboard;
