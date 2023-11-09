@@ -227,7 +227,7 @@ function UpdateDeleteUsuario() {
                       </div>
                     )}  
                   </td>
-                  <td style={{textAlign: 'center'}}>{item.adm == true ? (
+                  <td style={{textAlign: 'center'}}>{item.form == true ? (
                     <img className='form_check_icon' style={{height: '30px', width: '30px'}}src={checkIcon}></img>
                   ) : (
                     <img className='form_x_icon' style={{height: '30px', width: '30px'}}src={deleteIcon}></img>
