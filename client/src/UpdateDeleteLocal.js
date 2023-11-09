@@ -8,7 +8,7 @@ import copyIcon from './imgs/copy-solid.svg'
 import checkIcon from './imgs/check-solid.svg'
 
 import SmallHeader from './components/small_header';
-import CombinedLocalComponent from './AdminLocais';
+import CombinedLocalComponent from './AdminDashboard';
 
 
 function UpdateDeleteLocal() {
