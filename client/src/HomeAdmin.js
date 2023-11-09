@@ -56,8 +56,8 @@ function HomeAdmin() {
         <RegisterAdmin/>
         <UpdateDeleteUsuario/>
         <PontosTitle text={'Emergências'}/>
-        {/* <RegisterEmergencia/> */}
-        {/* <UpdateDeleteEmergencia/> */}
+        <RegisterEmergencia/>
+        <UpdateDeleteEmergencia/>
     </div>
   );
 }
