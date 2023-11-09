@@ -131,6 +131,8 @@ function FormAnalytic() {
       })
       .finally(() => {
         setIsSubmitting(false);
+        setIsFormVisible(false);
+        setIsVisible(false);
       });
   };
 
