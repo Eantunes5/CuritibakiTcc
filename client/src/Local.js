@@ -54,7 +54,7 @@ function Local() {
   const userId = localStorage.getItem('userId');
 
   const { id } = useParams();
-
+  
   useEffect(() => {
     const fetchUsuario = async () => {
       try {
