@@ -4,10 +4,14 @@ import { useRef, useState } from "react"
 import SmallHeader from './components/small_header';
 import { useNavigate } from "react-router-dom";
 import alertIcon from './imgs/circle-exclamation-solid.svg'
+import { useTranslation } from 'react-i18next';
+
 
 function AdicionarLocal() {
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
 
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL
@@ -16,6 +20,10 @@ function AdicionarLocal() {
   const handleSubmit = e => {
     // Prevent the default submit and page reload
     e.preventDefault()
+    setHorarios('.')
+    setIngressos('.')
+    setIframe('a')
+
 
     // Handle validations 
     const url = process.env.REACT_APP_API_URL;
@@ -83,12 +91,136 @@ function AdicionarLocal() {
   const [endereco, setEndereco] = useState('')
   const [foto, setFoto] = useState('')
   const [iframe, setIframe] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mostrarComponente, setMostrarComponente] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  
   //
 
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target.className === 'modal') {
+      closeModal(false);
+    }
+  };
+  const handleMostrarComponente = () => {
+    setMostrarComponente(true);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setMostrarComponente(false);
+  };
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Image = e.target.result;
+        setImagePreview(base64Image);
+        setFoto(base64Image);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   return (
-    <div>
-      <SmallHeader/>
-      <div className='div_register_local'>
+    <div style={{display: 'flex'}}>
+      <div onClick={handleMostrarComponente} style={{cursor: 'pointer', width: '100%', height: '40px', backgroundColor: '#1f1f1f', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px', color: 'white', fontWeight: 'bold', borderRadius: '15px'}}>
+        <span >{t('DESEJA SUGERIR UM LOCAL?')}</span>
+      </div>
+      {mostrarComponente && (
+        <div className="modal" onClick={handleOutsideClick}>
+          <div className="modal_content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p className='avaliacao_name'>Sugerir Local</p>
+            <form className={`form_reg_local`} action="" method="post" onSubmit={handleSubmit}>
+
+          <label for="nome">
+          <p className="form_p_local"><a style={{color: '#ff4747'}}>* </a>Nome</p>
+            <input
+              className='form_input_local'
+              type="nome"
+              name="nome"
+              id="nome"
+              value={nome}
+              onChange={handleChangeNome}
+              required
+            /></label>
+
+          <label for="tipo">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Tipo</p>
+          <select
+            className='form_input_local'
+            style={{cursor: 'pointer', height: '37px', width:'85vw'}}
+            name="tipo"
+            id="tipo"
+            value={tipo}
+            onChange={e => setTipo(e.target.value)}
+            required
+          >
+            <option style={{width: '85vw'}} value="">-Selecione Tipo-</option>
+            <option style={{width: '85vw'}} value="ponto">Ponto</option>
+            <option style={{width: '85vw'}} value="parque">Parque</option>
+            <option style={{width: '85vw'}} value="shopping">Shopping</option>
+          </select></label>
+          
+          <label for="sobre">
+            <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Comentário do local</p>
+          <textarea
+            className='form_textarea_local'
+            type="sobre"
+            name="sobre"
+            id="sobre"
+            value={sobre}
+            onChange={e => setSobre(e.target.value)}
+            required
+          /></label>
+
+            <label for="endereco">
+              <p className="form_p_local"><a style={{color: '#ff4747'}}>*</a> Endereco</p>
+            <input
+              className='form_input_local'
+              type="endereco"
+              name="endereco"
+              id="endereco"
+              value={endereco}
+              onChange={e => setEndereco(e.target.value)}
+              required
+            /></label>
+
+            <label for="foto" className="custom-file-upload">
+              <p className="form_p_local"><a style={{ color: '#ff4747' }}>*</a> Foto<img title='Tamanho max: 80kb' className="icon_alert_admin" src={alertIcon} /></p>
+              <input
+                className='form_input_local'
+                type="file"
+                accept='image/*'
+                name="foto"
+                id="foto"
+                onChange={handleFileSelect}
+                required
+              /></label>
+            <div className="thumbnail">
+              {imagePreview && <img src={imagePreview} alt="Thumbnail"/>}
+            </div>
+
+            <label style={{display: 'flex', alignItems: 'center'}}>
+              <input className="form_submit_local" type="submit" value="Enviar" />
+            </label>
+        </form>
+          </div>
+        </div>
+      )}
+      {/* <div className='div_register_local'>
         <div className='form_container'>
         <form action="" id="login" method="post" onSubmit={handleSubmit}>
           <h1>SUGERIR LOCAL</h1>
@@ -214,7 +346,7 @@ function AdicionarLocal() {
           </p>
         </form>
         </div>
-      </div>
+      </div> */}
     </div>
 
     

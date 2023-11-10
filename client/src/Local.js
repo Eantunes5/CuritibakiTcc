@@ -52,6 +52,7 @@ function Local() {
   const [categoria2, setCategoria2] = useState('Fotografar');
   const [progresso, setProgresso] = useState(1);
   const userId = localStorage.getItem('userId');
+  const [userFormTrue, setUserFormTrue] = useState(false);
 
   const { id } = useParams();
   
@@ -73,6 +74,7 @@ function Local() {
         const data = response.data;
     
         setNomeUsuario(data.nome); // Armazene o nome do usuário no estado
+        setUserFormTrue(data.form);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -295,11 +297,11 @@ function Local() {
     axios
       .post(urlReclamacoes, reclamacaoData)
       .then((response) => {
-        alert('Obrigado pela reclamação!');
+        alert('Obrigado pela avaliação!');
         // Atualize o estado de avaliações se necessário
       })
       .catch((error) => {
-        alert('Ocorreu um erro ao enviar sua reclamação. Por favor, tente novamente!');
+        alert('Ocorreu um erro ao enviar sua avaliação. Por favor, tente novamente!');
       });
   }
 
@@ -512,7 +514,7 @@ function Local() {
     <div>
       <Header/>
 
-      {isLoggedIn ? (<FormAnalytic/>) : null} {/* Verificar se o usuário fez form */}
+      {isLoggedIn && !userFormTrue ? (<FormAnalytic />) : null}
 
         <div className='local_img'>
           <img src={fotoLocal} alt=''/>

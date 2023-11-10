@@ -80,8 +80,6 @@ function Register() {
                   // Após o registro bem-sucedido, incrementar a conquista "Registrar"
                   const userId = response.data.usuario.id;
                   incrementAchievementProgress(userId);
-                  console.log("Aqui1: " + userId);
-
                   // Em seguida, defina o estado de sucesso como verdadeiro
                   setSucesso(true);
                 })

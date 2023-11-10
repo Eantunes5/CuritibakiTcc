@@ -15,7 +15,7 @@ function LangSelector() {
  
   const languages = [
     { code: 'pt', name: t('Português'), flag: brazilFlag }, // Use o t() para traduzir os idiomas
-    { code: 'en', name: t('Inglês'), flag: usFlag },
+    { code: 'en', name: t('English'), flag: usFlag },
   ];
 
   const toggleDropdown = () => {
@@ -34,7 +34,7 @@ function LangSelector() {
       <div className={`dropdown ${isOpen ? 'open' : ''}`}>
         <div className="selected-language" onClick={toggleDropdown}>
           <img src={selectedFlag} alt="Flag" />
-          {selectedLang === 'pt' ? t('Português') : t('Inglês')} {/* Traduza o idioma selecionado */}
+          {selectedLang === 'pt' ? t('PT') : t('EN')} {/* Traduza o idioma selecionado */}
           <img className={`arrow ${isOpen ? 'up' : 'down'}`} src={arrow} alt="Arrow" />
         </div>
         <ul className="language-list">

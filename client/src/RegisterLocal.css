@@ -173,6 +173,12 @@
   .edit_button_table, .td_iframe button{
     border: 2px solid #2464E4;
   }
+  .edit_accept_table{
+    border: 2px solid #6cb44c;
+  }
+  .edit_accept_table img{
+    filter: brightness(0) saturate(100%) invert(77%) sepia(8%) saturate(2921%) hue-rotate(56deg) brightness(82%) contrast(85%);
+  }
   .delete_button_table{
     border: 2px solid #fc4444;
   }
@@ -251,11 +257,18 @@
   z-index: 1000; /* Garante que o botão de fechar esteja na parte superior */
 }
 
-#vizContainer{
-  width: 100%;
-  height: 100%;
+.button_collab{
+  width: 70vw;
+  height: 50px;
+  background-color: #313131;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
 }
-  
 
 
 /* 

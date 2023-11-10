@@ -6,8 +6,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import alertIcon from './imgs/circle-exclamation-solid.svg'
+import { useTranslation } from 'react-i18next';
+
 
 function Login() {
+  const { t } = useTranslation();
+
+
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
   });
@@ -111,7 +116,7 @@ function Login() {
             </div>
             
             <br></br>
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> EMAIL</span>
             <br/>
             <input
               className="inp_login"
@@ -122,7 +127,7 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <br/>
-            <span className="legenda"><a style={{color: '#ff4747'}}>*</a> SENHA:</span>
+            <span className="legenda"><a style={{color: '#ff4747'}}>*</a>{t('SENHA')}</span>
             <br/>
             <input
               className="inp_login"
@@ -137,7 +142,7 @@ function Login() {
             <input type="submit" value="Login" className='btn_submit'/>
             <br/><br/>
             <Link to='/Register'>
-              <span className="to_register">Não tem uma conta? Clique aqui!</span>
+              <span className="to_register">{t('Não tem uma conta? Clique aqui!')}</span>
             </Link>
           </form>
         </div>

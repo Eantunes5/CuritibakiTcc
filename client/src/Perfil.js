@@ -5,6 +5,8 @@ import Header from './components/header';
 import defaultIcon from './imgs/user-solid.svg';
 import editIcon from './imgs/pen-solid.svg';
 import deleteIcon from './imgs/xmark-solid.svg'
+import lockedIcon from './imgs/lock-solid.svg'
+import conquistaIcon from './imgs/iconE.png'
 import { Link } from 'react-router-dom'; // Importe o componente Link
 import { useTranslation } from 'react-i18next';
 
@@ -283,12 +285,35 @@ function Perfil() {
               <h3>{t('Conquistas')}</h3>
               <div className="divider" />
               <ul>
-              {conquistas.map((conquista, index) => (
-                <li key={conquista._id}>
-                  {conquista.nome} - {conquista.descricao} - {conquista.progresso} - {conquista.meta}
-                  {/* Renderize outras informações da conquista, se necessário */}
-                </li>
-              ))}
+              {conquistas.map((conquista, index) => {
+                const progresso = Math.min(conquista.progresso, conquista.meta);
+                const iconToShow = progresso >= conquista.meta ? conquistaIcon : lockedIcon;
+
+                return(
+                  <li className='conquista_card' key={conquista._id}>
+                    <div style={{display: 'flex'}}>
+                      <div className='conquista_icon'>
+                        <img src={iconToShow}/>
+                      </div>
+                      <div className='conquista_container_text'>
+                        <p><b>{conquista.nome}</b></p>
+                        <p className='conquista_desc'>{conquista.descricao}</p>
+                      </div>
+                    </div>
+                    <p className='progress_text'>
+                      Progresso: {progresso} / {conquista.meta}
+                    </p>
+                    <div className="progress_bar">
+                      <div
+                        className="progress"
+                        style={{
+                          width: `${(progresso / conquista.meta) * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </li>
+                )})
+              }
             </ul>
             </div>
             

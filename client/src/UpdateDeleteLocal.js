@@ -174,19 +174,6 @@ function UpdateDeleteLocal() {
     setImageModalOpen(false);
   };
 
-
-
-
-
-
-  // const isAdmin = localStorage.getItem("isAdmin") === "true"; // Verifica se o usuário é um administrador
-
-  // if (!isAdmin) {
-  //   // Se o usuário não for um administrador, redirecionar para outra página
-  //   navigate("/"); // Redireciona para a página inicial
-  //   return null; // Evita a renderização da página atual
-  // }
-
   return (
     <div className='div_register_local' style={{flexDirection: "column"}}>
       <div className='form_container_reg_local' style={{width: 'calc(100% - 40px)'}}>
